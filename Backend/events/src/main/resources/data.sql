@@ -6,3 +6,6 @@ VALUES ('4f2c8e7a-7b6b-41c4-932f-74a67d13e9e1', 'This is the first comment.', '2
        ('2e41d0b9-3a36-4bc8-8f43-bb4c3563d9c2', 'Great post, keep it up!', '2025-10-20T21:57:31', NULL);
 SELECT *
 FROM comments;
+
+SELECT *
+FROM users;
