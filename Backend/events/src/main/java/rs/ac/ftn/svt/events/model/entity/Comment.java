@@ -1,4 +1,4 @@
-package rs.ac.ftn.svt.events.model;
+package rs.ac.ftn.svt.events.model.entity;
 
 
 import lombok.AllArgsConstructor;

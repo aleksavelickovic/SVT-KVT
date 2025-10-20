@@ -1,4 +1,4 @@
-package rs.ac.ftn.svt.events.model;
+package rs.ac.ftn.svt.events.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,10 +17,11 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(length = 36)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column
+    private String username;
     @Column
     private String email;
     @Column
