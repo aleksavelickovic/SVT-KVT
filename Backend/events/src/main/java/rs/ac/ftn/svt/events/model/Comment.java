@@ -1,11 +1,12 @@
 package rs.ac.ftn.svt.events.model;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(length = 36)
     private UUID id;
 
