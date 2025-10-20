@@ -35,9 +35,7 @@ public class SecurityConfiguration {
                 httpBasic(Customizer.withDefaults()).
                 sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
 
-
     }
-
 
     @Bean
     public UserDetailsService userDetailsService() {
