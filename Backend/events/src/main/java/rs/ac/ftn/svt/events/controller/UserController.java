@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.ftn.svt.events.model.dto.AccountRequestDTO;
@@ -17,6 +18,7 @@ import rs.ac.ftn.svt.events.model.dto.JwtAuthenticationRequest;
 import rs.ac.ftn.svt.events.model.dto.UserDTO;
 import rs.ac.ftn.svt.events.model.dto.UserTokenState;
 import rs.ac.ftn.svt.events.model.entity.AccountRequest;
+import rs.ac.ftn.svt.events.model.entity.RequestStatus;
 import rs.ac.ftn.svt.events.model.entity.User;
 import rs.ac.ftn.svt.events.security.TokenUtils;
 import rs.ac.ftn.svt.events.service.AccountRequestService;
@@ -24,6 +26,7 @@ import rs.ac.ftn.svt.events.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -45,6 +48,8 @@ public class UserController {
 
     @Autowired
     AccountRequestService accountRequestService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /* Ili preporucen nacin: Constructor Dependency Injection
     @Autowired
@@ -108,6 +113,23 @@ public class UserController {
     @PostMapping("/requests/add")
     public ResponseEntity<AccountRequest> create(@RequestBody AccountRequestDTO dto) {
         return ResponseEntity.ok(accountRequestService.createAccountRequest(dto));
+    }
+
+    @CrossOrigin
+    @PatchMapping("/requests/{id}")
+    public ResponseEntity<User> accept(@PathVariable Long id) {
+        AccountRequest accountRequest = accountRequestService.findOne(id);
+        accountRequest.setStatus(RequestStatus.ACCEPTED);
+        accountRequestService.save(accountRequest);
+
+        User newUser = new User();
+        newUser.setAddress(accountRequest.getAddress());
+        newUser.setCreatedAt(LocalDate.now());
+        newUser.setEmail(accountRequest.getEmail());
+        newUser.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
+        newUser.setEmail(accountRequest.getEmail());
+
+        return ResponseEntity.ok(userService.createUser(newUser));
     }
 
     @CrossOrigin

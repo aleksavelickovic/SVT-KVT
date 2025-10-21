@@ -13,4 +13,6 @@ public interface AccountRequestService {
 
     AccountRequest createAccountRequest(AccountRequestDTO accountRequestDTO);
 
+    AccountRequest save(AccountRequest accountRequest);
+
 }

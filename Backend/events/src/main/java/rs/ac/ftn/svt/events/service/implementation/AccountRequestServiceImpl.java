@@ -48,4 +48,9 @@ class AccountRequestServiceImpl implements AccountRequestService {
 
         return newAccountRequest;
     }
+
+    @Override
+    public AccountRequest save(AccountRequest accountRequest) {
+        return accountRequestRepository.save(accountRequest);
+    }
 }

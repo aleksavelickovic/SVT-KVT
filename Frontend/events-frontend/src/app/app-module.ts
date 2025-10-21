@@ -8,6 +8,7 @@ import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi}
 import {LayoutModule} from './layout/layout-module';
 import {RegistrationRequests} from './registration-requests/registration-requests';
 import {Interceptor} from './infrastructure/auth/interceptor';
+import {MatButton} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {Interceptor} from './infrastructure/auth/interceptor';
     AppRoutingModule,
     AuthModule,
     LayoutModule,
+    MatButton,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

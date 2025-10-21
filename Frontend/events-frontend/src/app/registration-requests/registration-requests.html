@@ -5,6 +5,7 @@
     <th>Adresa</th>
     <th>Status</th>
     <th>Datum</th>
+    <th>Akcija</th>
   </tr>
   </thead>
   <tbody>
@@ -14,6 +15,14 @@
         <td>{{ RegistrationRequest.address }}</td>
         <td>{{ RegistrationRequest.status }}</td>
         <td>{{ RegistrationRequest.createdAt }}</td>
+        <td>
+          @if (RegistrationRequest.status == 'PENDING') {
+            <button matButton="outlined" (click)="accept(RegistrationRequest.id)">Prihvati</button>
+            <button matButton="outlined">Odbij</button>
+          } @else {
+            <p>Status je {{ RegistrationRequest.status }} !</p>
+          }
+        </td>
       </tr>
     }
   </tbody>

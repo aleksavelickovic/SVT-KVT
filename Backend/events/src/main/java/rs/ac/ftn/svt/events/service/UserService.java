@@ -12,6 +12,8 @@ public interface UserService {
 
     User createUser(UserDTO userDTO);
 
+    User createUser(User user);
+
     List<User> findAll();
 
     List<User> findAllUsers();

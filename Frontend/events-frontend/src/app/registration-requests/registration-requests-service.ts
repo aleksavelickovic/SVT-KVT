@@ -24,4 +24,8 @@ export class RegistrationRequestsService {
     return this.httpClient.post<RegistrationRequest>(environment.apiHost + '/users/requests/add', registrationRequest)
   }
 
+  accept(id: number): Observable<RegistrationRequest> {
+    return this.httpClient.patch<RegistrationRequest>(environment.apiHost + '/users/requests/' + id, '')
+  }
+
 }
