@@ -4,6 +4,9 @@
   @if (role == 'ROLE_USER') {
     <p>Ulogovani ste kao korisnik!</p>
   }
+  @if (role == 'ROLE_ADMINISTRATOR') {
+    <p>Ulogovani ste kao Administrator!</p>
+  }
   @if (role != null) {
     <button (click)="logOut()" mat-raised-button>LogOut</button>
   }
