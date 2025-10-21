@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {NavBar} from './nav-bar/nav-bar';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatButton} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {MatButton} from '@angular/material/button';
   imports: [
     CommonModule,
     MatToolbar,
-    MatButton
+    MatButton,
+    RouterLink
   ]
 })
 export class LayoutModule {

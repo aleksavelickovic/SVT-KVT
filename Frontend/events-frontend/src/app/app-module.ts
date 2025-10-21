@@ -6,10 +6,12 @@ import {App} from './app';
 import {AuthModule} from "./infrastructure/auth/auth-module";
 import {provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
 import {LayoutModule} from './layout/layout-module';
+import {RegistrationRequests} from './registration-requests/registration-requests';
 
 @NgModule({
   declarations: [
-    App
+    App,
+    RegistrationRequests
   ],
   imports: [
     BrowserModule,

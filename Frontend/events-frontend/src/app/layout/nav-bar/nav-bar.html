@@ -5,9 +5,11 @@
     <p>Ulogovani ste kao korisnik!</p>
   }
   @if (role == 'ROLE_ADMINISTRATOR') {
-    <p>Ulogovani ste kao Administrator!</p>
+    <button [routerLink]="['../registrationrequests']" matButton="outlined">Pregledaj pristigle zahteve za
+      registraciju
+    </button>
   }
   @if (role != null) {
-    <button (click)="logOut()" mat-raised-button>LogOut</button>
+    <button (click)="logOut()" matButton="outlined">LogOut</button>
   }
 </mat-toolbar>
