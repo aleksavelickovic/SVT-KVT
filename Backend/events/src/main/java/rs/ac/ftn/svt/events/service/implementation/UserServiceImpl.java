@@ -8,6 +8,7 @@ import rs.ac.ftn.svt.events.model.entity.User;
 import rs.ac.ftn.svt.events.repository.UserRepository;
 import rs.ac.ftn.svt.events.service.UserService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +53,13 @@ public class UserServiceImpl implements UserService {
         User newUser = new User();
         newUser.setEmail(userDTO.getEmail());
         newUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        newUser.setCreatedAt(LocalDate.now());
+        newUser.setAddress(userDTO.getAddress());
+        newUser.setBirthday(userDTO.getBirthday());
+        newUser.setCity(userDTO.getCity());
+        newUser.setName(userDTO.getName());
+        newUser.setPhoneNumber(userDTO.getPhone_number());
+
 //        newUser.setRole(Roles.USER);
         newUser = userRepository.save(newUser);
 

@@ -7,7 +7,7 @@ VALUES ('4f2c8e7a-7b6b-41c4-932f-74a67d13e9e1', 'This is the first comment.', '2
 SELECT *
 FROM comments;
 
-INSERT INTO users (address, birtday, city, created_at, email, name, password, phone_number)
+INSERT INTO users (address, birthday, city, created_at, email, name, password, phone_number)
 VALUES ('123 Elm St, Apt 4', '1990-05-14', 'New York',
         '2025-10-20T22:10:00',
         'pera@gmail.com', 'Pera Peric', '$2a$08$jUkWGc23Y6Qkl69ikbmjC.0vRSEi6JeecB7unU4ajap4KX.O2dlJm',

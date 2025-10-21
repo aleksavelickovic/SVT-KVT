@@ -33,7 +33,7 @@ public class User {
     @Column
     private String phoneNumber;
     @Column
-    private LocalDate birtday;
+    private LocalDate birthday;
     @Column
     private String address;
     @Column
