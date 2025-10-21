@@ -30,7 +30,7 @@ class AccountRequestServiceImpl implements AccountRequestService {
 
     @Override
     public AccountRequest createAccountRequest(AccountRequestDTO accountRequestDTO) {
-        Optional<AccountRequest> accountRequest = accountRequestRepository.findById(accountRequestDTO.getId());
+        Optional<AccountRequest> accountRequest = accountRequestRepository.findFirstByEmail(accountRequestDTO.getEmail());
 
         if (accountRequest.isPresent()) {
             return null;

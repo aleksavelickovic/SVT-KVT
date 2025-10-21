@@ -1,4 +1,4 @@
-<form [formGroup]='registerForm'>
+<form (ngSubmit)="create()" [formGroup]='registerForm'>
   <mat-form-field>
     <mat-label>Email</mat-label>
     <input formControlName="email" matInput name="email" type="email"/>
@@ -23,12 +23,12 @@
     <mat-label>Adresa</mat-label>
     <input formControlName="address" matInput name="address" type="text"/>
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>Grad</mat-label>
-    <input formControlName="city" matInput name="city" type="text"/>
-  </mat-form-field>
+  <!--  <mat-form-field>-->
+  <!--    <mat-label>Grad</mat-label>-->
+  <!--    <input formControlName="city" matInput name="city" type="text"/>-->
+  <!--  </mat-form-field>-->
   <div>
-    <button color="primary" mat-raised-button type="submit">Posaljite zahtev</button>
+    <button color="primary" matButton="outlined" type="submit">Posaljite zahtev</button>
   </div>
   <!--  <div>-->
   <!--    <button color="primary" mat-raised-button [routerLink]="['register']">Neamte nalog? Posaljite zahtev za registraciju</button>-->

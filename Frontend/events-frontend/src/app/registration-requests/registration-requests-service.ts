@@ -20,4 +20,8 @@ export class RegistrationRequestsService {
     return this.httpClient.get<RegistrationRequest[]>(environment.apiHost + '/users/requests')
   }
 
+  add(registrationRequest: RegistrationRequest): Observable<RegistrationRequest> {
+    return this.httpClient.post<RegistrationRequest>(environment.apiHost + '/users/requests/add', registrationRequest)
+  }
+
 }

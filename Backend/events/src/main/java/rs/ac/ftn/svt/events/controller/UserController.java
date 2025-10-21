@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.ftn.svt.events.model.dto.AccountRequestDTO;
 import rs.ac.ftn.svt.events.model.dto.JwtAuthenticationRequest;
 import rs.ac.ftn.svt.events.model.dto.UserDTO;
 import rs.ac.ftn.svt.events.model.dto.UserTokenState;
@@ -101,6 +102,12 @@ public class UserController {
     @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<List<AccountRequest>> getAllRequests() {
         return ResponseEntity.ok(accountRequestService.findAll());
+    }
+
+    @CrossOrigin
+    @PostMapping("/requests/add")
+    public ResponseEntity<AccountRequest> create(@RequestBody AccountRequestDTO dto) {
+        return ResponseEntity.ok(accountRequestService.createAccountRequest(dto));
     }
 
     @CrossOrigin
