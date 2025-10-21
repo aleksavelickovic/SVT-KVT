@@ -5,6 +5,7 @@ import {AppRoutingModule} from './app-routing-module';
 import {App} from './app';
 import {AuthModule} from "./infrastructure/auth/auth-module";
 import {provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
+import {LayoutModule} from './layout/layout-module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import {provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/com
     BrowserModule,
     AppRoutingModule,
     AuthModule,
+    LayoutModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

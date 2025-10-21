@@ -1,1 +1,10 @@
-<p>nav-bar works!</p>
+<mat-toolbar>
+  <p>toolbar works!</p>
+
+  @if (role == 'ROLE_USER') {
+    <p>Ulogovani ste kao korisnik!</p>
+  }
+  @if (role != null) {
+    <button (click)="logOut()" mat-raised-button>LogOut</button>
+  }
+</mat-toolbar>
