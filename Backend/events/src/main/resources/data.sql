@@ -26,3 +26,6 @@ FROM users;
 select *
 from users
 where dtype = 'ROLE_ADMINISTRATOR';
+
+SELECT *
+FROM account_requests;

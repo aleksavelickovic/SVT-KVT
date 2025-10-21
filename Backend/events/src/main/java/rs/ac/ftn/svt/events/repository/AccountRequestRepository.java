@@ -6,4 +6,5 @@ import rs.ac.ftn.svt.events.model.entity.AccountRequest;
 
 @Repository
 public interface AccountRequestRepository extends JpaRepository<AccountRequest, Long> {
+    AccountRequest findFirstById(Long id);
 }

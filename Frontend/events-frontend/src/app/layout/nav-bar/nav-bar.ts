@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../infrastructure/auth/auth-service';
 import {Router} from '@angular/router';
 
@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.css'
 })
-export class NavBar {
+export class NavBar implements OnInit {
   role: string = '';
 
   constructor(private authService: AuthService, private router: Router) {

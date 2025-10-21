@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import rs.ac.ftn.svt.events.model.dto.JwtAuthenticationRequest;
 import rs.ac.ftn.svt.events.model.dto.UserDTO;
 import rs.ac.ftn.svt.events.model.dto.UserTokenState;
+import rs.ac.ftn.svt.events.model.entity.AccountRequest;
 import rs.ac.ftn.svt.events.model.entity.User;
 import rs.ac.ftn.svt.events.security.TokenUtils;
+import rs.ac.ftn.svt.events.service.AccountRequestService;
 import rs.ac.ftn.svt.events.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +42,9 @@ public class UserController {
     @Autowired
     TokenUtils tokenUtils;
 
+    @Autowired
+    AccountRequestService accountRequestService;
+
     /* Ili preporucen nacin: Constructor Dependency Injection
     @Autowired
     public UserController(UserServiceImpl userService, AuthenticationManager authenticationManager,
@@ -47,7 +52,7 @@ public class UserController {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
-        this.tokenUtils = tokenUtils;
+        this.tokenUtils = tokenUtils;requests
     }
     */
     @CrossOrigin
@@ -89,6 +94,13 @@ public class UserController {
         System.out.println("TOKEN: " + jwt);
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+    }
+
+    @CrossOrigin
+    @GetMapping("/requests")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<AccountRequest>> getAllRequests() {
+        return ResponseEntity.ok(accountRequestService.findAll());
     }
 
     @CrossOrigin

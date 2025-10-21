@@ -20,9 +20,11 @@ public class AccountRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
+    private String email;
+    @Column
     private String password;
     @Column
-    private String addres;
+    private String address;
     @Enumerated(EnumType.STRING)
     private RequestStatus status;
     @Column
