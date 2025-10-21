@@ -15,13 +15,13 @@ public class UserDTO {
     private Long id;
 
     @NotBlank
-    private String username;
+    private String email;
 
     @NotBlank
     private String password;
 
     public UserDTO(User createdUser) {
         this.id = createdUser.getId();
-        this.username = createdUser.getUsername();
+        this.email = createdUser.getEmail();
     }
 }

@@ -20,7 +20,7 @@ public class WebSecurity {
 
     public boolean checkClubId(Authentication authentication, HttpServletRequest request, int id) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = userService.findByUsername(userDetails.getUsername());
+        User user = userService.findByEmail(userDetails.getUsername());
         return id == user.getId();
     }
 }

@@ -70,7 +70,7 @@ public class UserController {
         // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
         // AuthenticationException
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+                authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
         // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
         // kontekst
@@ -94,6 +94,6 @@ public class UserController {
     @GetMapping("/details")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public User user(Principal user) {
-        return this.userService.findByUsername(user.getName());
+        return this.userService.findByEmail(user.getName());
     }
 }

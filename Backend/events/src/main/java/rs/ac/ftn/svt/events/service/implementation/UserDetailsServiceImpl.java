@@ -29,13 +29,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userService = userService;
     }
 */
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userService.findByUsername(username);
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        User user = userService.findByEmail(email);
 
         if (user == null) {
-            throw new UsernameNotFoundException("There is no user with username " + username);
+            throw new UsernameNotFoundException("There is no user with email " + email);
         } else {
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
             String role = "";
@@ -48,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(role));
 
             return new org.springframework.security.core.userdetails.User(
-                    user.getUsername().trim(),
+                    user.getEmail().trim(),
                     user.getPassword().trim(),
                     grantedAuthorities);
         }

@@ -36,7 +36,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             }
         }
 
-        String username = tokenUtils.getUsernameFromToken(token);
+        String username = tokenUtils.getEmailFromToken(token);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
