@@ -66,21 +66,24 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
+        System.out.println("OKINUO SE LOGIN CONTROLLER! 1");
 
         // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
         // AuthenticationException
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getEmail(), authenticationRequest.getPassword()));
+        System.out.println("OKINUO SE LOGIN CONTROLLER! 2");
 
         // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
         // kontekst
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println("OKINUO SE LOGIN CONTROLLER! 3");
 
         // Kreiraj token za tog korisnika
         UserDetails user = (UserDetails) authentication.getPrincipal();
         String jwt = tokenUtils.generateToken(user);
         int expiresIn = tokenUtils.getExpiredIn();
-
+        System.out.println("OKINUO SE LOGIN CONTROLLER! 4");
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
