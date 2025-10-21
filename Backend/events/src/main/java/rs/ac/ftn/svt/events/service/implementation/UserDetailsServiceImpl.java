@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import rs.ac.ftn.svt.events.model.entity.Administrator;
 import rs.ac.ftn.svt.events.model.entity.User;
 import rs.ac.ftn.svt.events.service.UserService;
 
@@ -40,11 +41,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         } else {
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
             String role = "";
-            if (user instanceof User) {
-                role = "ROLE_USER";
-            } else {
-                role = "ROLE_ADMIN"; // TODO vrati se ovde kad dodas administratora u model
+
+            for (User u : userService.findAllUsers()) {
+                if (user.getEmail().equals(u.getEmail())) {
+                    role = "ROLE_USER";
+                    break;
+                }
             }
+
+            for (Administrator a : userService.findAllAdmins()) {
+                if (user.getEmail().equals(a.getEmail())) {
+                    role = "ROLE_ADMINISTRATOR";
+                    break;
+                }
+            }
+
+//            if (user instanceof User) {
+//                role = "ROLE_USER";
+//            } else if (user instanceof Administrator) {
+//                role = "ROLE_ADMIN"; // TODO vrati se ovde kad dodas administratora u model
+//            }
 
             grantedAuthorities.add(new SimpleGrantedAuthority(role));
 

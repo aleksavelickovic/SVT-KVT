@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.ac.ftn.svt.events.model.dto.UserDTO;
+import rs.ac.ftn.svt.events.model.entity.Administrator;
 import rs.ac.ftn.svt.events.model.entity.User;
 import rs.ac.ftn.svt.events.repository.UserRepository;
 import rs.ac.ftn.svt.events.service.UserService;
@@ -69,5 +70,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return this.userRepository.findAllUsers();
+    }
+
+    @Override
+    public List<Administrator> findAllAdmins() {
+        return this.userRepository.findAllAdmins();
     }
 }
