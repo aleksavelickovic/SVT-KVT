@@ -1,0 +1,16 @@
+<form (ngSubmit)="login()" [formGroup]='loginForm'>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input formControlName="email" matInput name="email" type="email"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Lozinka</mat-label>
+    <input formControlName="password" matInput name="password" type="password"/>
+  </mat-form-field>
+  <div>
+    <button color="primary" mat-raised-button type="submit">Prijava</button>
+  </div>
+  <div>
+    <button color="primary" mat-raised-button>Neamte nalog? Posaljite zahtev za registraciju</button>
+  </div>
+</form>

@@ -50,6 +50,7 @@ public class UserController {
         this.tokenUtils = tokenUtils;
     }
     */
+    @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<UserDTO> create(@RequestBody @Validated UserDTO newUser) {
 
@@ -63,6 +64,7 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
@@ -84,16 +86,19 @@ public class UserController {
         String jwt = tokenUtils.generateToken(user);
         int expiresIn = tokenUtils.getExpiredIn();
         System.out.println("OKINUO SE LOGIN CONTROLLER! 4");
+        System.out.println("TOKEN: " + jwt);
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 
+    @CrossOrigin
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
     public List<User> loadAll() {
         return this.userService.findAll();
     }
 
+    @CrossOrigin
     @GetMapping("/details")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public User user(Principal user) {

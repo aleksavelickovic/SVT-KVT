@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {environment} from '../../env/enviroment';
+import {AuthResponse} from './model/AuthResponse';
 
 
 @Injectable({
@@ -20,12 +22,17 @@ export class AuthService {
     this.user$.next(this.getRole());
   }
 
+  login(auth: any): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(environment.apiHost + '/users/login', auth, {
+      headers: this.headers,
+    });
+  }
 
   getRole(): any {
     if (this.isLoggedIn()) {
       const accesToken: any = localStorage.getItem('user');
       const helper = new JwtHelperService();
-      return helper.decodeToken(accesToken).role[0].authority
+      return helper.decodeToken(accesToken).role.authority
     }
     return null;
   }

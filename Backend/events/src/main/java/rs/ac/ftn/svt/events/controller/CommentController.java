@@ -2,6 +2,7 @@ package rs.ac.ftn.svt.events.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
+    @CrossOrigin
     @GetMapping
     public ResponseEntity<List<Comment>> findAllComments() {
         return ResponseEntity.ok(commentService.findAll());
