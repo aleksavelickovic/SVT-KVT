@@ -98,14 +98,14 @@ public class UserController {
 
     @CrossOrigin
     @GetMapping("/requests")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<List<AccountRequest>> getAllRequests() {
         return ResponseEntity.ok(accountRequestService.findAll());
     }
 
     @CrossOrigin
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     public List<User> loadAll() {
         return this.userService.findAll();
     }

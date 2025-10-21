@@ -17,13 +17,14 @@ export class RegistrationRequests implements OnInit {
   }
 
   ngOnInit(): void {
-    throw new Error("Method not implemented.");
+    this.getAllRequests();
   }
 
   getAllRequests(): void {
     this.service.getAll().subscribe({
       next: (registrationRequests: RegistrationRequest[]) => {
         this.registrationRequests = registrationRequests
+        console.log(this.registrationRequests)
       },
       error: (_) => {
         console.error("GRESKA!")

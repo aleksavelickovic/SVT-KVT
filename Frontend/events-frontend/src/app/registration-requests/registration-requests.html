@@ -3,12 +3,19 @@
   <tr>
     <th>Email</th>
     <th>Adresa</th>
-    <th>Opis</th>
-    <th>Godina</th>
+    <th>Status</th>
+    <th>Datum</th>
   </tr>
   </thead>
   <tbody>
-
+    @for (RegistrationRequest of registrationRequests; track RegistrationRequest.id) {
+      <tr>
+        <td>{{ RegistrationRequest.email }}</td>
+        <td>{{ RegistrationRequest.address }}</td>
+        <td>{{ RegistrationRequest.status }}</td>
+        <td>{{ RegistrationRequest.createdAt }}</td>
+      </tr>
+    }
   </tbody>
 </table>
 

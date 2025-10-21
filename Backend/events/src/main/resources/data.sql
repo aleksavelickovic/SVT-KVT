@@ -27,5 +27,13 @@ select *
 from users
 where dtype = 'ROLE_ADMINISTRATOR';
 
+INSERT INTO account_requests (address, created_at, password, rejection_reason, status, email)
+VALUES ('321 Maple St, Apt 5', '2025-10-20', '$2a$08$XyZ1234567890abcdefgHIJKLMNOpqrstuvWXyzABCD1234567890ab',
+        NULL, 'PENDING', 'maple@example.com'),
+       ('654 Cedar Ave', '2025-10-20', '$2a$08$YzA2345678901bcdefghIJKLMNOpqrstuvWXyzABCD1234567890abc',
+        'Incomplete documentation', 'REJECTED', 'documentation@example.com'),
+       ('987 Birch Rd', '2025-10-20', '$2a$08$ZaB3456789012cdefghiJKLMNOpqrstuvWXyzABCD1234567890abcd', NULL,
+        'ACCEPTED', 'birch@example.com');
+
 SELECT *
 FROM account_requests;
