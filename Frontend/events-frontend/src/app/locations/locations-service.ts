@@ -27,4 +27,9 @@ export class LocationsService {
     return this.httpClient.get<EventLocation>(environment.apiHost + '/locations/' + id)
   }
 
+  editLocation(location: EventLocation): Observable<EventLocation> {
+    console.log("ID OD LOKACIJE: " + location.id)
+    return this.httpClient.patch<EventLocation>(environment.apiHost + '/locations/' + location.id, location)
+  }
+
 }

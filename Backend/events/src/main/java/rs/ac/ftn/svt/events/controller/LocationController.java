@@ -30,6 +30,19 @@ class LocationController {
     }
 
     @CrossOrigin
+    @PatchMapping("/{id}")
+    public ResponseEntity<Location> editLocation(@RequestBody LocationDTO locationDTO, @PathVariable String id) {
+        System.out.println("ID OD DTO: " + locationDTO.getId());
+        Location locationForEdit = locationService.findOne(Long.valueOf(id));
+        locationForEdit.setName(locationDTO.getName());
+        locationForEdit.setDescription(locationDTO.getDescription());
+        locationForEdit.setAddress(locationDTO.getAddress());
+        locationForEdit.setType(locationDTO.getType());
+
+        return ResponseEntity.ok(locationService.save(locationForEdit));
+    }
+
+    @CrossOrigin
     @PostMapping()
     @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Location> addLocation(@RequestBody LocationDTO locationDTO) {
