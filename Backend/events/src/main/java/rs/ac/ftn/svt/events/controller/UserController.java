@@ -13,10 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.ftn.svt.events.model.dto.AccountRequestDTO;
-import rs.ac.ftn.svt.events.model.dto.JwtAuthenticationRequest;
-import rs.ac.ftn.svt.events.model.dto.UserDTO;
-import rs.ac.ftn.svt.events.model.dto.UserTokenState;
+import rs.ac.ftn.svt.events.model.dto.*;
 import rs.ac.ftn.svt.events.model.entity.AccountRequest;
 import rs.ac.ftn.svt.events.model.entity.RequestStatus;
 import rs.ac.ftn.svt.events.model.entity.User;
@@ -117,19 +114,28 @@ public class UserController {
 
     @CrossOrigin
     @PatchMapping("/requests/{id}")
-    public ResponseEntity<User> accept(@PathVariable Long id) {
+    public ResponseEntity<User> accept(@PathVariable Long id, @RequestBody RejectionDTO rejectionDTO) {
+        if (rejectionDTO.reason.equals("n")) {
+            AccountRequest accountRequest = accountRequestService.findOne(id);
+            accountRequest.setStatus(RequestStatus.ACCEPTED);
+            accountRequestService.save(accountRequest);
+
+            User newUser = new User();
+            newUser.setAddress(accountRequest.getAddress());
+            newUser.setCreatedAt(LocalDate.now());
+            newUser.setEmail(accountRequest.getEmail());
+            newUser.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
+            newUser.setEmail(accountRequest.getEmail());
+
+            return ResponseEntity.ok(userService.createUser(newUser));
+        }
         AccountRequest accountRequest = accountRequestService.findOne(id);
-        accountRequest.setStatus(RequestStatus.ACCEPTED);
+        accountRequest.setStatus(RequestStatus.REJECTED);
+        accountRequest.setRejectionReason(rejectionDTO.reason);
         accountRequestService.save(accountRequest);
 
-        User newUser = new User();
-        newUser.setAddress(accountRequest.getAddress());
-        newUser.setCreatedAt(LocalDate.now());
-        newUser.setEmail(accountRequest.getEmail());
-        newUser.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
-        newUser.setEmail(accountRequest.getEmail());
+        return ResponseEntity.ok(null);
 
-        return ResponseEntity.ok(userService.createUser(newUser));
     }
 
     @CrossOrigin

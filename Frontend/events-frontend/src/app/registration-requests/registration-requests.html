@@ -18,7 +18,14 @@
         <td>
           @if (RegistrationRequest.status == 'PENDING') {
             <button matButton="outlined" (click)="accept(RegistrationRequest.id)">Prihvati</button>
-            <button matButton="outlined">Odbij</button>
+            <button (click)="reject(RegistrationRequest.id)" matButton="outlined">Odbij</button>
+            <form [formGroup]='reasonForm'>
+              <mat-form-field>
+                <mat-label>Razlog odbijanja...</mat-label>
+                <input formControlName="reason" matInput name="text" type="text"/>
+              </mat-form-field>
+            </form>
+
           } @else {
             <p>Status je {{ RegistrationRequest.status }} !</p>
           }

@@ -9,6 +9,9 @@ import {LayoutModule} from './layout/layout-module';
 import {RegistrationRequests} from './registration-requests/registration-requests';
 import {Interceptor} from './infrastructure/auth/interceptor';
 import {MatButton} from '@angular/material/button';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MaterialModule} from './material/material-module';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,11 @@ import {MatButton} from '@angular/material/button';
     AuthModule,
     LayoutModule,
     MatButton,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MaterialModule,
+    ReactiveFormsModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -34,4 +42,5 @@ import {MatButton} from '@angular/material/button';
   ],
   bootstrap: [App]
 })
-export class AppModule { }
+export class AppModule {
+}
