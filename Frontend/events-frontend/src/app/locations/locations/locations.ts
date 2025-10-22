@@ -34,5 +34,19 @@ export class Locations implements OnInit {
     })
   }
 
+  deleteLocation(id: number): void {
+    this.service.deleteLocation(id).subscribe({
+      next: () => {
+        this.getAllLocations()
+        this.router.navigate(['../locations'])
+        console.log(this.locations)
+      },
+      error: (_) => {
+        console.error("GRESKA!")
+      }
+    })
+    // this.getAllLocations()
+  }
+
 
 }

@@ -30,6 +30,15 @@ class LocationController {
     }
 
     @CrossOrigin
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    public ResponseEntity<?> deleteLocation(@PathVariable Long id) {
+        System.out.println("DELETE OKINUTO!");
+        locationService.delete(id);
+        return ResponseEntity.ok(null);
+    }
+
+    @CrossOrigin
     @PatchMapping("/{id}")
     public ResponseEntity<Location> editLocation(@RequestBody LocationDTO locationDTO, @PathVariable String id) {
         System.out.println("ID OD DTO: " + locationDTO.getId());

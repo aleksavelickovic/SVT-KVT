@@ -32,4 +32,8 @@ export class LocationsService {
     return this.httpClient.patch<EventLocation>(environment.apiHost + '/locations/' + location.id, location)
   }
 
+  deleteLocation(id: number): Observable<any> {
+    return this.httpClient.delete(environment.apiHost + '/locations/' + id)
+  }
+
 }
