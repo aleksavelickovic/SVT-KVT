@@ -1,3 +1,4 @@
+<button matButton [routerLink]="['../addlocation']">Dodaj novu lokaciju</button>
 @for (EventLocation of locations; track EventLocation.id) {
   <mat-card appearance="outlined" class="example-card">
     <mat-card-header>
@@ -22,8 +23,8 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button matButton>LIKE</button>
-      <button matButton>SHARE</button>
+      <button matButton>Izmeni</button>
+      <button matButton>Obrisi</button>
     </mat-card-actions>
   </mat-card>
 

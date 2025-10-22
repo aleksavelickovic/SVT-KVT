@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+button[matButton] {
+  margin-left: 16px;
+  background: #fff;
+  color: #1976d2;
+  border: 1px solid #1976d2;
+  border-radius: 4px;
+  padding: 6px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+button[matButton]:hover {
+  background: #1976d2;
+  color: #fff;
+}

@@ -1,0 +1,28 @@
+<form (ngSubmit)="addLocation()" [formGroup]='locationForm' novalidate>
+  <mat-form-field>
+    <mat-label>Ime</mat-label>
+    <input formControlName="name" matInput name="name" type="text"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Opis</mat-label>
+    <input formControlName="description" matInput name="description" type="text"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input formControlName="address" matInput name="address" type="text"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tip</mat-label>
+    <input formControlName="type" matInput name="type" type="text"/>
+  </mat-form-field>
+  <!--  <mat-form-field>-->
+  <!--    <mat-label>Grad</mat-label>-->
+  <!--    <input formControlName="city" matInput name="city" type="text"/>-->
+  <!--  </mat-form-field>-->
+  <div>
+    <button color="primary" mat-raised-button type="submit">Potvrdi</button>
+  </div>
+  <!--  <div>-->
+  <!--    <button color="primary" mat-raised-button [routerLink]="['register']">Neamte nalog? Posaljite zahtev za registraciju</button>-->
+  <!--  </div>-->
+</form>

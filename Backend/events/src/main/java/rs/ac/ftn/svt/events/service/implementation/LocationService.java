@@ -3,9 +3,7 @@ package rs.ac.ftn.svt.events.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.ac.ftn.svt.events.model.dto.LocationDTO;
-import rs.ac.ftn.svt.events.model.entity.AccountRequest;
 import rs.ac.ftn.svt.events.model.entity.Location;
-import rs.ac.ftn.svt.events.model.entity.RequestStatus;
 import rs.ac.ftn.svt.events.repository.LocationRepository;
 
 import java.time.LocalDate;
@@ -42,6 +40,8 @@ class LocationService implements rs.ac.ftn.svt.events.service.LocationService {
         newLocation.setAddress(locationDTO.getAddress());
         newLocation.setDescription(locationDTO.getDescription());
         newLocation.setType(locationDTO.getType());
+
+        locationRepository.save(newLocation);
 
         return newLocation;
     }

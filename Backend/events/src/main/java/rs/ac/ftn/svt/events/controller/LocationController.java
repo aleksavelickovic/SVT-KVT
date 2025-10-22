@@ -2,11 +2,9 @@ package rs.ac.ftn.svt.events.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import rs.ac.ftn.svt.events.model.dto.LocationDTO;
 import rs.ac.ftn.svt.events.model.entity.Location;
 import rs.ac.ftn.svt.events.service.LocationService;
 
@@ -23,6 +21,14 @@ class LocationController {
     @GetMapping
     public ResponseEntity<List<Location>> findAll() {
         return ResponseEntity.ok(locationService.findAll());
+    }
+
+    @CrossOrigin
+    @PostMapping()
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    public ResponseEntity<Location> addLocation(@RequestBody LocationDTO locationDTO) {
+        System.out.println("POZVANA ADD LOCATION!");
+        return ResponseEntity.ok(locationService.createLocation(locationDTO));
     }
 
 }
