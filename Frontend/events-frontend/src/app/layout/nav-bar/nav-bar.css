@@ -1,0 +1,35 @@
+/* events-frontend/src/app/layout/nav-bar/nav-bar.css */
+
+mat-toolbar {
+  background: #1976d2;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  min-height: 56px;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+mat-toolbar p {
+  margin: 0 16px 0 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+button[matButton] {
+  margin-left: 16px;
+  background: #fff;
+  color: #1976d2;
+  border: 1px solid #1976d2;
+  border-radius: 4px;
+  padding: 6px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+button[matButton]:hover {
+  background: #1976d2;
+  color: #fff;
+}
