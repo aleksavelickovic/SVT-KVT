@@ -41,6 +41,7 @@ class EventServiceImpl implements EventService {
         newEvent.setDate(eventDTO.getDate());
         newEvent.setPrice(eventDTO.getPrice());
         newEvent.setRecurrent(eventDTO.getRecurrent());
+        newEvent.setLocation(eventDTO.getLocation());
 
         eventRepository.save(newEvent);
 

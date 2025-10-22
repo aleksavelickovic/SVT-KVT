@@ -3,6 +3,7 @@ package rs.ac.ftn.svt.events.model.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import rs.ac.ftn.svt.events.model.entity.Location;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 public class EventDTO {
 
     private Long id;
-    private Long locationId;
+    private Location Location;
     @NotBlank
     private String name;
     @NotBlank

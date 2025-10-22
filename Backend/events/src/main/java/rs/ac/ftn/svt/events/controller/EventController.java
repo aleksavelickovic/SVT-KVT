@@ -42,6 +42,7 @@ class EventController {
         event.setDate(eventDTO.getDate());
         event.setPrice(eventDTO.getPrice());
         event.setRecurrent(eventDTO.getRecurrent());
+        event.setLocation(eventDTO.getLocation());
 
         return ResponseEntity.ok(eventService.save(event));
     }

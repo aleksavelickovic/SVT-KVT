@@ -23,6 +23,14 @@
     <mat-label>Datum</mat-label>
     <input formControlName="date" matInput name="date" type="date" value="{{event?.date}}"/>
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>Lokacija</mat-label>
+    <mat-select formControlName="location">
+      @for (Location of locations; track Location.id) {
+        <mat-option [value]="Location">{{ Location.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
   <input formControlName="id" name="id" type="hidden" value="{{event?.id}}"/>
   <div>
     <button color="primary" matButton="outlined" type="submit">Potvrdi</button>

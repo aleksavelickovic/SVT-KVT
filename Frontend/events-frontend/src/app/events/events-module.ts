@@ -12,12 +12,14 @@ import {
   MatCardTitle
 } from '@angular/material/card';
 import {RouterLink, RouterModule} from '@angular/router';
-import { EditEvent } from './edit-event/edit-event';
+import {EditEvent} from './edit-event/edit-event';
 import {MatFormField} from '@angular/material/input';
 import {MatInput, MatLabel} from '@angular/material/input';
 import {MaterialModule} from '../material/material-module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {MatOptgroup, MatOption} from "@angular/material/core";
+import {MatSelect} from '@angular/material/select';
 
 
 @NgModule({
@@ -44,7 +46,11 @@ import {MatCheckbox} from '@angular/material/checkbox';
     MatLabel,
     MaterialModule,
     ReactiveFormsModule,
-    MatCheckbox
+    MatCheckbox,
+    MatOption,
+    MatOptgroup,
+    RouterModule,
+    MatSelect
   ]
 })
 export class EventsModule {

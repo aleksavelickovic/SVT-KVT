@@ -1,20 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LocationsService} from '../../locations/locations-service';
 import {FrontendEvent} from '../model/frontendEvent';
 import {EventsService} from '../events-service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {EventLocation} from '../../locations/model/eventLocation';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 @Component({
   selector: 'app-edit-event',
   standalone: false,
   templateUrl: './edit-event.html',
-  styleUrl: './edit-event.css'
+  styleUrl: './edit-event.css',
+  providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditEvent implements OnInit {
 
   event?: FrontendEvent
+  locations: EventLocation[] = []
   eventForm = new FormGroup({
     name: new FormControl(this.event?.name, Validators.required),
     address: new FormControl(this.event?.address, Validators.required),
@@ -23,9 +27,10 @@ export class EditEvent implements OnInit {
     price: new FormControl(this.event?.price, Validators.required),
     recurrent: new FormControl(this.event?.recurrent, Validators.required),
     id: new FormControl(this.event?.id, Validators.required),
+    location: new FormControl(this.event?.location, Validators.required),
   })
 
-  constructor(private route: ActivatedRoute, private service: EventsService, private router: Router) {
+  constructor(private route: ActivatedRoute, private service: EventsService, private router: Router, private locationService: LocationsService) {
 
   }
 
@@ -52,6 +57,20 @@ export class EditEvent implements OnInit {
         }
       })
     })
+    this.locationService.getAll().subscribe({
+      next: (locations: EventLocation[]) => {
+        this.locations = locations;
+        const selectedLoc = this.locations.find(l => l.id === this.event?.location.id);
+        this.eventForm.patchValue({
+          location: selectedLoc
+        });
+        console.log(this.locations)
+      },
+      error: (_) => {
+        console.error("GRESKA!")
+      }
+    })
   }
 
+  protected readonly Event = Event;
 }
