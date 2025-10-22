@@ -7,6 +7,6 @@ export interface RegistrationRequest {
   birthday: string;
   status: string;
   address: string;
-  createdAt: Date;
+  createdAt: Array<Number>;
   rejectionReason: string
 }
