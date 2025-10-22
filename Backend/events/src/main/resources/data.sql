@@ -54,3 +54,21 @@ VALUES ('Grand Hall', 'Large indoor venue suited for conferences and concerts.',
 
 SELECT *
 FROM locations;
+
+-- inserts for events referencing locations by name
+INSERT INTO events (name, address, type, date, price, recurrent, location_id)
+VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2025-11-10', 79.99, FALSE,
+        (SELECT id FROM locations WHERE name = 'Grand Hall')),
+       ('Riverside Music Fest', 'Riverside Dr, Novi Sad', 'FESTIVAL', '2025-08-21', 0.00, TRUE,
+        (SELECT id FROM locations WHERE name = 'Riverside Park')),
+       ('Creative Workshop Series', '7 Creative Ln, Niš', 'WORKSHOP', '2025-09-05', 25.00, TRUE,
+        (SELECT id FROM locations WHERE name = 'Studio 7')),
+       ('Business Leaders Forum', '45 Business Rd, Kragujevac', 'CONFERENCE', '2025-12-02', 119.00, FALSE,
+        (SELECT id FROM locations WHERE name = 'Conference Center Delta')),
+       ('Museum Lecture Night', 'Museum Sq 3, Subotica', 'LECTURE', '2025-10-15', 12.50, FALSE,
+        (SELECT id FROM locations WHERE name = 'City Museum Auditorium')),
+       ('Summer Open Air Gala', 'Arena Blvd, Čačak', 'GALA', '2026-06-12', 39.50, TRUE,
+        (SELECT id FROM locations WHERE name = 'Open Air Arena'));
+
+SELECT *
+FROM events;
