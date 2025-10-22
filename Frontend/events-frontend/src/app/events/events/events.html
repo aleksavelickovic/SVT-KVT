@@ -1,0 +1,43 @@
+<p>events works!</p>
+@for (FrontendEvent of events; track FrontendEvent.id) {
+  <mat-card appearance="outlined" class="example-card">
+    <mat-card-header>
+      <!--      <div mat-card-avatar class="example-header-image"></div>-->
+      <mat-card-title>{{ FrontendEvent.name }} - ID: {{ FrontendEvent.id }}</mat-card-title>
+      <mat-card-subtitle>{{ FrontendEvent.address }}</mat-card-subtitle>
+    </mat-card-header>
+    <div>
+      <img alt="Placeholder image"
+           mat-card-image
+           src="https://www.cvent.com/sites/default/files/styles/focus_scale_and_crop_800x450/public/image/2023-11/Business_Travel_Trends_Bleisure_Event-Cvent_CONNECT_2023.jpg.webp?itok=F_USbJO1"
+           style="width: 100%; height: 500px">
+    </div>
+    <mat-card-content>
+      <p>
+        @if (FrontendEvent.price <= 0) {
+          <p>Besplatno!</p>
+        } @else {
+          Cena: {{ FrontendEvent.price }}
+        }
+        <br>
+        Datum: {{ FrontendEvent.date[2] }}.{{ FrontendEvent.date[1] }}.{{ FrontendEvent.date[0] }}
+        <br>
+        {{ FrontendEvent.type }}
+        <br>
+        @if (FrontendEvent.recurrent) {
+          <p>Ponavlja se!</p>
+        } @else {
+          <p>Ne ponavlja se!</p>
+        }
+        <br>
+        Lokacija: {{ FrontendEvent.location.name }}
+
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <!--      <button [routerLink]="['../editlocation/' + EventLocation.id]" matButton>Izmeni</button> // TODO ceo CRUD-->
+      <!--      <button (click)="deleteLocation(EventLocation.id)" matButton>Obrisi</button>-->
+    </mat-card-actions>
+  </mat-card>
+
+}

@@ -6,6 +6,7 @@ import {RegistrationRequests} from './registration-requests/registration-request
 import {Locations} from './locations/locations/locations';
 import {AddLocation} from './locations/add-location/add-location';
 import {EditLocation} from './locations/edit-location/edit-location';
+import {Events} from './events/events/events';
 
 const routes: Routes = [
   {component: LoginComponent, path: "login"},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {component: RegistrationRequests, path: "registrationrequests"},
   {component: Locations, path: "locations"},
   {component: AddLocation, path: "addlocation"},
-  {component: EditLocation, path: "editlocation/:id"}
+  {component: EditLocation, path: "editlocation/:id"},
+  {component: Events, path: "events"}
 ];
 
 @NgModule({

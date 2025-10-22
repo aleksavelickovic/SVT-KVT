@@ -10,6 +10,8 @@
     </button>
     <button [routerLink]="['../locations']" matButton="outlined">Lokacije
     </button>
+    <button [routerLink]="['../events']" matButton="outlined">Dogadjaji
+    </button>
   }
   @if (role != null) {
     <button (click)="logOut()" matButton="outlined">LogOut</button>
