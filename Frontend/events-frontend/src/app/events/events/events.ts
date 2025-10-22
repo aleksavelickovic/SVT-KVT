@@ -33,4 +33,18 @@ export class Events implements OnInit {
     })
   }
 
+  deleteEvent(id: number): void {
+    this.service.deleteLocation(id).subscribe({
+      next: () => {
+        this.getAllEvents()
+        this.router.navigate(['../events'])
+        console.log(this.events)
+      },
+      error: (_) => {
+        console.error("GRESKA!")
+      }
+    })
+
+  }
+
 }

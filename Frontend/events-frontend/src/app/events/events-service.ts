@@ -19,4 +19,8 @@ export class EventsService {
     return this.httpClient.get<FrontendEvent[]>(environment.apiHost + '/events')
   }
 
+  deleteLocation(id: number): Observable<any> {
+    return this.httpClient.delete(environment.apiHost + '/events/' + id)
+  }
+
 }
