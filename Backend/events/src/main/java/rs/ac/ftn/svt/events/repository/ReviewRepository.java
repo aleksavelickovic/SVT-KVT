@@ -6,4 +6,5 @@ import rs.ac.ftn.svt.events.model.entity.Review;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
+    Review findFirstById(Long id);
 }
