@@ -52,4 +52,12 @@ class EventController {
     public ResponseEntity<Event> findOne(@PathVariable Long id) {
         return ResponseEntity.ok(eventService.findOne(id));
     }
+
+    @CrossOrigin
+    @PostMapping
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    public ResponseEntity<Event> addEvent(@RequestBody EventDTO eventDTO) {
+        System.out.println("POZVANA ADD EVENT!");
+        return ResponseEntity.ok(eventService.createEvent(eventDTO));
+    }
 }

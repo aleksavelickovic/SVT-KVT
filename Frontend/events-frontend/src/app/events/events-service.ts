@@ -20,6 +20,10 @@ export class EventsService {
     return this.httpClient.get<FrontendEvent[]>(environment.apiHost + '/events')
   }
 
+  add(event: FrontendEvent): Observable<FrontendEvent> {
+    return this.httpClient.post<FrontendEvent>(environment.apiHost + '/events', event)
+  }
+
   deleteEvent(id: number): Observable<any> {
     return this.httpClient.delete(environment.apiHost + '/events/' + id)
   }

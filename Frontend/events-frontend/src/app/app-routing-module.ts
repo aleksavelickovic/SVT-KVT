@@ -8,6 +8,7 @@ import {AddLocation} from './locations/add-location/add-location';
 import {EditLocation} from './locations/edit-location/edit-location';
 import {Events} from './events/events/events';
 import {EditEvent} from './events/edit-event/edit-event';
+import {AddEvent} from './events/add-event/add-event';
 
 const routes: Routes = [
   {component: LoginComponent, path: "login"},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {component: AddLocation, path: "addlocation"},
   {component: EditLocation, path: "editlocation/:id"},
   {component: EditEvent, path: "editevent/:id"},
-  {component: Events, path: "events"}
+  {component: Events, path: "events"},
+  {component: AddEvent, path: "addevent"}
 ];
 
 @NgModule({

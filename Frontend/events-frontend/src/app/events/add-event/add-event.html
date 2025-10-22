@@ -1,0 +1,38 @@
+<p>add-event works!</p>
+<form (ngSubmit)="addEvent()" [formGroup]='eventForm' novalidate>
+  <mat-form-field>
+    <mat-label>Ime</mat-label>
+    <input formControlName="name" matInput name="name" type="text"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cena</mat-label>
+    <input formControlName="price" matInput name="price" type="number"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input formControlName="address" matInput name="address" type="text"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tip</mat-label>
+    <input formControlName="type" matInput name="type" type="text"/>
+  </mat-form-field>
+  <mat-checkbox formControlName="recurrent" name="recurrent">
+    Ponavlja se?
+  </mat-checkbox>
+  <mat-form-field>
+    <mat-label>Datum</mat-label>
+    <input formControlName="date" matInput name="date" type="date"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Lokacija</mat-label>
+    <mat-select formControlName="location">
+      @for (Location of locations; track Location.id) {
+        <mat-option [value]="Location">{{ Location.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+<!--  <input formControlName="id" name="id" type="hidden"/>-->
+  <div>
+    <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
+  </div>
+</form>

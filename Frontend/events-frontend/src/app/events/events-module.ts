@@ -20,12 +20,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatOptgroup, MatOption} from "@angular/material/core";
 import {MatSelect} from '@angular/material/select';
+import { AddEvent } from './add-event/add-event';
 
 
 @NgModule({
   declarations: [
     Events,
-    EditEvent
+    EditEvent,
+    AddEvent
   ],
   imports: [
     CommonModule,
