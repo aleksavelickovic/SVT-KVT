@@ -24,6 +24,12 @@ class LocationController {
     }
 
     @CrossOrigin
+    @GetMapping("/{id}")
+    public ResponseEntity<Location> findOne(@PathVariable Long id) {
+        return ResponseEntity.ok(locationService.findOne(id));
+    }
+
+    @CrossOrigin
     @PostMapping()
     @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Location> addLocation(@RequestBody LocationDTO locationDTO) {

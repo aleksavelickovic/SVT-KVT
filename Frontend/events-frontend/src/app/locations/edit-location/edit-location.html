@@ -1,0 +1,21 @@
+<form [formGroup]='locationForm' novalidate>
+  <mat-form-field>
+    <mat-label>Ime</mat-label>
+    <input formControlName="name" matInput name="name" type="text" value="{{location?.name}}"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Opis</mat-label>
+    <input formControlName="description" matInput name="description" type="text" value="{{location?.description}}"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input formControlName="address" matInput name="address" type="text" value="{{location?.address}}"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tip</mat-label>
+    <input formControlName="type" matInput name="type" type="text" value="{{location?.type}}"/>
+  </mat-form-field>
+  <div>
+    <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
+  </div>
+</form>
