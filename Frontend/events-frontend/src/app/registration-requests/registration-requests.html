@@ -28,6 +28,9 @@
 
           } @else {
             <p>Status je {{ RegistrationRequest.status }} !</p>
+            @if (RegistrationRequest.status == 'REJECTED') {
+              <p>Razlog odbijanja: {{ RegistrationRequest.rejectionReason }}</p>
+            }
           }
         </td>
       </tr>
