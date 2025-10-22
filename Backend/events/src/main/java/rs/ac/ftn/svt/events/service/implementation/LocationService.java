@@ -40,6 +40,7 @@ class LocationService implements rs.ac.ftn.svt.events.service.LocationService {
         newLocation.setAddress(locationDTO.getAddress());
         newLocation.setDescription(locationDTO.getDescription());
         newLocation.setType(locationDTO.getType());
+        newLocation.setTotalRating(0.0);
 
         locationRepository.save(newLocation);
 

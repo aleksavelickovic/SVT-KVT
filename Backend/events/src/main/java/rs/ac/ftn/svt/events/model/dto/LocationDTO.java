@@ -20,5 +20,6 @@ public class LocationDTO {
     private String address;
     @NotBlank
     private String type;
+    private Double totalRating;
 
 }

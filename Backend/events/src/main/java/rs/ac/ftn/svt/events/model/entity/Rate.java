@@ -6,31 +6,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "locations")
-public class Location {
+@Table(name = "ratings")
+public class Rate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private String name;
+    private Integer performance;
     @Column
-    private String description;
+    private Integer soundAndLightning;
     @Column
-    private LocalDate createdAt;
+    private Integer venue;
     @Column
-    private String address;
-    @Column
-    private String type;
-    @Column       // TODO vrati se ovde kad dodas rating sistem
-    private Double totalRating;
+    private Integer overallImpression;
 
 }

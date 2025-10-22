@@ -5,4 +5,5 @@ export interface EventLocation {
   createdAt: Array<number>;
   address: string;
   type: string;
+  totalRating: number;
 }

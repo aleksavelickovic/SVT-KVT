@@ -47,6 +47,7 @@ class LocationController {
         locationForEdit.setDescription(locationDTO.getDescription());
         locationForEdit.setAddress(locationDTO.getAddress());
         locationForEdit.setType(locationDTO.getType());
+        locationForEdit.setTotalRating(locationDTO.getTotalRating());
 
         return ResponseEntity.ok(locationService.save(locationForEdit));
     }
