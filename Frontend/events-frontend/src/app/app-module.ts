@@ -10,7 +10,8 @@ import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi}
 import {Interceptor} from './infrastructure/auth/interceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material/material-module';
-import {LocationsModule} from './locations/locations-module'; // keep if you have a central material module
+import {LocationsModule} from './locations/locations-module';
+import {EventsModule} from './events/events-module'; // keep if you have a central material module
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {LocationsModule} from './locations/locations-module'; // keep if you hav
     MaterialModule,
     ReactiveFormsModule,
     LocationsModule,
+    EventsModule
   ],
   providers: [
     {

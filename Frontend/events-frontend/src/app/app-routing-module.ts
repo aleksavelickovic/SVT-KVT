@@ -7,6 +7,7 @@ import {Locations} from './locations/locations/locations';
 import {AddLocation} from './locations/add-location/add-location';
 import {EditLocation} from './locations/edit-location/edit-location';
 import {Events} from './events/events/events';
+import {EditEvent} from './events/edit-event/edit-event';
 
 const routes: Routes = [
   {component: LoginComponent, path: "login"},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {component: Locations, path: "locations"},
   {component: AddLocation, path: "addlocation"},
   {component: EditLocation, path: "editlocation/:id"},
+  {component: EditEvent, path: "editevent/:id"},
   {component: Events, path: "events"}
 ];
 

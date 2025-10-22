@@ -34,7 +34,7 @@ export class Events implements OnInit {
   }
 
   deleteEvent(id: number): void {
-    this.service.deleteLocation(id).subscribe({
+    this.service.deleteEvent(id).subscribe({
       next: () => {
         this.getAllEvents()
         this.router.navigate(['../events'])

@@ -1,0 +1,30 @@
+<p>edit-event works!</p>
+<form (ngSubmit)="editEvent()" [formGroup]='eventForm' novalidate>
+  <mat-form-field>
+    <mat-label>Ime</mat-label>
+    <input formControlName="name" matInput name="name" type="text" value="{{event?.name}}"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cena</mat-label>
+    <input formControlName="price" matInput name="price" type="number" value="{{event?.price}}"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input formControlName="address" matInput name="address" type="text" value="{{event?.address}}"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tip</mat-label>
+    <input formControlName="type" matInput name="type" type="text" value="{{event?.type}}"/>
+  </mat-form-field>
+  <mat-checkbox formControlName="recurrent" name="recurrent">
+    Ponavlja se?
+  </mat-checkbox>
+  <mat-form-field>
+    <mat-label>Datum</mat-label>
+    <input formControlName="date" matInput name="date" type="date" value="{{event?.date}}"/>
+  </mat-form-field>
+  <input formControlName="id" name="id" type="hidden" value="{{event?.id}}"/>
+  <div>
+    <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
+  </div>
+</form>

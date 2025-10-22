@@ -20,7 +20,7 @@
           Cena: {{ FrontendEvent.price }}
         }
         <br>
-        Datum: {{ FrontendEvent.date[2] }}.{{ FrontendEvent.date[1] }}.{{ FrontendEvent.date[0] }}
+        Datum: {{FrontendEvent.date}}
         <br>
         {{ FrontendEvent.type }}
         <br>
@@ -35,7 +35,7 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <!--      <button [routerLink]="['../editlocation/' + EventLocation.id]" matButton>Izmeni</button> // TODO ceo CRUD-->
+      <button [routerLink]="['../editevent/' + FrontendEvent.id]" matButton>Izmeni</button>      <!-- TODO ceo CRUD-->
       <button (click)="deleteEvent(FrontendEvent.id)" matButton>Obrisi</button>
     </mat-card-actions>
   </mat-card>

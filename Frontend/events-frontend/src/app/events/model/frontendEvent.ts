@@ -5,7 +5,7 @@ export interface FrontendEvent {
   name: string;
   address: string;
   type: string;
-  date: Array<string>;
+  date: Date;
   price: number;
   recurrent: Boolean;
   location: EventLocation;
