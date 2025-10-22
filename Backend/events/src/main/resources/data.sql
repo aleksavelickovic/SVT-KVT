@@ -37,3 +37,20 @@ VALUES ('321 Maple St, Apt 5', '2025-10-20', '$2a$08$XyZ1234567890abcdefgHIJKLMN
 
 SELECT *
 FROM account_requests;
+
+INSERT INTO locations (name, description, created_at, address, type)
+VALUES ('Grand Hall', 'Large indoor venue suited for conferences and concerts.', '2025-10-20', '12 Market St, Belgrade',
+        'HALL'),
+       ('Riverside Park', 'Open-air park with stage and seating for community events.', '2025-09-15',
+        'Riverside Dr, Novi Sad', 'OUTDOOR'),
+       ('Studio 7', 'Intimate studio space for workshops and small performances.', '2025-08-05', '7 Creative Ln, Niš',
+        'STUDIO'),
+       ('Conference Center Delta', 'Modern conference center with multiple meeting rooms.', '2025-07-01',
+        '45 Business Rd, Kragujevac', 'CONFERENCE_CENTER'),
+       ('City Museum Auditorium', 'Auditorium inside the city museum, suitable for lectures and screenings.',
+        '2025-06-12', 'Museum Sq 3, Subotica', 'MUSEUM'),
+       ('Open Air Arena', 'Large outdoor arena for festivals and sporting events.', '2025-05-22', 'Arena Blvd, Čačak',
+        'OUTDOOR');
+
+SELECT *
+FROM locations;
