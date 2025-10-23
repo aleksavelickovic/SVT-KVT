@@ -1,3 +1,32 @@
+<form (ngSubmit)="filterEvents()" [formGroup]='searchFormEvents' novalidate>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input formControlName="address" matInput name="address" type="text"/>
+  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Lokacija</mat-label>
+      <mat-select formControlName="location">
+        @for (Location of locations; track Location.id) {
+          <mat-option [value]="Location">{{ Location.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tip</mat-label>
+    <input formControlName="type" matInput name="type" type="text"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cena</mat-label>
+    <input formControlName="price" matInput name="price" type="number"/>
+  </mat-form-field>
+
+  <div>
+    <button color="primary" matButton="outlined" type="submit">Pretrazi</button>
+  </div>
+</form>
+<button color="primary" matButton="outlined" (click)="resetFilters()">Resetuj pretragu</button>
+
+
 <button [routerLink]="['../addevent']" matButton>Dodaj novi dogadjaj</button>
 @for (FrontendEvent of events; track FrontendEvent.id) {
   <mat-card appearance="outlined" class="example-card">

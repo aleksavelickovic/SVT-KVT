@@ -15,7 +15,7 @@ import {EventLocation} from '../../locations/model/eventLocation';
 export class AddEvent implements OnInit {
 
   // event?: FrontendEvent
-  locations: EventLocation[] = []
+  public locations: EventLocation[] = []
   eventForm = new FormGroup({
     name: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),

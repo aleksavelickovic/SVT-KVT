@@ -68,7 +68,7 @@ VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2025-11-10'
        ('Museum Lecture Night', 'Museum Sq 3, Subotica', 'LECTURE', '2025-10-15', 12.50, FALSE,
         (SELECT id FROM locations WHERE name = 'City Museum Auditorium')),
        ('Summer Open Air Gala', 'Arena Blvd, Čačak', 'GALA', '2026-06-12', 39.50, TRUE,
-        (SELECT id FROM locations WHERE name = 'Open Air Arena'));
+        (SELECT id FROM locations WHERE name = 'Grand Hall'));
 
 SELECT *
 FROM events;
