@@ -11,19 +11,27 @@ import {EditEvent} from './events/edit-event/edit-event';
 import {AddEvent} from './events/add-event/add-event';
 import {ReviewsModule} from './reviews/reviews-module';
 import {Profile} from './infrastructure/auth/profile/profile';
+import {AuthGuard} from './infrastructure/auth/auth-guard';
 
 const routes: Routes = [
 
   {component: LoginComponent, path: "login"},
   {component: Register, path: "register"},
-  {component: RegistrationRequests, path: "registrationrequests"},
-  {component: Locations, path: "locations"},
-  {component: AddLocation, path: "addlocation"},
-  {component: EditLocation, path: "editlocation/:id"},
-  {component: EditEvent, path: "editevent/:id"},
-  {component: Events, path: "events"},
-  {component: AddEvent, path: "addevent"},
-  {component: Profile, path: "profile"}
+  {
+    component: RegistrationRequests,
+    path: "registrationrequests",
+    canActivate: [AuthGuard],
+    data: {role: ['ADMINISTRATOR']}
+  },
+  {component: Locations, path: "locations", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
+  {component: AddLocation, path: "addlocation", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
+  {component: EditLocation, path: "editlocation/:id", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
+  {component: EditEvent, path: "editevent/:id", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
+  {component: Events, path: "events", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
+  {component: AddEvent, path: "addevent", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
+  {component: Profile, path: "profile", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login', pathMatch: 'full'}
 
 ];
 
