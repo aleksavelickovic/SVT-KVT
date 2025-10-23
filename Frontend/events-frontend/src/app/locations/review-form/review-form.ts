@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ReviewService} from '../../reviews/review-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventsService} from '../../events/events-service';
@@ -17,6 +17,10 @@ import {FrontendReview} from '../../reviews/model/review';
 export class ReviewForm implements OnInit {
 
   events: FrontendEvent[] = []
+
+  @Output()
+  submitted: EventEmitter<any> = new EventEmitter<any>();
+
   reviewForm = new FormGroup({
     performance: new FormControl(0, Validators.required),
     soundAndLightning: new FormControl(0, Validators.required),
@@ -68,16 +72,20 @@ export class ReviewForm implements OnInit {
     this.service.add(review).subscribe({
       next: () => {
         console.log("USPEH!!!!!!!!!!!!!!!!!!!!!!!")
-        this.eventsService.getAll().subscribe({
-          next: (events: FrontendEvent[]) => {
-            this.events = events;
-            console.log(this.events)
-          },
-          error: (_) => {
-            console.error("GRESKA!")
-          }
-        })
-        this.router.navigate(['../locations'])
+        this.submitted.emit()
+        // this.eventsService.getAll().subscribe({
+        //   next: (events: FrontendEvent[]) => {
+        //     this.events = events;
+        //     console.log(this.events)
+        //   },
+        //   error: (_) => {
+        //     console.error("GRESKA!")
+        //   }
+        // })
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {  // TODO prosledi roditeljskoj komponenti event
+          this.router.navigate(['/locations']);
+        });
+
         // this.getAllLocations()
       },
       error: (_) => {
