@@ -83,5 +83,9 @@ export class Locations implements OnInit {
     }, 50);
   }
 
+  resetFilters(): void {
+    this.getAllLocations()
+  }
+
 
 }
