@@ -86,4 +86,9 @@ public class UserServiceImpl implements UserService {
     public List<Administrator> findAllAdmins() {
         return this.userRepository.findAllAdmins();
     }
+
+    @Override
+    public User save(User forEdit) {
+        return userRepository.save(forEdit);
+    }
 }

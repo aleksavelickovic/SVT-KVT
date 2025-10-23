@@ -1,11 +1,7 @@
-<form (ngSubmit)="create()" [formGroup]='registerForm'>
+<form (ngSubmit)="editUser()" [formGroup]='profileForm'>
   <mat-form-field>
     <mat-label>Email</mat-label>
     <input formControlName="email" matInput name="email" type="email"/>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Lozinka</mat-label>
-    <input formControlName="password" matInput name="password" type="password"/>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Ime</mat-label>
@@ -16,14 +12,14 @@
     <input formControlName="phone_number" matInput name="phone_number" type="text"/>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Datum rodjenja</mat-label>
-    <input formControlName="birthday" matInput name="birthday" type="date"/>
+    <mat-label>Grad</mat-label>
+    <input formControlName="city" matInput name="birthday" type="text"/>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Adresa</mat-label>
     <input formControlName="address" matInput name="address" type="text"/>
   </mat-form-field>
   <div>
-    <button color="primary" matButton="outlined" type="submit">Posaljite zahtev</button>
+    <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
   </div>
 </form>

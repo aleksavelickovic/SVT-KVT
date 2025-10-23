@@ -16,5 +16,6 @@
   @if (role != null) {
     <button (click)="logOut()" matButton="outlined">LogOut</button>
     <p>Dobrodosli, {{ localStorage.getItem("name") }}</p>
+    <button matButton="outlined" [routerLink]="['../profile']">Profil</button>
   }
 </mat-toolbar>

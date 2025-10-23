@@ -19,4 +19,6 @@ public interface UserService {
     List<User> findAllUsers();
 
     List<Administrator> findAllAdmins();
+
+    User save(User forEdit);
 }

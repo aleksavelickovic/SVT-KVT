@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {environment} from '../../env/enviroment';
 import {AuthResponse} from './model/AuthResponse';
+import {FrontendUser} from './model/User';
 
 
 @Injectable({
@@ -26,6 +27,10 @@ export class AuthService {
     return this.http.post<AuthResponse>(environment.apiHost + '/users/login', auth, {
       headers: this.headers,
     });
+  }
+
+  editUser(user: FrontendUser): Observable<FrontendUser> {
+    return this.http.patch<FrontendUser>(environment.apiHost + '/users', user)
   }
 
   getRole(): any {

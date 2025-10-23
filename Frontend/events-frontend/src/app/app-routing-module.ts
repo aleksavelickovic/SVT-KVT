@@ -10,6 +10,7 @@ import {Events} from './events/events/events';
 import {EditEvent} from './events/edit-event/edit-event';
 import {AddEvent} from './events/add-event/add-event';
 import {ReviewsModule} from './reviews/reviews-module';
+import {Profile} from './infrastructure/auth/profile/profile';
 
 const routes: Routes = [
 
@@ -21,8 +22,8 @@ const routes: Routes = [
   {component: EditLocation, path: "editlocation/:id"},
   {component: EditEvent, path: "editevent/:id"},
   {component: Events, path: "events"},
-  {component: AddEvent, path: "addevent"}
-
+  {component: AddEvent, path: "addevent"},
+  {component: Profile, path: "profile"}
 
 ];
 

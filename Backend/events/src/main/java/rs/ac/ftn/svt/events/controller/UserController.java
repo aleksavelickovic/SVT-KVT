@@ -13,7 +13,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.ftn.svt.events.model.dto.*;
+import rs.ac.ftn.svt.events.model.dto.AccountRequestDTO;
+import rs.ac.ftn.svt.events.model.dto.JwtAuthenticationRequest;
+import rs.ac.ftn.svt.events.model.dto.RejectionDTO;
+import rs.ac.ftn.svt.events.model.dto.UserDTO;
 import rs.ac.ftn.svt.events.model.entity.AccountRequest;
 import rs.ac.ftn.svt.events.model.entity.RequestStatus;
 import rs.ac.ftn.svt.events.model.entity.User;
@@ -71,6 +74,20 @@ public class UserController {
         UserDTO userDTO = new UserDTO(createdUser);
 
         return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
+    }
+
+    @CrossOrigin
+    @PatchMapping
+    public ResponseEntity<User> editUser(@RequestBody UserDTO userDTO) {
+        User forEdit = userService.findByEmail(userDTO.getEmail());
+
+        forEdit.setName(userDTO.getName());
+        forEdit.setAddress(userDTO.getAddress());
+        forEdit.setCity(userDTO.getCity());
+        forEdit.setPhoneNumber(userDTO.getPhone_number());
+        forEdit.setEmail(userDTO.getEmail());
+
+        return ResponseEntity.ok(userService.save(forEdit));
     }
 
     @CrossOrigin
