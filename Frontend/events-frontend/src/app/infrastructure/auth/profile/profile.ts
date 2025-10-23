@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../auth-service';
 import {RegistrationRequest} from '../../../registration-requests/model/registrationRequest';
 import {FrontendUser} from '../model/User';
+import {Route, Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +13,7 @@ import {FrontendUser} from '../model/User';
 })
 export class Profile {
 
-  constructor(private service: AuthService) {
+  constructor(private service: AuthService, private router: Router) {
   }
 
   profileForm = new FormGroup({
@@ -29,7 +30,7 @@ export class Profile {
     this.service.editUser(this.profileForm.getRawValue() as FrontendUser).subscribe({
       next: (user: FrontendUser) => {
         console.log("USPEH")
-        console.log(user)
+        console.log(user) // TODO localstorage i routing
       },
       error: (_) => {
         console.error("Greska!")
