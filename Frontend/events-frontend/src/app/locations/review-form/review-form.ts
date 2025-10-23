@@ -68,6 +68,15 @@ export class ReviewForm implements OnInit {
     this.service.add(review).subscribe({
       next: () => {
         console.log("USPEH!!!!!!!!!!!!!!!!!!!!!!!")
+        this.eventsService.getAll().subscribe({
+          next: (events: FrontendEvent[]) => {
+            this.events = events;
+            console.log(this.events)
+          },
+          error: (_) => {
+            console.error("GRESKA!")
+          }
+        })
         this.router.navigate(['../locations'])
         // this.getAllLocations()
       },
@@ -75,6 +84,7 @@ export class ReviewForm implements OnInit {
         console.error("GRESKA!")
       }
     })
+
 
   }
 

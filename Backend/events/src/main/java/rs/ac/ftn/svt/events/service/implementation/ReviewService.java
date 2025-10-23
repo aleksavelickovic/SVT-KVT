@@ -13,7 +13,6 @@ import rs.ac.ftn.svt.events.repository.ReviewRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
@@ -42,12 +41,11 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
 
     @Override
     public Review createReview(ReviewDTO reviewDTO) {
-        // Prevent duplicate ID usage
+
         if (reviewRepository.findById(reviewDTO.getId()).isPresent()) {
             return null;
         }
 
-        // Create new Review and Rate
         Rate rate = new Rate();
         rate.setPerformance(reviewDTO.getRate().getPerformance());
         rate.setSoundAndLightning(reviewDTO.getRate().getSoundAndLightning());
@@ -63,7 +61,6 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
 
         reviewRepository.save(newReview);
 
-        // Recalculate totalRating for the location
         Location location = newReview.getEvent().getLocation();
         List<Review> locationReviews = reviewRepository.findAll().stream()
                 .filter(r -> r.getEvent().getLocation().equals(location))
