@@ -77,6 +77,7 @@ public class WebSecurityConfig {
         http.authorizeRequests()
 //                .antMatchers("/h2-console/**").permitAll()	// /h2-console/** ako se koristi H2 baza)
                 .antMatchers(HttpMethod.POST, "/users/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/loggedin").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/requests/add").permitAll()
                 .antMatchers(HttpMethod.GET, "/comments").permitAll() // TODO skloni kad ti vise ne bude trebalo!

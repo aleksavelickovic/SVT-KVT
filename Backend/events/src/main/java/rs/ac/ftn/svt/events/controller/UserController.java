@@ -22,6 +22,7 @@ import rs.ac.ftn.svt.events.service.AccountRequestService;
 import rs.ac.ftn.svt.events.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -74,8 +75,8 @@ public class UserController {
 
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseEntity<UserTokenState> createAuthenticationToken(
-            @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
+    public ResponseEntity<UserDTO> createAuthenticationToken(
+            @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response, HttpSession session) {
         System.out.println("OKINUO SE LOGIN CONTROLLER! 1");
 
         // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
@@ -91,12 +92,27 @@ public class UserController {
 
         // Kreiraj token za tog korisnika
         UserDetails user = (UserDetails) authentication.getPrincipal();
+
+        User loggedInUser = userService.findByEmail(user.getUsername());
+        System.out.println("ULOGOVAN" + loggedInUser.getName());
+        session.setAttribute("korisnik", loggedInUser);
+
         String jwt = tokenUtils.generateToken(user);
         int expiresIn = tokenUtils.getExpiredIn();
         System.out.println("OKINUO SE LOGIN CONTROLLER! 4");
         System.out.println("TOKEN: " + jwt);
         // Vrati token kao odgovor na uspesnu autentifikaciju
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+        return ResponseEntity.ok(new UserDTO(jwt, (long) expiresIn, loggedInUser.getId(), loggedInUser.getEmail(), loggedInUser.getPassword(), loggedInUser.getName(),
+                loggedInUser.getPhoneNumber(), loggedInUser.getAddress(), loggedInUser.getBirthday(), loggedInUser.getCity()));
+    }
+
+    @CrossOrigin
+    @GetMapping("/loggedin")
+//    @PreAuthorize("hasAnyRole('USER', 'ADMINISTRATOR')")
+    public ResponseEntity<User> getLoggedInUser(HttpSession session) {
+        User user = (User) session.getAttribute("korisnik");
+        System.out.println("IME KORISNIKA:" + user.getName());
+        return ResponseEntity.ok((User) session.getAttribute("korisnik"));
     }
 
     @CrossOrigin

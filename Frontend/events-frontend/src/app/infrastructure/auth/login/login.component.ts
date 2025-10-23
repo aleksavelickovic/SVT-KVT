@@ -33,6 +33,9 @@ export class LoginComponent {
           console.log("TOKEN: " + response.accessToken)
           localStorage.setItem('user', response.accessToken);
           this.authService.setUser()
+          console.log(response.name)
+          console.log(response.password)
+          console.log(response.expiresIn)
           // this.router.navigate(['home'])
           console.log("USPESAN LOGIN!!!")
         }
