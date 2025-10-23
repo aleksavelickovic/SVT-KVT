@@ -28,7 +28,7 @@ from users
 where dtype = 'ROLE_ADMINISTRATOR';
 
 INSERT INTO account_requests (address, created_at, password, rejection_reason, status, email)
-VALUES ('321 Maple St, Apt 5', '2025-10-20', '$2a$08$XyZ1234567890abcdefgHIJKLMNOpqrstuvWXyzABCD1234567890ab',
+VALUES ('321 Maple St, Apt 5', '2025-10-20', '$2a$08$vnTIORF4zzdONivQjYKZZ.WcfyuaU/FROGVbwIoNgiu38VMvgpLjO',
         NULL, 'PENDING', 'maple@example.com'),
        ('654 Cedar Ave', '2025-10-20', '$2a$08$YzA2345678901bcdefghIJKLMNOpqrstuvWXyzABCD1234567890abc',
         'Incomplete documentation', 'REJECTED', 'documentation@example.com'),

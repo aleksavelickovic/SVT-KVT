@@ -140,7 +140,7 @@ public class UserController {
             newUser.setAddress(accountRequest.getAddress());
             newUser.setCreatedAt(LocalDate.now());
             newUser.setEmail(accountRequest.getEmail());
-            newUser.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
+            newUser.setPassword(accountRequest.getPassword());
             newUser.setEmail(accountRequest.getEmail());
 
             return ResponseEntity.ok(userService.createUser(newUser));

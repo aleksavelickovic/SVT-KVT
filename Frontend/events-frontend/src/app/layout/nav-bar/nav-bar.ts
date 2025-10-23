@@ -26,4 +26,5 @@ export class NavBar implements OnInit {
     this.router.navigate(['login']);
   }
 
+  protected readonly localStorage = localStorage;
 }

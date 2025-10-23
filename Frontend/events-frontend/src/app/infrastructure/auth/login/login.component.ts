@@ -31,11 +31,19 @@ export class LoginComponent {
       this.authService.login(login).subscribe({
         next: (response: AuthResponse) => {
           console.log("TOKEN: " + response.accessToken)
+          console.log("ISTICE ZA: " + response.expiresIn)
           localStorage.setItem('user', response.accessToken);
           this.authService.setUser()
           console.log(response.name)
-          console.log(response.password)
-          console.log(response.expiresIn)
+          localStorage.setItem("name", response.name)
+          console.log(response.email)
+          localStorage.setItem("email", response.email)
+          localStorage.setItem("phone_number", response.phone_number)
+          localStorage.setItem("address", response.address)
+          localStorage.setItem("city", response.city)
+
+          console.log(response.password) // TODO vraca se hash-ovan password
+
           // this.router.navigate(['home'])
           console.log("USPESAN LOGIN!!!")
         }

@@ -1,6 +1,7 @@
 package rs.ac.ftn.svt.events.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.ac.ftn.svt.events.model.dto.AccountRequestDTO;
 import rs.ac.ftn.svt.events.model.entity.AccountRequest;
@@ -17,6 +18,8 @@ class AccountRequestServiceImpl implements AccountRequestService {
 
     @Autowired
     private AccountRequestRepository accountRequestRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<AccountRequest> findAll() {
@@ -39,7 +42,7 @@ class AccountRequestServiceImpl implements AccountRequestService {
         AccountRequest newAccountRequest = new AccountRequest();
         newAccountRequest.setCreatedAt(LocalDate.now());
         newAccountRequest.setEmail(accountRequestDTO.getEmail());
-        newAccountRequest.setPassword(accountRequestDTO.getPassword());
+        newAccountRequest.setPassword(passwordEncoder.encode(accountRequestDTO.getPassword()));
         newAccountRequest.setAddress(accountRequestDTO.getAddress());
         newAccountRequest.setStatus(RequestStatus.PENDING);
         newAccountRequest.setRejectionReason(accountRequestDTO.getRejectionReason());
