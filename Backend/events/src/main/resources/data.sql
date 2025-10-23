@@ -50,7 +50,7 @@ VALUES ('Grand Hall', 'Large indoor venue suited for conferences and concerts.',
        ('City Museum Auditorium', 'Auditorium inside the city museum, suitable for lectures and screenings.',
         '2025-06-12', 'Museum Sq 3, Subotica', 'MUSEUM', 8.91),
        ('Open Air Arena', 'Large outdoor arena for festivals and sporting events.', '2025-05-22', 'Arena Blvd, Čačak',
-        'OUTDOOR', 8.12);
+        'HALL', 8.12);
 
 SELECT *
 FROM locations;

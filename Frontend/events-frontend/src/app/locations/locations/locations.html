@@ -1,3 +1,22 @@
+<form (ngSubmit)="searchLocations()" [formGroup]='searchForm' novalidate>
+  <mat-form-field>
+    <mat-label>Naziv</mat-label>
+    <input formControlName="name" matInput name="name" type="text"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input formControlName="address" matInput name="address" type="text"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tip</mat-label>
+    <input formControlName="type" matInput name="type" type="text"/>
+  </mat-form-field>
+
+  <div>
+    <button color="primary" matButton="outlined" type="submit">Pretrazi</button>
+  </div>
+</form>
+
 <button matButton [routerLink]="['../addlocation']">Dodaj novu lokaciju</button>
 @for (EventLocation of locations; track EventLocation.id) {
   <mat-card appearance="outlined" class="example-card">

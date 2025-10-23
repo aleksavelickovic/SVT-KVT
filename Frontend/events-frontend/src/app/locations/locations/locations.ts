@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {LocationsService} from '../locations-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventLocation} from '../model/eventLocation';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {waitForAsync} from '@angular/core/testing';
 
 @Component({
   selector: 'app-locations',
@@ -14,6 +16,12 @@ export class Locations implements OnInit {
   locations: EventLocation[] = []
   protected readonly location = location;
   protected readonly Location = Location;
+
+  searchForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    type: new FormControl('', Validators.required),
+  })
 
   constructor(private service: LocationsService, private route: ActivatedRoute, private router: Router) {
   }
@@ -46,6 +54,33 @@ export class Locations implements OnInit {
       }
     })
     // this.getAllLocations()
+  }
+
+
+  searchLocations(): void {
+    this.getAllLocations()
+    setTimeout(() => {
+      console.log("Pocinjem sa pretragom...");
+      const raw = this.searchForm.getRawValue();
+      const name = raw.name;
+      const address = raw.address;
+      const type = raw.type;
+      console.log(name)
+      console.log(address)
+      console.log(type)
+      if (name?.trim().length != 0) {
+        this.locations = this.locations.filter(l => l.name == name);
+        console.log(this.locations)
+      }
+      if (address?.trim().length != 0) {
+        this.locations = this.locations.filter(l => l.address == address);
+        console.log(this.locations)
+      }
+      if (type?.trim().length != 0) {
+        this.locations = this.locations.filter(l => l.type == type);
+        console.log(this.locations)
+      }
+    }, 50);
   }
 
 
