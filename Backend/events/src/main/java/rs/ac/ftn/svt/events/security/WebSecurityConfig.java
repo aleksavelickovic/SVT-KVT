@@ -70,17 +70,17 @@ public class WebSecurityConfig {
         // komunikacija izmedju klijenta i servera je stateless posto je u pitanju REST aplikacija
         // ovo znaci da server ne pamti nikakvo stanje, tokeni se ne cuvaju na serveru
         // ovo nije slucaj kao sa sesijama koje se cuvaju na serverskoj strani - STATEFUL aplikacija
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // Zbog ovoga HttpSession ne radi kako treba!!!
 
         // sve neautentifikovane zahteve obradi uniformno i posalji 401 gresku
         http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
         http.authorizeRequests()
 //                .antMatchers("/h2-console/**").permitAll()	// /h2-console/** ako se koristi H2 baza)
                 .antMatchers(HttpMethod.POST, "/users/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/loggedin").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/requests/add").permitAll()
-                .antMatchers(HttpMethod.GET, "/comments").permitAll() // TODO skloni kad ti vise ne bude trebalo!
+//                .antMatchers(HttpMethod.POST, "/users/requests/add").permitAll()
+//                .antMatchers(HttpMethod.GET, "/comments").permitAll() // TODO skloni kad ti vise ne bude trebalo!
                 // ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama kontrolera, moze se iskoristiti hasRole() metoda da se ogranici
                 // koji tip korisnika moze da pristupi odgovarajucoj ruti. Npr. ukoliko zelimo da definisemo da ruti 'admin' moze da pristupi
                 // samo korisnik koji ima rolu 'ADMIN', navodimo na sledeci nacin:

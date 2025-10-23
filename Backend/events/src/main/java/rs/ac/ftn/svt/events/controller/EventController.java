@@ -19,6 +19,7 @@ class EventController {
 
     @CrossOrigin
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<List<Event>> findAll() {
         return ResponseEntity.ok(eventService.findAll());
     }
@@ -34,6 +35,7 @@ class EventController {
 
     @CrossOrigin
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<Event> editEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
         Event event = eventService.findOne(id);
         event.setName(eventDTO.getName());
@@ -49,13 +51,14 @@ class EventController {
 
     @CrossOrigin
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<Event> findOne(@PathVariable Long id) {
         return ResponseEntity.ok(eventService.findOne(id));
     }
 
     @CrossOrigin
     @PostMapping
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<Event> addEvent(@RequestBody EventDTO eventDTO) {
         System.out.println("POZVANA ADD EVENT!");
         return ResponseEntity.ok(eventService.createEvent(eventDTO));

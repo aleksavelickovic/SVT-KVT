@@ -19,12 +19,14 @@ class LocationController {
 
     @CrossOrigin
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<List<Location>> findAll() {
         return ResponseEntity.ok(locationService.findAll());
     }
 
     @CrossOrigin
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<Location> findOne(@PathVariable Long id) {
         return ResponseEntity.ok(locationService.findOne(id));
     }
@@ -40,6 +42,7 @@ class LocationController {
 
     @CrossOrigin
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<Location> editLocation(@RequestBody LocationDTO locationDTO, @PathVariable String id) {
         System.out.println("ID OD DTO: " + locationDTO.getId());
         Location locationForEdit = locationService.findOne(Long.valueOf(id));

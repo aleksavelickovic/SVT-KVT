@@ -78,6 +78,7 @@ public class UserController {
 
     @CrossOrigin
     @PatchMapping
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<User> editUser(@RequestBody UserDTO userDTO) {
         User forEdit = userService.findByEmail(userDTO.getEmail());
 
@@ -123,14 +124,14 @@ public class UserController {
                 loggedInUser.getPhoneNumber(), loggedInUser.getAddress(), loggedInUser.getBirthday(), loggedInUser.getCity()));
     }
 
-    @CrossOrigin
-    @GetMapping("/loggedin")
-//    @PreAuthorize("hasAnyRole('USER', 'ADMINISTRATOR')")
-    public ResponseEntity<User> getLoggedInUser(HttpSession session) {
-        User user = (User) session.getAttribute("korisnik");
-        System.out.println("IME KORISNIKA:" + user.getName());
-        return ResponseEntity.ok((User) session.getAttribute("korisnik"));
-    }
+//    @CrossOrigin
+//    @GetMapping("/loggedin")
+//   @PreAuthorize("hasAnyRole('USER', 'ADMINISTRATOR')")
+//    public ResponseEntity<User> getLoggedInUser(HttpSession session) {
+//        User user = (User) session.getAttribute("korisnik");
+//        System.out.println("IME KORISNIKA:" + user.getName());
+//        return ResponseEntity.ok((User) session.getAttribute("korisnik"));
+//    }
 
     @CrossOrigin
     @GetMapping("/requests")
@@ -147,6 +148,7 @@ public class UserController {
 
     @CrossOrigin
     @PatchMapping("/requests/{id}")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<User> accept(@PathVariable Long id, @RequestBody RejectionDTO rejectionDTO) {
         if (rejectionDTO.reason.equals("n")) {
             AccountRequest accountRequest = accountRequestService.findOne(id);
@@ -173,14 +175,14 @@ public class UserController {
 
     @CrossOrigin
     @GetMapping("/all")
-//    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public List<User> loadAll() {
         return this.userService.findAll();
     }
 
     @CrossOrigin
     @GetMapping("/details")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMINISTRATOR')")
     public User user(Principal user) {
         return this.userService.findByEmail(user.getName());
     }

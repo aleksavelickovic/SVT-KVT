@@ -21,7 +21,7 @@ const routes: Routes = [
     component: RegistrationRequests,
     path: "registrationrequests",
     canActivate: [AuthGuard],
-    data: {role: ['ADMINISTRATOR']}
+    data: {role: ['ROLE_ADMINISTRATOR']}
   },
   {component: Locations, path: "locations", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
   {component: AddLocation, path: "addlocation", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
