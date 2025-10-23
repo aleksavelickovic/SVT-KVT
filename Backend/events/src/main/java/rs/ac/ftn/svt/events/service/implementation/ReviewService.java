@@ -73,7 +73,7 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
             Rate rt = r.getRate();
             totalSum += rt.getPerformance() + rt.getSoundAndLightning() +
                     rt.getVenue() + rt.getOverallImpression();
-            ratingCount += 4; // 4 criteria
+            ratingCount += 4;
         }
 
         if (ratingCount > 0) {
