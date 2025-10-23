@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.ac.ftn.svt.events.model.dto.ReviewDTO;
 import rs.ac.ftn.svt.events.model.entity.Location;
+import rs.ac.ftn.svt.events.model.entity.Rate;
 import rs.ac.ftn.svt.events.model.entity.Review;
+import rs.ac.ftn.svt.events.repository.EventRepository;
 import rs.ac.ftn.svt.events.repository.LocationRepository;
+import rs.ac.ftn.svt.events.repository.RateRepository;
 import rs.ac.ftn.svt.events.repository.ReviewRepository;
 
 import java.time.LocalDateTime;
@@ -19,7 +22,13 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
     private ReviewRepository reviewRepository;
 
     @Autowired
+    private RateRepository rateRepository;
+
+    @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Override
     public List<Review> findAll() {
@@ -33,35 +42,49 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
 
     @Override
     public Review createReview(ReviewDTO reviewDTO) {
-        Optional<Review> review = reviewRepository.findById((reviewDTO.getId()));
-
-        if (review.isPresent()) {
+        // Prevent duplicate ID usage
+        if (reviewRepository.findById(reviewDTO.getId()).isPresent()) {
             return null;
         }
-        Review newReview = new Review();
 
+        // Create new Review and Rate
+        Rate rate = new Rate();
+        rate.setPerformance(reviewDTO.getRate().getPerformance());
+        rate.setSoundAndLightning(reviewDTO.getRate().getSoundAndLightning());
+        rate.setVenue(reviewDTO.getRate().getVenue());
+        rate.setOverallImpression(reviewDTO.getRate().getOverallImpression());
+        rateRepository.save(rate);
+
+        Review newReview = new Review();
         newReview.setCreatedAt(LocalDateTime.now());
-        newReview.setRate(reviewDTO.getRate());
-        newReview.setEvent(reviewDTO.getEvent());
+        newReview.setRate(rate);
+        newReview.setEvent(eventRepository.findFirstById(reviewDTO.getEvent()));
         newReview.setHidden(false);
 
+        reviewRepository.save(newReview);
 
-        double numberOfRatings = 4;
-        double totalRating = reviewDTO.getRate().getPerformance() + reviewDTO.getRate().getSoundAndLightning() +
-                reviewDTO.getRate().getVenue() + reviewDTO.getRate().getOverallImpression();
+        // Recalculate totalRating for the location
+        Location location = newReview.getEvent().getLocation();
+        List<Review> locationReviews = reviewRepository.findAll().stream()
+                .filter(r -> r.getEvent().getLocation().equals(location))
+                .toList();
 
-        for (Review review1 : reviewRepository.findAll()) {
-            if (review1.getEvent().getLocation().equals(newReview.getEvent().getLocation())) {
-                numberOfRatings += 4;
-                totalRating += review1.getRate().getPerformance() + review1.getRate().getSoundAndLightning() +
-                        review1.getRate().getVenue() + review1.getRate().getOverallImpression();
-            }
-            Location reviewLocation = newReview.getEvent().getLocation();
-            reviewLocation.setTotalRating(totalRating / numberOfRatings);
-            locationRepository.save(reviewLocation);
+        double totalSum = 0;
+        int ratingCount = 0;
 
-            reviewRepository.save(newReview);
+        for (Review r : locationReviews) {
+            Rate rt = r.getRate();
+            totalSum += rt.getPerformance() + rt.getSoundAndLightning() +
+                    rt.getVenue() + rt.getOverallImpression();
+            ratingCount += 4; // 4 criteria
         }
+
+        if (ratingCount > 0) {
+            double newAverage = totalSum / ratingCount;
+            location.setTotalRating(newAverage);
+            locationRepository.save(location);
+        }
+
         return newReview;
     }
 

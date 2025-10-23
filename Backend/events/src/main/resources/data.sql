@@ -72,3 +72,9 @@ VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2025-11-10'
 
 SELECT *
 FROM events;
+
+SELECT *
+FROM reviews;
+
+SELECT *
+FROM ratings

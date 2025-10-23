@@ -1,0 +1,31 @@
+<form (ngSubmit)="addReview()" [formGroup]='reviewForm' novalidate>
+  <mat-form-field>
+    <mat-label>Performans</mat-label>
+    <input formControlName="performance" matInput name="performance" type="number"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Zvuk i Osvetljenje</mat-label>
+    <input formControlName="soundAndLightning" matInput name="soundAndLightning" type="number"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Organizacija</mat-label>
+    <input formControlName="venue" matInput name="venue" type="number"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Generalni utisak</mat-label>
+    <input formControlName="overallImpression" matInput name="overallImpression" type="number"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Dogadjaj</mat-label>
+    <mat-select formControlName="event">
+      @for (FrontendEvent of events; track FrontendEvent.id) {
+        <mat-option [value]="FrontendEvent.id">{{ FrontendEvent.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <!--  <input formControlName="id" name="id" type="hidden"/>-->
+  <div>
+    <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
+  </div>
+</form>
+

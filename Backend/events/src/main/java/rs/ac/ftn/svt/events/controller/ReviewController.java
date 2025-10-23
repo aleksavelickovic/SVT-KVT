@@ -17,6 +17,7 @@ class ReviewController {
     @CrossOrigin
     @PostMapping
     public ResponseEntity<Review> addReview(@RequestBody ReviewDTO reviewDTO) {
+        System.out.println("REVIEW!!!");
         return ResponseEntity.ok(reviewService.createReview(reviewDTO));
     }
 

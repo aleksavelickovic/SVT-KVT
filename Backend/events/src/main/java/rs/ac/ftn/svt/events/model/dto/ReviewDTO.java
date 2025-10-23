@@ -21,7 +21,7 @@ public class ReviewDTO {
 
     private Boolean hidden;
 
-    private Event event;
+    private Long event;
 
     private Rate rate;
 }

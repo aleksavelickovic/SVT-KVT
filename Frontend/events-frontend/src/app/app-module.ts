@@ -11,7 +11,8 @@ import {Interceptor} from './infrastructure/auth/interceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material/material-module';
 import {LocationsModule} from './locations/locations-module';
-import {EventsModule} from './events/events-module'; // keep if you have a central material module
+import {EventsModule} from './events/events-module';
+import {ReviewsModule} from './reviews/reviews-module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {EventsModule} from './events/events-module'; // keep if you have a centr
     MaterialModule,
     ReactiveFormsModule,
     LocationsModule,
-    EventsModule
+    EventsModule,
+    ReviewsModule
   ],
   providers: [
     {

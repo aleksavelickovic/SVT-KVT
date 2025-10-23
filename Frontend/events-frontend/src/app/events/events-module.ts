@@ -21,13 +21,14 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {MatOptgroup, MatOption} from "@angular/material/core";
 import {MatSelect} from '@angular/material/select';
 import { AddEvent } from './add-event/add-event';
+import {ReviewsModule} from '../reviews/reviews-module';
 
 
 @NgModule({
   declarations: [
     Events,
     EditEvent,
-    AddEvent
+    AddEvent,
   ],
   imports: [
     CommonModule,
@@ -52,7 +53,7 @@ import { AddEvent } from './add-event/add-event';
     MatOption,
     MatOptgroup,
     RouterModule,
-    MatSelect
+    MatSelect,
   ]
 })
 export class EventsModule {

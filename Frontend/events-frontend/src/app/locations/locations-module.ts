@@ -11,13 +11,17 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MaterialModule} from '../material/material-module';
-import {EditLocation} from './edit-location/edit-location'; // optional if you aggregate them here
+import {EditLocation} from './edit-location/edit-location';
+import {ReviewForm} from './review-form/review-form';
+import {MatOptgroup, MatOption} from "@angular/material/core";
+import {MatSelect} from '@angular/material/select';
 
 @NgModule({
   declarations: [
     Locations,
     AddLocation,
-    EditLocation
+    EditLocation,
+    ReviewForm
   ],
   imports: [
     CommonModule,
@@ -25,11 +29,14 @@ import {EditLocation} from './edit-location/edit-location'; // optional if you a
     NgOptimizedImage,
     ReactiveFormsModule,
     FormsModule,
-    MaterialModule,         // keep if you have it, else remove
+    MaterialModule,
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatOptgroup,
+    MatOption,
+    MatSelect
   ]
 })
 export class LocationsModule {}
