@@ -8,9 +8,11 @@ import rs.ac.ftn.svt.events.model.dto.ReviewDTO;
 import rs.ac.ftn.svt.events.model.entity.Review;
 import rs.ac.ftn.svt.events.service.ReviewService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/reviews")
-class ReviewController {
+public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
@@ -22,5 +24,13 @@ class ReviewController {
         System.out.println("REVIEW!!!");
         return ResponseEntity.ok(reviewService.createReview(reviewDTO));
     }
+
+    @CrossOrigin
+    @GetMapping
+    @PreAuthorize("hasAnyRole('USER', 'ADMINISTRATOR')")
+    public ResponseEntity<List<Review>> findAll() {
+        return ResponseEntity.ok(reviewService.findAll());
+    }
+
 
 }

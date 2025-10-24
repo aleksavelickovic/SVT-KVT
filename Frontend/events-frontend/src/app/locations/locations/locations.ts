@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {EventLocation} from '../model/eventLocation';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {waitForAsync} from '@angular/core/testing';
+import {FrontendEvent} from '../../events/model/frontendEvent';
+import {FrontendReview} from '../model/review';
 
 @Component({
   selector: 'app-locations',
@@ -14,6 +16,8 @@ import {waitForAsync} from '@angular/core/testing';
 export class Locations implements OnInit {
 
   locations: EventLocation[] = []
+  reviews: FrontendReview[] = []
+  
   protected readonly location = location;
   protected readonly Location = Location;
 
