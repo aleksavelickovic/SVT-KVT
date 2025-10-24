@@ -17,7 +17,7 @@ export class Profile implements OnInit {
 
   locations: EventLocation[] = []
 
-  constructor(private service: AuthService, private locationsService: LocationsService, private router: Router) {
+  constructor(private service: AuthService, private locationsService: LocationsService, private reviewService: ReviewService, private router: Router) {
   }
 
   ngOnInit(): void {
