@@ -56,7 +56,7 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
         Review newReview = new Review();
         newReview.setCreatedAt(LocalDateTime.now());
         newReview.setRate(rate);
-        newReview.setEvent(eventRepository.findFirstById(reviewDTO.getEvent()));
+        newReview.setEvent(eventRepository.findFirstById(reviewDTO.getEvent().getId()));
         newReview.setHidden(false);
 
         reviewRepository.save(newReview);

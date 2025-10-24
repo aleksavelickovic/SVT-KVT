@@ -7,7 +7,7 @@ export interface FrontendReview {
   createdAt: Date;
   eventCount: number;
   hidden: Boolean;
-  event?: number;
+  event?: FrontendEvent;
   rate: FrontendRate;
   madeBy: string | null
 

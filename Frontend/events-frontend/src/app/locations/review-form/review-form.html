@@ -19,7 +19,7 @@
     <mat-label>Dogadjaj</mat-label>
     <mat-select formControlName="event">
       @for (FrontendEvent of events; track FrontendEvent.id) {
-        <mat-option [value]="FrontendEvent.id">{{ FrontendEvent.name }}</mat-option>
+        <mat-option [value]="FrontendEvent">{{ FrontendEvent.name }}</mat-option>
       }
     </mat-select>
   </mat-form-field>

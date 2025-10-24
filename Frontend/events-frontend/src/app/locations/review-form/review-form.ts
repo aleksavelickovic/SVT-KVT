@@ -26,7 +26,7 @@ export class ReviewForm implements OnInit {
     soundAndLightning: new FormControl(0, Validators.required),
     venue: new FormControl(0, Validators.required),
     overallImpression: new FormControl(0, Validators.required),
-    event: new FormControl('', Validators.required),
+    event: new FormControl(Validators.required),
   })
 
   constructor(private service: ReviewService, private eventsService: EventsService, private route: ActivatedRoute, private router: Router) {
@@ -53,13 +53,14 @@ export class ReviewForm implements OnInit {
       venue: Number(raw.venue),
       overallImpression: Number(raw.overallImpression)
     };
-    const selectedEvent = this.events.find(e => e.id === Number(raw.event));
+    // const selectedEvent = this.events.find(e => e.id === Number(raw.event));
+    const selectedEvent = raw.event as unknown as FrontendEvent
     const review: FrontendReview = {
       id: 0, // placeholder; backend may overwrite
       createdAt: new Date(),
       eventCount: 0,
       hidden: false as unknown as Boolean,
-      event: selectedEvent?.id,
+      event: selectedEvent,
       rate,
       madeBy: localStorage.getItem("name")
     };
