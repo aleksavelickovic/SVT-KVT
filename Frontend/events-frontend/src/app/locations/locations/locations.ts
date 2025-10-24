@@ -6,6 +6,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {waitForAsync} from '@angular/core/testing';
 import {FrontendEvent} from '../../events/model/frontendEvent';
 import {FrontendReview} from '../model/review';
+import {ReviewService} from '../review-service';
 
 @Component({
   selector: 'app-locations',
@@ -17,7 +18,7 @@ export class Locations implements OnInit {
 
   locations: EventLocation[] = []
   reviews: FrontendReview[] = []
-  
+
   protected readonly location = location;
   protected readonly Location = Location;
 
@@ -27,11 +28,12 @@ export class Locations implements OnInit {
     type: new FormControl('', Validators.required),
   })
 
-  constructor(private service: LocationsService, private route: ActivatedRoute, private router: Router) {
+  constructor(private service: LocationsService, private reviewService: ReviewService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
     this.getAllLocations()
+    this.getAllReviews()
   }
 
   getAllLocations(): void {
@@ -39,6 +41,18 @@ export class Locations implements OnInit {
       next: (locations: EventLocation[]) => {
         this.locations = locations;
         console.log(this.locations)
+      },
+      error: (_) => {
+        console.error("GRESKA!")
+      }
+    })
+  }
+
+  getAllReviews(): void {
+    this.reviewService.getAll().subscribe({
+      next: (reviews: FrontendReview[]) => {
+        this.reviews = reviews;
+        console.log(this.reviews)
       },
       error: (_) => {
         console.error("GRESKA!")
