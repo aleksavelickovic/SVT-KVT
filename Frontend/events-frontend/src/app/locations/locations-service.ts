@@ -19,6 +19,10 @@ export class LocationsService {
     return this.httpClient.get<EventLocation[]>(environment.apiHost + '/locations')
   }
 
+  getAllManagedLocations(id: number): Observable<EventLocation[]> {
+    return this.httpClient.get<EventLocation[]>(environment.apiHost + '/locations/managed/' + id)
+  }
+
   add(location: EventLocation): Observable<EventLocation> {
     return this.httpClient.post<EventLocation>(environment.apiHost + '/locations', location)
   }

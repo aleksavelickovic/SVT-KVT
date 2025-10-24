@@ -1,6 +1,6 @@
 package rs.ac.ftn.svt.events.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +35,7 @@ public class Location {
     @Column       // TODO vrati se ovde kad dodas rating sistem
     private Double totalRating;
     @ManyToMany(mappedBy = "manages", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnore
     private List<User> managedBy;
 
 }

@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../auth-service';
 import {RegistrationRequest} from '../../../registration-requests/model/registrationRequest';
 import {FrontendUser} from '../model/User';
 import {Route, Router} from '@angular/router';
+import {EventLocation} from '../../../locations/model/eventLocation';
+import {LocationsService} from '../../../locations/locations-service';
 
 @Component({
   selector: 'app-profile',
@@ -11,9 +13,23 @@ import {Route, Router} from '@angular/router';
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
-export class Profile {
+export class Profile implements OnInit {
 
-  constructor(private service: AuthService, private router: Router) {
+  locations: EventLocation[] = []
+
+  constructor(private service: AuthService, private locationsService: LocationsService, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.locationsService.getAllManagedLocations(Number(localStorage.getItem("id"))).subscribe({
+      next: (locations: EventLocation[]) => {
+        this.locations = locations
+        console.log(this.locations)
+      },
+      error: (_) => {
+        console.error("Greska!")
+      }
+    })
   }
 
   profileForm = new FormGroup({

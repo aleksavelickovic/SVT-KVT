@@ -30,6 +30,8 @@ export class LoginComponent {
       }
       this.authService.login(login).subscribe({
         next: (response: AuthResponse) => {
+          console.log("ID: " + response.id)
+          localStorage.setItem("id", String(response.id))
           console.log("TOKEN: " + response.accessToken)
           console.log("ISTICE ZA: " + response.expiresIn)
           localStorage.setItem('user', response.accessToken);

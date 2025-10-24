@@ -23,3 +23,49 @@
     <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
   </div>
 </form>
+
+<h2>Upravljate sledecim lokacijama: </h2>
+@for (EventLocation of locations; track EventLocation.id) {
+  <mat-card appearance="outlined" class="example-card">
+    <mat-card-header>
+      <!--      <div mat-card-avatar class="example-header-image"></div>-->
+      <mat-card-title>{{ EventLocation.name }} - ID: {{ EventLocation.id }}</mat-card-title>
+      <mat-card-subtitle>{{ EventLocation.address }}</mat-card-subtitle>
+    </mat-card-header>
+    <!--    <div>-->
+    <!--      <img alt="Placeholder image"-->
+    <!--           mat-card-image-->
+    <!--           src="https://www.cvent.com/sites/default/files/styles/focus_scale_and_crop_800x450/public/image/2023-11/Business_Travel_Trends_Bleisure_Event-Cvent_CONNECT_2023.jpg.webp?itok=F_USbJO1"-->
+    <!--           style="width: 100%; height: 500px">-->
+    <!--    </div>-->
+    <mat-card-content>
+      <p>
+        {{ EventLocation.description }}
+        <br>
+        Kreirano: {{ EventLocation.createdAt[2] }}.{{ EventLocation.createdAt[1] }}.{{ EventLocation.createdAt[0] }}
+        <br>
+        {{ EventLocation.type }}
+        <br>
+        <!--        // TODO mozda kasnije uraditi?-->
+        Ocene:
+        <!--        <br>-->
+        <!--        @for (FrontendReview of reviews; track FrontendReview.id) {-->
+        <!--          @if (FrontendReview.event?.location?.name == EventLocation.name) {-->
+        <!--            Ostavljeno od strane: {{ FrontendReview.madeBy }} |-->
+        <!--              Performans: {{ FrontendReview.rate.performance }} ✪ |-->
+        <!--              Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |-->
+        <!--              Mesto: {{ FrontendReview.rate.venue }} ✪ |-->
+        <!--              Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪-->
+        <!--            <br>-->
+        <!--          }-->
+        <!--        }-->
+
+        <!--        <br>-->
+        Ukupna Ocena: {{ EventLocation.totalRating }}
+        <br>
+
+
+      </p>
+    </mat-card-content>
+  </mat-card>
+}

@@ -1,6 +1,6 @@
 package rs.ac.ftn.svt.events.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +44,6 @@ public class User {
     @Column
     private String city;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Location> manages;
 }

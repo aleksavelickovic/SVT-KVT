@@ -15,6 +15,6 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
 
     Optional<Location> findFirstByName(String name);
 
-    @Query(value = "select * from locations l where l.id = (select manages_id from users_manages where managed_by_id = :userId)", nativeQuery = true)
+    @Query(value = "select * from locations l where l.id in (select manages_id from users_manages where managed_by_id = :userId)", nativeQuery = true)
     List<Location> findAllManagedLocations(@Param("userId") Long userId);
 }

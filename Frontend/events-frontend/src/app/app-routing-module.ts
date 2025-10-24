@@ -29,9 +29,9 @@ const routes: Routes = [
   {component: EditEvent, path: "editevent/:id", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
   {component: Events, path: "events", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
   {component: AddEvent, path: "addevent", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
-  {component: Profile, path: "profile", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login', pathMatch: 'full'}
+  {component: Profile, path: "profile"}, // TODO USER uloge!
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: '**', redirectTo: '/login', pathMatch: 'full'}
 
 ];
 
