@@ -1,5 +1,6 @@
 package rs.ac.ftn.svt.events.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -41,4 +43,7 @@ public class User {
     private String address;
     @Column
     private String city;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Location> manages;
 }

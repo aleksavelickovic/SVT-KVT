@@ -56,4 +56,9 @@ class LocationService implements rs.ac.ftn.svt.events.service.LocationService {
     public void delete(Long id) {
         locationRepository.delete(locationRepository.findFirstById(id));
     }
+
+    @Override
+    public List<Location> findAllManagedLocations(Long id) {
+        return locationRepository.findAllManagedLocations(id);
+    }
 }

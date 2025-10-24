@@ -77,4 +77,14 @@ SELECT *
 FROM reviews;
 
 SELECT *
-FROM ratings
+FROM ratings;
+
+INSERT INTO users_manages (managed_by_id, manages_id)
+VALUES ((SELECT id FROM users WHERE email = 'pera@gmail.com'), (SELECT id FROM locations WHERE name = 'Grand Hall'));
+
+SELECT *
+FROM users_manages;
+
+select *
+from locations l
+where l.id = (select manages_id from users_manages where managed_by_id = 1);

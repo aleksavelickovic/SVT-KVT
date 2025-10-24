@@ -63,4 +63,10 @@ public class LocationController {
         return ResponseEntity.ok(locationService.createLocation(locationDTO));
     }
 
+    @CrossOrigin
+    @GetMapping("/managed/{id}")
+    public ResponseEntity<List<Location>> findManagedLocations(@PathVariable Long id) {
+        return ResponseEntity.ok(locationService.findAllManagedLocations(id));
+    }
+
 }

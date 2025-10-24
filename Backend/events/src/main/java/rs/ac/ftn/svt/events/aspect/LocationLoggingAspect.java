@@ -59,6 +59,15 @@ public class LocationLoggingAspect {
                     LOGGER.info("GRESA PRILIKOM IZVRSAVANJA editLocation METODE!");
                 }
                 break;
+            case "findManagedLocations":
+                LOGGER.info("POZVANA findManagedLocations METODA!");
+                try {
+                    returnval = joinPoint.proceed();
+                    LOGGER.info("ZAVRSENA findManagedLocations METODA!");
+                } catch (Throwable e) {
+                    LOGGER.info("GRESA PRILIKOM IZVRSAVANJA findManagedLocations METODE!");
+                }
+                break;
 
             default:
                 LOGGER.info("NIJE POZVANA NIJEDNA METODA!");

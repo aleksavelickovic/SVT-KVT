@@ -1,5 +1,6 @@
 package rs.ac.ftn.svt.events.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,5 +34,8 @@ public class Location {
     private String type;
     @Column       // TODO vrati se ovde kad dodas rating sistem
     private Double totalRating;
+    @ManyToMany(mappedBy = "manages", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<User> managedBy;
 
 }

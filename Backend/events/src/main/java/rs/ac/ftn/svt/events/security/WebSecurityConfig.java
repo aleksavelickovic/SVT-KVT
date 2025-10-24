@@ -87,7 +87,7 @@ public class WebSecurityConfig {
                 //.antMatchers("/api/clubs").hasRole("ADMIN")// ili .antMatchers("/admin").hasAuthority("ROLE_ADMIN")
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
-                .anyRequest().authenticated().and()
+                .anyRequest().permitAll().and()// TODO ako hoces da isljucis spring security: .anyRequest().permitAll().and(), inace: .anyRequest().authenticated().and()
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
                 .cors().and().csrf().disable()
 
