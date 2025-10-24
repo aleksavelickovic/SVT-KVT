@@ -29,7 +29,7 @@ public class LocationLoggingAspect {
                     returnval = joinPoint.proceed();
                     LOGGER.info("ZAVRSENA findAll METODA!");
                 } catch (Throwable e) {
-                    LOGGER.info("GRESA PRILIKOM IZVRSAVANJA findAll METODE!");
+                    LOGGER.error("GRESKA PRILIKOM IZVRSAVANJA findAll METODE!");
                 }
                 break;
             case "addLocation":
@@ -38,7 +38,7 @@ public class LocationLoggingAspect {
                     returnval = joinPoint.proceed();
                     LOGGER.info("ZAVRSENA addLocation METODA!");
                 } catch (Throwable e) {
-                    LOGGER.info("GRESA PRILIKOM IZVRSAVANJA addLocation METODE!");
+                    LOGGER.error("GRESKA PRILIKOM IZVRSAVANJA addLocation METODE!");
                 }
                 break;
             case "deleteLocation":
@@ -47,7 +47,7 @@ public class LocationLoggingAspect {
                     returnval = joinPoint.proceed();
                     LOGGER.info("ZAVRSENA deleteLocation METODA!");
                 } catch (Throwable e) {
-                    LOGGER.info("GRESA PRILIKOM IZVRSAVANJA deleteLocation METODE!");
+                    LOGGER.error("GRESKA PRILIKOM IZVRSAVANJA deleteLocation METODE!");
                 }
                 break;
             case "editLocation":
@@ -56,7 +56,7 @@ public class LocationLoggingAspect {
                     returnval = joinPoint.proceed();
                     LOGGER.info("ZAVRSENA editLocation METODA!");
                 } catch (Throwable e) {
-                    LOGGER.info("GRESA PRILIKOM IZVRSAVANJA editLocation METODE!");
+                    LOGGER.error("GRESKA PRILIKOM IZVRSAVANJA editLocation METODE!");
                 }
                 break;
             case "findManagedLocations":
@@ -65,7 +65,7 @@ public class LocationLoggingAspect {
                     returnval = joinPoint.proceed();
                     LOGGER.info("ZAVRSENA findManagedLocations METODA!");
                 } catch (Throwable e) {
-                    LOGGER.info("GRESA PRILIKOM IZVRSAVANJA findManagedLocations METODE!");
+                    LOGGER.error("GRESKA PRILIKOM IZVRSAVANJA findManagedLocations METODE!");
                 }
                 break;
 
