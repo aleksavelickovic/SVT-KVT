@@ -27,12 +27,6 @@ export class ReviewForm implements OnInit {
     venue: new FormControl(0, Validators.required),
     overallImpression: new FormControl(0, Validators.required),
     event: new FormControl('', Validators.required),
-    // address: new FormControl('', Validators.required),
-    // type: new FormControl('', Validators.required),
-    // date: new FormControl(new Date(), Validators.required),
-    // price: new FormControl(0.0, Validators.required),
-    // recurrent: new FormControl(false, Validators.required),
-    // location: new FormControl(Validators.required),
   })
 
   constructor(private service: ReviewService, private eventsService: EventsService, private route: ActivatedRoute, private router: Router) {
@@ -66,9 +60,10 @@ export class ReviewForm implements OnInit {
       eventCount: 0,
       hidden: false as unknown as Boolean,
       event: selectedEvent?.id,
-      rate
+      rate,
+      madeBy: localStorage.getItem("name")
     };
-    console.log(review)
+    console.error(review)
     this.service.add(review).subscribe({
       next: () => {
         console.log("USPEH!!!!!!!!!!!!!!!!!!!!!!!")
@@ -96,4 +91,5 @@ export class ReviewForm implements OnInit {
 
   }
 
+  protected readonly localStorage = localStorage;
 }

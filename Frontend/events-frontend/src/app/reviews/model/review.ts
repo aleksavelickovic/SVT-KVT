@@ -9,5 +9,6 @@ export interface FrontendReview {
   hidden: Boolean;
   event?: number;
   rate: FrontendRate;
+  madeBy: string | null
 
 }
