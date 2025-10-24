@@ -69,3 +69,14 @@
     </mat-card-content>
   </mat-card>
 }
+<h3>Vase recenzije: </h3>
+@for (FrontendReview of reviews; track FrontendReview.id) {
+  @if (FrontendReview.madeBy == localStorage.getItem("name")) {
+    Ostavljeno od strane: {{ FrontendReview.madeBy }} |
+      Performans: {{ FrontendReview.rate.performance }} ✪ |
+      Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
+      Mesto: {{ FrontendReview.rate.venue }} ✪ |
+      Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪
+    <br>
+  }
+}

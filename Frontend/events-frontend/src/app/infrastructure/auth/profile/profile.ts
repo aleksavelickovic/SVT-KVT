@@ -7,6 +7,8 @@ import {Route, Router} from '@angular/router';
 import {EventLocation} from '../../../locations/model/eventLocation';
 import {LocationsService} from '../../../locations/locations-service';
 import {ReviewService} from '../../../reviews/review-service';
+import {FrontendReview} from '../../../reviews/model/review';
+import {GetReviewService} from '../../../locations/get-review-service';
 
 @Component({
   selector: 'app-profile',
@@ -17,8 +19,9 @@ import {ReviewService} from '../../../reviews/review-service';
 export class Profile implements OnInit {
 
   locations: EventLocation[] = []
+  reviews: FrontendReview[] = []
 
-  constructor(private service: AuthService, private locationsService: LocationsService, private reviewService: ReviewService, private router: Router) {
+  constructor(private service: AuthService, private locationsService: LocationsService, private reviewService: GetReviewService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -26,6 +29,15 @@ export class Profile implements OnInit {
       next: (locations: EventLocation[]) => {
         this.locations = locations
         console.log(this.locations)
+      },
+      error: (_) => {
+        console.error("Greska!")
+      }
+    })
+    this.reviewService.getAll().subscribe({
+      next: (reviews: FrontendReview[]) => {
+        this.reviews = reviews
+        console.log(this.reviews)
       },
       error: (_) => {
         console.error("Greska!")
@@ -55,4 +67,5 @@ export class Profile implements OnInit {
     })
   }
 
+  protected readonly localStorage = localStorage;
 }
