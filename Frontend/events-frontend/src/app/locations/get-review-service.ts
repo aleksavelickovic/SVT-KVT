@@ -9,7 +9,7 @@ import {FrontendReview} from '../reviews/model/review';
 @Injectable({
   providedIn: 'root'
 })
-export class ReviewService {
+export class GetReviewService {
 
   reviews: FrontendReview[] = []
 

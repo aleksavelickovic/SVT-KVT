@@ -20,8 +20,7 @@ export class ReviewService {
     return this.httpClient.post<FrontendReview>(environment.apiHost + '/reviews', review)
   }
 
-  getAll(): Observable<FrontendReview[]> {
-    return this.httpClient.get<FrontendReview[]>(environment.apiHost + '/reviews')
-  }
-
+  // getAll(): Observable<FrontendReview[]> {
+  //   return this.httpClient.get<FrontendReview[]>(environment.apiHost + '/reviews')
+  // }
 }

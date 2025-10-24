@@ -6,7 +6,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {waitForAsync} from '@angular/core/testing';
 import {FrontendEvent} from '../../events/model/frontendEvent';
 
-import {ReviewService} from '../review-service';
+import {GetReviewService} from '../get-review-service';
 import {FrontendReview} from '../../reviews/model/review';
 
 @Component({
@@ -29,7 +29,7 @@ export class Locations implements OnInit {
     type: new FormControl('', Validators.required),
   })
 
-  constructor(private service: LocationsService, private reviewService: ReviewService, private route: ActivatedRoute, private router: Router) {
+  constructor(private service: LocationsService, private reviewService: GetReviewService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {

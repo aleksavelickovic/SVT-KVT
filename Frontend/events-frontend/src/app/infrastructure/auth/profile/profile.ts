@@ -6,6 +6,7 @@ import {FrontendUser} from '../model/User';
 import {Route, Router} from '@angular/router';
 import {EventLocation} from '../../../locations/model/eventLocation';
 import {LocationsService} from '../../../locations/locations-service';
+import {ReviewService} from '../../../reviews/review-service';
 
 @Component({
   selector: 'app-profile',
