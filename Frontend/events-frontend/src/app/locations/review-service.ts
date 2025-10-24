@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {FrontendReview} from './model/review';
+
 import {Observable} from 'rxjs';
 import {EventLocation} from './model/eventLocation';
 import {environment} from '../env/enviroment';
+import {FrontendReview} from '../reviews/model/review';
 
 @Injectable({
   providedIn: 'root'

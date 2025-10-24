@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import rs.ac.ftn.svt.events.model.entity.Event;
 import rs.ac.ftn.svt.events.model.entity.Rate;
+import rs.ac.ftn.svt.events.model.entity.User;
 
 import java.time.LocalDateTime;
 
@@ -24,4 +25,6 @@ public class ReviewDTO {
     private Event event;
 
     private Rate rate;
+
+    private String madeBy;
 }

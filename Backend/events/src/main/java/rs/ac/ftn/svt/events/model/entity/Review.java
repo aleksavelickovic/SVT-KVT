@@ -30,5 +30,7 @@ public class Review {
     private Event event;
     @OneToOne
     private Rate rate;
+    @Column
+    private String madeBy;
 
 }

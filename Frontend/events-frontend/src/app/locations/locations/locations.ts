@@ -5,8 +5,9 @@ import {EventLocation} from '../model/eventLocation';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {waitForAsync} from '@angular/core/testing';
 import {FrontendEvent} from '../../events/model/frontendEvent';
-import {FrontendReview} from '../model/review';
+
 import {ReviewService} from '../review-service';
+import {FrontendReview} from '../../reviews/model/review';
 
 @Component({
   selector: 'app-locations',
