@@ -21,7 +21,38 @@ export class Profile implements OnInit {
   locations: EventLocation[] = []
   reviews: FrontendReview[] = []
 
+  profileForm = new FormGroup({
+    email: new FormControl(localStorage.getItem("email"), Validators.email),
+    // password: new FormControl('', Validators.required),                         // TODO promena lozinke
+    name: new FormControl(localStorage.getItem("name"), Validators.required),
+    phone_number: new FormControl(localStorage.getItem("phone_number"), Validators.required),
+    address: new FormControl(localStorage.getItem("address"), Validators.required),
+    city: new FormControl(localStorage.getItem("city"), Validators.required),
+
+
+  })
+
+  changePswForm = new FormGroup({
+    oldpassword: new FormControl('', Validators.required),
+    newpassword: new FormControl('', Validators.required),
+    newpasswordagain: new FormControl('', Validators.required)
+  })
+
   constructor(private service: AuthService, private locationsService: LocationsService, private reviewService: GetReviewService, private router: Router) {
+  }
+
+  changePassword(): void {
+    const form = this.changePswForm.getRawValue()
+    console.log(form.oldpassword)
+    console.log(form.newpassword)
+    this.service.changePassword(localStorage.getItem("email"), form.oldpassword, form.newpassword).subscribe({
+      next: () => {
+        console.log("USPESNO PROMENJENA SIFRA!")
+      },
+      error: (_) => {
+        console.error("Greska prilikom promene sifre!")
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -44,16 +75,6 @@ export class Profile implements OnInit {
       }
     })
   }
-
-  profileForm = new FormGroup({
-    email: new FormControl(localStorage.getItem("email"), Validators.email),
-    // password: new FormControl('', Validators.required),                         // TODO promena lozinke
-    name: new FormControl(localStorage.getItem("name"), Validators.required),
-    phone_number: new FormControl(localStorage.getItem("phone_number"), Validators.required),
-    address: new FormControl(localStorage.getItem("address"), Validators.required),
-    city: new FormControl(localStorage.getItem("city"), Validators.required)
-
-  })
 
   editUser(): void {
     this.service.editUser(this.profileForm.getRawValue() as FrontendUser).subscribe({

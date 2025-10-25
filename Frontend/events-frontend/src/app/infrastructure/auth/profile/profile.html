@@ -24,6 +24,27 @@
   </div>
 </form>
 
+<form (ngSubmit)="changePassword()" [formGroup]="changePswForm">
+  <br>
+  Lozinka:
+  <br>
+  <mat-form-field>
+    <mat-label>Stara lozinka:</mat-label>
+    <input formControlName="oldpassword" matInput name="oldpassword" type="password"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Nova lozinka:</mat-label>
+    <input formControlName="newpassword" matInput name="newpassword" type="password"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Nova lozinka, ponovo:</mat-label>
+    <input formControlName="newpasswordagain" matInput name="newpasswordagain" type="password"/>
+  </mat-form-field>
+  <div>
+    <button color="primary" matButton="outlined" type="submit">Promeni lozinku</button>
+  </div>
+</form>
+
 <h2>Upravljate sledecim lokacijama: </h2>
 @for (EventLocation of locations; track EventLocation.id) {
   <mat-card appearance="outlined" class="example-card">
@@ -74,7 +95,7 @@
   @if (FrontendReview.madeBy == localStorage.getItem("name")) {
     Ostavljeno od strane: {{ FrontendReview.madeBy }} |
       Za Lokaciju: {{ FrontendReview.event?.location?.name }} |
-    Performans: {{ FrontendReview.rate.performance }} ✪ |
+      Performans: {{ FrontendReview.rate.performance }} ✪ |
       Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
       Mesto: {{ FrontendReview.rate.venue }} ✪ |
       Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪

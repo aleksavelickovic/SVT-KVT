@@ -5,6 +5,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {environment} from '../../env/enviroment';
 import {AuthResponse} from './model/AuthResponse';
 import {FrontendUser} from './model/User';
+import {FrontendReview} from '../../reviews/model/review';
 
 
 @Injectable({
@@ -27,6 +28,14 @@ export class AuthService {
     return this.http.post<AuthResponse>(environment.apiHost + '/users/login', auth, {
       headers: this.headers,
     });
+  }
+
+  changePassword(email: string | null, oldpassword: string | null, newpassword: string | null): Observable<FrontendUser> {
+    const body = {
+      oldpassword: oldpassword,
+      newpassword: newpassword
+    };
+    return this.http.patch<FrontendUser>(environment.apiHost + '/users/' + email, body)
   }
 
   editUser(user: FrontendUser): Observable<FrontendUser> {

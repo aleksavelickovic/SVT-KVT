@@ -1,5 +1,6 @@
 package rs.ac.ftn.svt.events.controller;
 
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -178,6 +179,26 @@ public class UserController {
     @PreAuthorize("hasRole('ADMINISTRATOR')")
     public List<User> loadAll() {
         return this.userService.findAll();
+    }
+
+    @CrossOrigin
+    @PatchMapping("/{email}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMINISTRATOR')")
+    public ResponseEntity<User> changePassword(@PathVariable String email, @RequestBody changePswDTO request) {
+        User user = userService.findByEmail(email);
+        if (passwordEncoder.matches(request.oldpassword, user.getPassword())) {
+            System.out.println("SIFRE SE POKLAPAJU!");
+            user.setPassword(passwordEncoder.encode(request.newpassword));
+            return ResponseEntity.ok(userService.save(user));
+        }
+
+        return ResponseEntity.status(403).build();
+    }
+
+    @NoArgsConstructor
+    public static class changePswDTO {
+        public String oldpassword;
+        public String newpassword;
     }
 
     @CrossOrigin
