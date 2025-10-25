@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -194,6 +195,19 @@ public class UserController {
         if (passwordEncoder.matches(request.oldpassword, user.getPassword())) {
             System.out.println("SIFRE SE POKLAPAJU!");
             user.setPassword(passwordEncoder.encode(request.newpassword));
+
+            SimpleMailMessage msg = new SimpleMailMessage();
+            msg.setTo(email);
+            msg.setSubject("Promena lozinke");
+            msg.setText("Postovani gospodine " + user.getName() + ",\n\n" + "Vasa lozinka je uspesno promenjena!");
+
+            try {
+                mailSender.send(msg);
+                System.out.println("Poslat MEJL!");
+            } catch (Exception ex) {
+                System.err.println("Greška pri slanju mejla: " + ex.getMessage());
+            }
+
             return ResponseEntity.ok(userService.save(user));
         }
 
