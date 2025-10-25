@@ -167,11 +167,41 @@ public class UserController {
             newUser.setCreatedAt(LocalDate.now());
             newUser.setEmail(accountRequest.getEmail());
             newUser.setPassword(accountRequest.getPassword());
-            newUser.setEmail(accountRequest.getEmail());
+
+            SimpleMailMessage msg = new SimpleMailMessage();
+            msg.setTo(newUser.getEmail());
+            msg.setSubject("Vas zahtev za registraciju je prihvacen!");
+            msg.setText("Postovani korisnice,  " + "\n\n" + "Vas zahtev za registraciju je prihvacen i mozete se ulogovati na svoj novi korisnicki nalog.\n\n"
+                    + "Nalog je napravljen na dan: " + newUser.getCreatedAt());
+
+            try {
+                mailSender.send(msg);
+                System.out.println("Poslat MEJL!");
+            } catch (Exception ex) {
+                System.err.println("Greška pri slanju mejla: " + ex.getMessage());
+            }
 
             return ResponseEntity.ok(userService.createUser(newUser));
         }
         AccountRequest accountRequest = accountRequestService.findOne(id);
+        User newUser = new User();
+        newUser.setAddress(accountRequest.getAddress());
+        newUser.setCreatedAt(LocalDate.now());
+        newUser.setEmail(accountRequest.getEmail());
+        newUser.setPassword(accountRequest.getPassword());
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(accountRequest.getEmail());
+        msg.setSubject("Vas zahtev za registraciju je odbijen!");
+        msg.setText("Postovani korisnice,  " + "\n\n" + "Nazalost, vas zahtev za kreiranje naloga je odbijen.\n\n"
+                + "Razlog odbijanja: " + rejectionDTO.reason);
+
+        try {
+            mailSender.send(msg);
+            System.out.println("Poslat MEJL!");
+        } catch (Exception ex) {
+            System.err.println("Greška pri slanju mejla: " + ex.getMessage());
+        }
         accountRequest.setStatus(RequestStatus.REJECTED);
         accountRequest.setRejectionReason(rejectionDTO.reason);
         accountRequestService.save(accountRequest);

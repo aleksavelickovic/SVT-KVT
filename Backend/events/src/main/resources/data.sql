@@ -29,11 +29,11 @@ where dtype = 'ROLE_ADMINISTRATOR';
 
 INSERT INTO account_requests (address, created_at, password, rejection_reason, status, email)
 VALUES ('321 Maple St, Apt 5', '2025-10-20', '$2a$08$vnTIORF4zzdONivQjYKZZ.WcfyuaU/FROGVbwIoNgiu38VMvgpLjO',
-        NULL, 'PENDING', 'maple@example.com'),
+        NULL, 'PENDING', 'a.velickovic333@gmail.com'),
        ('654 Cedar Ave', '2025-10-20', '$2a$08$YzA2345678901bcdefghIJKLMNOpqrstuvWXyzABCD1234567890abc',
         'Incomplete documentation', 'REJECTED', 'documentation@example.com'),
        ('987 Birch Rd', '2025-10-20', '$2a$08$ZaB3456789012cdefghiJKLMNOpqrstuvWXyzABCD1234567890abcd', NULL,
-        'ACCEPTED', 'birch@example.com');
+        'PENDING', 'mega3000aka@gmail.com');
 
 SELECT *
 FROM account_requests;
