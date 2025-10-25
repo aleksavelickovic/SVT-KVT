@@ -2,6 +2,8 @@ package rs.ac.ftn.svt.events.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.ftn.svt.events.model.dto.LocationDTO;
@@ -17,10 +19,27 @@ public class LocationController {
     @Autowired
     LocationService locationService;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
+
     @CrossOrigin
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
+//    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<List<Location>> findAll() {
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo("akica208@gmail.com");
+        msg.setSubject("TEST poruka");
+        msg.setText("Ovo je TEST poruka mejl!");
+
+        try {
+            mailSender.send(msg);
+            System.out.println("Poslat MEJL!");
+        } catch (Exception ex) {
+            System.err.println("Greška pri slanju mejla: " + ex.getMessage());
+        }
+
         return ResponseEntity.ok(locationService.findAll());
     }
 
