@@ -2,7 +2,6 @@ package rs.ac.ftn.svt.events.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +24,9 @@ public class LocationController {
 
     @CrossOrigin
     @GetMapping
-//    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<List<Location>> findAll() {
-
+/*
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo("akica208@gmail.com");
         msg.setSubject("TEST poruka");
@@ -39,7 +38,7 @@ public class LocationController {
         } catch (Exception ex) {
             System.err.println("Greška pri slanju mejla: " + ex.getMessage());
         }
-
+*/
         return ResponseEntity.ok(locationService.findAll());
     }
 
