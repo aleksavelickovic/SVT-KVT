@@ -45,14 +45,20 @@ export class Profile implements OnInit {
     const form = this.changePswForm.getRawValue()
     console.log(form.oldpassword)
     console.log(form.newpassword)
-    this.service.changePassword(localStorage.getItem("email"), form.oldpassword, form.newpassword).subscribe({
-      next: () => {
-        console.log("USPESNO PROMENJENA SIFRA!")
-      },
-      error: (_) => {
-        console.error("Greska prilikom promene sifre!")
-      }
-    })
+    console.log(form.newpasswordagain)
+    if (form.newpassword == form.newpasswordagain){
+      this.service.changePassword(localStorage.getItem("email"), form.oldpassword, form.newpassword).subscribe({
+        next: () => {
+          console.log("USPESNO PROMENJENA SIFRA!")
+        },
+        error: (_) => {
+          console.error("Greska prilikom promene sifre!")
+        }
+      })
+    } else{
+      console.error("LOZINKE SE NE POKLAPAJU!")
+    }
+
   }
 
   ngOnInit(): void {
