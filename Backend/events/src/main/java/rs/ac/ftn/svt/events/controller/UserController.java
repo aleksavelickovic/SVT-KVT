@@ -184,11 +184,6 @@ public class UserController {
             return ResponseEntity.ok(userService.createUser(newUser));
         }
         AccountRequest accountRequest = accountRequestService.findOne(id);
-        User newUser = new User();
-        newUser.setAddress(accountRequest.getAddress());
-        newUser.setCreatedAt(LocalDate.now());
-        newUser.setEmail(accountRequest.getEmail());
-        newUser.setPassword(accountRequest.getPassword());
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(accountRequest.getEmail());
