@@ -7,5 +7,5 @@ import rs.ac.ftn.svt.events.model.entity.Comment;
 import java.util.UUID;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, UUID> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

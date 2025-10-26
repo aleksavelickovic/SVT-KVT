@@ -28,6 +28,9 @@ public class Comment {
     private LocalDateTime createdAt;
 
     @OneToOne
+    private User belongsTo;
+
+    @OneToOne
     private Comment repliesTo;
 
 }

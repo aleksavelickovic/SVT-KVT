@@ -3,10 +3,10 @@ import {ReviewService} from '../../reviews/review-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventsService} from '../../events/events-service';
 import {FrontendEvent} from '../../events/model/frontendEvent';
-import {EventLocation} from '../../locations/model/eventLocation';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FrontendRate} from '../../reviews/model/Rate';
 import {FrontendReview} from '../../reviews/model/review';
+import {FrontendComment} from '../../reviews/model/Comment';
 
 @Component({
   selector: 'app-review-form',
@@ -27,6 +27,7 @@ export class ReviewForm implements OnInit {
     venue: new FormControl(0, Validators.required),
     overallImpression: new FormControl(0, Validators.required),
     event: new FormControl(Validators.required),
+    commentText: new FormControl('', Validators.required)
   })
 
   constructor(private service: ReviewService, private eventsService: EventsService, private route: ActivatedRoute, private router: Router) {
@@ -51,9 +52,14 @@ export class ReviewForm implements OnInit {
       performance: Number(raw.performance),
       soundAndLightning: Number(raw.soundAndLightning),
       venue: Number(raw.venue),
-      overallImpression: Number(raw.overallImpression)
+      overallImpression: Number(raw.overallImpression),
     };
-    // const selectedEvent = this.events.find(e => e.id === Number(raw.event));
+    const comment: FrontendComment = {
+      id: 0,
+      text: raw.commentText,
+      createdAt: new Date(),
+      repliesTo: null
+    }
     const selectedEvent = raw.event as unknown as FrontendEvent
     const review: FrontendReview = {
       id: 0, // placeholder; backend may overwrite
@@ -62,7 +68,8 @@ export class ReviewForm implements OnInit {
       hidden: false as unknown as Boolean,
       event: selectedEvent,
       rate,
-      madeBy: localStorage.getItem("name")
+      madeBy: localStorage.getItem("name"),
+      comment
     };
     console.error(review)
     this.service.add(review).subscribe({

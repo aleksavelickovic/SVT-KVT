@@ -32,5 +32,7 @@ public class Review {
     private Rate rate;
     @Column
     private String madeBy;
+    @OneToOne
+    private Comment comment;
 
 }

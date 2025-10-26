@@ -3,13 +3,11 @@ package rs.ac.ftn.svt.events.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.ac.ftn.svt.events.model.dto.ReviewDTO;
+import rs.ac.ftn.svt.events.model.entity.Comment;
 import rs.ac.ftn.svt.events.model.entity.Location;
 import rs.ac.ftn.svt.events.model.entity.Rate;
 import rs.ac.ftn.svt.events.model.entity.Review;
-import rs.ac.ftn.svt.events.repository.EventRepository;
-import rs.ac.ftn.svt.events.repository.LocationRepository;
-import rs.ac.ftn.svt.events.repository.RateRepository;
-import rs.ac.ftn.svt.events.repository.ReviewRepository;
+import rs.ac.ftn.svt.events.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +20,9 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
 
     @Autowired
     private RateRepository rateRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Autowired
     private LocationRepository locationRepository;
@@ -42,6 +43,12 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
     @Override
     public Review createReview(ReviewDTO reviewDTO) {
 
+        Comment comment = null;
+        if (reviewDTO.getComment() != null) {
+            comment = commentRepository.save(reviewDTO.getComment());
+        }
+
+
         if (reviewRepository.findById(reviewDTO.getId()).isPresent()) {
             return null;
         }
@@ -59,6 +66,10 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
         newReview.setEvent(eventRepository.findFirstById(reviewDTO.getEvent().getId()));
         newReview.setMadeBy(reviewDTO.getMadeBy());
         newReview.setHidden(false);
+        if (reviewDTO.getComment() != null) {
+            newReview.setComment(comment);
+        }
+
 
         reviewRepository.save(newReview);
 

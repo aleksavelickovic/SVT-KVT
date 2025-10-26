@@ -1,6 +1,6 @@
-import {Timestamp} from 'rxjs';
 import {FrontendEvent} from '../../events/model/frontendEvent';
 import {FrontendRate} from './Rate';
+import {FrontendComment} from './Comment';
 
 export interface FrontendReview {
   id: number;
@@ -10,5 +10,6 @@ export interface FrontendReview {
   event?: FrontendEvent;
   rate: FrontendRate;
   madeBy: string | null
+  comment: FrontendComment | null
 
 }

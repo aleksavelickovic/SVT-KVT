@@ -1,9 +1,14 @@
-INSERT INTO comments (text, created_at, replies_to_id)
-VALUES ('This is the first comment.', '2025-10-20T21:45:00', NULL),
-       ('Really interesting topic!', '2025-10-20T21:47:12', NULL),
-       ('I totally agree with this.', '2025-10-20T21:50:05', NULL),
-       ('Thanks for sharing!', '2025-10-20T21:53:42', NULL),
-       ('Great post, keep it up!', '2025-10-20T21:57:31', NULL);
+INSERT INTO comments (text, created_at, belongs_to_id, replies_to_id)
+VALUES ('This is the first comment.', '2025-10-20T21:45:00',
+        (SELECT id FROM users WHERE email = 'aleksavelickovic555@gmail.com'), NULL),
+       ('Really interesting topic!', '2025-10-20T21:47:12',
+        (SELECT id FROM users WHERE email = 'aleksavelickovic555@gmail.com'), NULL),
+       ('I totally agree with this.', '2025-10-20T21:50:05',
+        (SELECT id FROM users WHERE email = 'aleksavelickovic555@gmail.com'), NULL),
+       ('Thanks for sharing!', '2025-10-20T21:53:42', (SELECT id FROM users WHERE email = 'carol@example.com'), NULL),
+       ('Great post, keep it up!', '2025-10-20T21:57:31', (SELECT id FROM users WHERE email = 'carol@example.com'),
+        NULL);
+
 SELECT *
 FROM comments;
 
