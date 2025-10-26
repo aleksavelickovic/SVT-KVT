@@ -18,7 +18,10 @@
 </form>
 <button color="primary" matButton="outlined" (click)="resetFilters()">Resetuj pretragu</button>
 
-<button matButton [routerLink]="['../addlocation']">Dodaj novu lokaciju</button>
+@if (role == "ROLE_ADMINISTRATOR") {
+  <button matButton [routerLink]="['../addlocation']">Dodaj novu lokaciju</button>
+}
+
 @for (EventLocation of locations; track EventLocation.id) {
   <mat-card appearance="outlined" class="example-card">
     <mat-card-header>
@@ -62,9 +65,18 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button [routerLink]="['../editlocation/' + EventLocation.id]" matButton>Izmeni</button>
-      <button (click)="deleteLocation(EventLocation.id)" matButton>Obrisi</button>
+      @if (role == "ROLE_ADMINISTRATOR") {
+        <button [routerLink]="['../editlocation/' + EventLocation.id]" matButton>Izmeni</button>
+        <button (click)="deleteLocation(EventLocation.id)" matButton>Obrisi</button>
+      } @else if (role == "ROLE_USER") {
+        @for (ManagedLocation of managedLocations; track ManagedLocation.id) {
+          @if (EventLocation.name == ManagedLocation.name) {
+            <button [routerLink]="['../editlocation/' + EventLocation.id]" matButton>Izmeni</button>
+          }
+        }
+      }
+
     </mat-card-actions>
   </mat-card>
-
 }
+

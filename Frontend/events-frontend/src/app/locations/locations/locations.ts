@@ -19,17 +19,19 @@ import {AuthService} from '../../infrastructure/auth/auth-service';
 export class Locations implements OnInit {
 
   locations: EventLocation[] = []
+  managedLocations: EventLocation[]=[]
   reviews: FrontendReview[] = []
   role: string = ''
 
-  protected readonly location = location;
-  protected readonly Location = Location;
+  // protected readonly location = location;
+  // protected readonly Location = Location;
 
   searchForm = new FormGroup({
     name: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
   })
+
 
   constructor(private service: LocationsService, private reviewService: GetReviewService, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
   }
@@ -38,6 +40,7 @@ export class Locations implements OnInit {
     this.getAllLocations()
     this.getAllReviews()
     this.getRole()
+    this.getAllManagedLocations()
   }
 
   getRole(): void {
@@ -54,6 +57,18 @@ export class Locations implements OnInit {
       },
       error: (_) => {
         console.error("GRESKA!")
+      }
+    })
+  }
+
+  getAllManagedLocations(): void {
+    this.service.getAllManagedLocations(Number(localStorage.getItem("id"))).subscribe({
+      next: (locations: EventLocation[]) => {
+        this.managedLocations = locations
+        console.log(this.locations)
+      },
+      error: (_) => {
+        console.error("Greska!")
       }
     })
   }
