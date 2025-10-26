@@ -29,5 +29,5 @@ public class ReviewDTO {
 
     private String madeBy;
 
-    private Comment comment;
+    private CommentDTO comment;
 }

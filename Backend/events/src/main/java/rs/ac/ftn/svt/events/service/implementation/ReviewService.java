@@ -30,6 +30,9 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<Review> findAll() {
         return reviewRepository.findAll();
@@ -43,9 +46,13 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
     @Override
     public Review createReview(ReviewDTO reviewDTO) {
 
-        Comment comment = null;
+        Comment comment = new Comment();
         if (reviewDTO.getComment() != null) {
-            comment = commentRepository.save(reviewDTO.getComment());
+            comment.setCreatedAt(LocalDateTime.now());
+            comment.setText(reviewDTO.getComment().getText());
+            comment.setRepliesTo(reviewDTO.getComment().getRepliesTo());
+            comment.setBelongsTo(userRepository.findFirstById((reviewDTO.getComment().getBelongsTo())));
+            comment = commentRepository.save(comment);
         }
 
 

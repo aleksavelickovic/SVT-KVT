@@ -58,6 +58,7 @@ export class ReviewForm implements OnInit {
       id: 0,
       text: raw.commentText,
       createdAt: new Date(),
+      belongsTo: localStorage.getItem("id"),
       repliesTo: null
     }
     const selectedEvent = raw.event as unknown as FrontendEvent
