@@ -7,6 +7,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FrontendRate} from '../../reviews/model/Rate';
 import {FrontendReview} from '../../reviews/model/review';
 import {FrontendComment} from '../../reviews/model/Comment';
+import {FrontendUser} from '../../infrastructure/auth/model/User';
 
 @Component({
   selector: 'app-review-form',
@@ -54,11 +55,18 @@ export class ReviewForm implements OnInit {
       venue: Number(raw.venue),
       overallImpression: Number(raw.overallImpression),
     };
+    const comenteer: FrontendUser = {
+      email: localStorage.getItem("email"),
+      name: localStorage.getItem("name"),
+      phone_number: localStorage.getItem("phone_number"),
+      address: localStorage.getItem("address"),
+      city: localStorage.getItem("city")
+    }
     const comment: FrontendComment = {
       id: 0,
       text: raw.commentText,
       createdAt: new Date(),
-      belongsTo: localStorage.getItem("id"),
+      belongsTo: comenteer,
       repliesTo: null
     }
     const selectedEvent = raw.event as unknown as FrontendEvent

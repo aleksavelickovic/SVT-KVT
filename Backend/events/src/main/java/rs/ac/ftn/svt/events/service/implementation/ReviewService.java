@@ -51,7 +51,7 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
             comment.setCreatedAt(LocalDateTime.now());
             comment.setText(reviewDTO.getComment().getText());
             comment.setRepliesTo(reviewDTO.getComment().getRepliesTo());
-            comment.setBelongsTo(userRepository.findFirstById((reviewDTO.getComment().getBelongsTo())));
+            comment.setBelongsTo(userRepository.findByEmail((reviewDTO.getComment().getBelongsTo().getEmail())));
             comment = commentRepository.save(comment);
         }
 

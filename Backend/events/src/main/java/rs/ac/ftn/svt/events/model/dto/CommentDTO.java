@@ -21,7 +21,7 @@ public class CommentDTO {
 
     private LocalDateTime createdAt;
 
-    private Long belongsTo;
+    private UserDTO belongsTo;
 
     private Comment repliesTo;
 }

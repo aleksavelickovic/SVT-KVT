@@ -1,7 +1,7 @@
 export interface FrontendUser {
-  email: string;
-  name: string;
-  phone_number: string;
-  address: string;
-  city: string;
+  email: string | null;
+  name: string | null;
+  phone_number: string | null;
+  address: string | null;
+  city: string | null;
 }

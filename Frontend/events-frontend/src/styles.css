@@ -1,4 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+/*TODO background color*/
+/*body {*/
+/*  background-color: rgb(32, 32, 29);*/
+/*}*/
+
 button[matButton] {
   margin-left: 16px;
   background: #fff;
