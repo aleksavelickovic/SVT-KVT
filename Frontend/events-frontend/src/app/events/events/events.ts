@@ -17,6 +17,8 @@ export class Events implements OnInit {
 
   events: FrontendEvent[] = []
   locations: EventLocation[] = []
+  managedLocations: EventLocation[] = []
+
   searchFormEvents = new FormGroup({
     type: new FormControl('', Validators.required),
     location: new FormControl(this.locations[0], Validators.required),
@@ -30,6 +32,7 @@ export class Events implements OnInit {
 
   ngOnInit(): void {
     this.getAllEvents();
+    this.getAllManagedLocations()
     this.locationService.getAll().subscribe({
       next: (locations: EventLocation[]) => {
         this.locations = locations;
@@ -49,6 +52,18 @@ export class Events implements OnInit {
       },
       error: (_) => {
         console.error("GRESKA!")
+      }
+    })
+  }
+
+  getAllManagedLocations(): void {
+    this.locationService.getAllManagedLocations(Number(localStorage.getItem("id"))).subscribe({
+      next: (locations: EventLocation[]) => {
+        this.managedLocations = locations
+        console.log(this.locations)
+      },
+      error: (_) => {
+        console.error("Greska!")
       }
     })
   }

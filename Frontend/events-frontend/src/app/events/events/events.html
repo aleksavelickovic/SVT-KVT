@@ -3,14 +3,14 @@
     <mat-label>Adresa</mat-label>
     <input formControlName="address" matInput name="address" type="text"/>
   </mat-form-field>
-    <mat-form-field>
-      <mat-label>Lokacija</mat-label>
-      <mat-select formControlName="location">
-        @for (Location of locations; track Location.id) {
-          <mat-option [value]="Location">{{ Location.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Lokacija</mat-label>
+    <mat-select formControlName="location">
+      @for (Location of locations; track Location.id) {
+        <mat-option [value]="Location">{{ Location.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
   <mat-form-field>
     <mat-label>Tip</mat-label>
     <input formControlName="type" matInput name="type" type="text"/>
@@ -29,6 +29,12 @@
 
 <button [routerLink]="['../addevent']" matButton>Dodaj novi dogadjaj</button>
 @for (FrontendEvent of events; track FrontendEvent.id) {
+  @for (EventLocation of managedLocations; track EventLocation.id) {  <!-- TODO ovako vadis lokacije kojima korisnik upravlja! -->
+    @if (FrontendEvent.location.name == EventLocation.name) {
+      <h1>Upravljate ovom lokacijom!</h1>
+    }
+
+  }
   <mat-card appearance="outlined" class="example-card">
     <mat-card-header>
       <!--      <div mat-card-avatar class="example-header-image"></div>-->
@@ -60,7 +66,6 @@
         }
         <br>
         Lokacija: {{ FrontendEvent.location.name }}
-
 
 
       </p>
