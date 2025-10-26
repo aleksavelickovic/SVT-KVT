@@ -37,6 +37,7 @@ public class LocationController {
             System.out.println("Poslat MEJL!");
         } catch (Exception ex) {
             System.err.println("Greška pri slanju mejla: " + ex.getMessage());
+            System.err.println("Greška pri slanju mejla: " + ex.getMessage());
         }
 */
         return ResponseEntity.ok(locationService.findAll());
@@ -55,7 +56,7 @@ public class LocationController {
     public ResponseEntity<?> deleteLocation(@PathVariable Long id) {
         System.out.println("DELETE OKINUTO!");
         locationService.delete(id);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("Obrisano!");
     }
 
     @CrossOrigin

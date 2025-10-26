@@ -29,12 +29,7 @@
 
 <button [routerLink]="['../addevent']" matButton>Dodaj novi dogadjaj</button>
 @for (FrontendEvent of events; track FrontendEvent.id) {
-  @for (EventLocation of managedLocations; track EventLocation.id) {  <!-- TODO ovako vadis lokacije kojima korisnik upravlja! -->
-    @if (FrontendEvent.location.name == EventLocation.name) {
-      <h1>Upravljate ovom lokacijom!</h1>
-    }
 
-  }
   <mat-card appearance="outlined" class="example-card">
     <mat-card-header>
       <!--      <div mat-card-avatar class="example-header-image"></div>-->
@@ -71,8 +66,15 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button [routerLink]="['../editevent/' + FrontendEvent.id]" matButton>Izmeni</button>      <!-- TODO ceo CRUD-->
-      <button (click)="deleteEvent(FrontendEvent.id)" matButton>Obrisi</button>
+      @for (EventLocation of managedLocations; track EventLocation.id) {  <!-- TODO ovako vadis lokacije kojima korisnik upravlja! -->
+        @if (FrontendEvent.location.name == EventLocation.name) {
+        <h5>Upravljate lokacijom na kojoj se ovaj dogadjaj odrzava</h5>
+        <button [routerLink]="['../editevent/' + FrontendEvent.id]" matButton>Izmeni</button>      <!-- TODO ceo CRUD-->
+        <button (click)="deleteEvent(FrontendEvent.id)" matButton>Obrisi</button>
+        }
+
+      }
+
     </mat-card-actions>
   </mat-card>
 
