@@ -8,6 +8,7 @@ import {FrontendEvent} from '../../events/model/frontendEvent';
 
 import {GetReviewService} from '../get-review-service';
 import {FrontendReview} from '../../reviews/model/review';
+import {AuthService} from '../../infrastructure/auth/auth-service';
 
 @Component({
   selector: 'app-locations',
@@ -19,6 +20,7 @@ export class Locations implements OnInit {
 
   locations: EventLocation[] = []
   reviews: FrontendReview[] = []
+  role: string = ''
 
   protected readonly location = location;
   protected readonly Location = Location;
@@ -29,12 +31,19 @@ export class Locations implements OnInit {
     type: new FormControl('', Validators.required),
   })
 
-  constructor(private service: LocationsService, private reviewService: GetReviewService, private route: ActivatedRoute, private router: Router) {
+  constructor(private service: LocationsService, private reviewService: GetReviewService, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.getAllLocations()
     this.getAllReviews()
+    this.getRole()
+  }
+
+  getRole(): void {
+    this.authService.userState.subscribe((result) => {
+      this.role = result;
+    })
   }
 
   getAllLocations(): void {
