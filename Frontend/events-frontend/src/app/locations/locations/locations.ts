@@ -68,8 +68,11 @@ export class Locations implements OnInit {
         this.router.navigate(['../locations'])
         console.log(this.locations)
       },
-      error: (_) => {
+      error: (_) => { // TODO zasto ovde vraca error kad se sve lepo izvrsi?
         console.error("GRESKA!")
+        this.getAllLocations()
+        this.router.navigate(['../locations'])
+        console.log(this.locations)
       }
     })
     // this.getAllLocations()
