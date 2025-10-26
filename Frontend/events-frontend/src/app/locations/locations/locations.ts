@@ -9,6 +9,9 @@ import {FrontendEvent} from '../../events/model/frontendEvent';
 import {GetReviewService} from '../get-review-service';
 import {FrontendReview} from '../../reviews/model/review';
 import {AuthService} from '../../infrastructure/auth/auth-service';
+import {CommentService} from '../../comments/comment-service';
+import {FrontendComment} from '../../comments/model/Comment';
+import {FrontendUser} from '../../infrastructure/auth/model/User';
 
 @Component({
   selector: 'app-locations',
@@ -19,8 +22,9 @@ import {AuthService} from '../../infrastructure/auth/auth-service';
 export class Locations implements OnInit {
 
   locations: EventLocation[] = []
-  managedLocations: EventLocation[]=[]
+  managedLocations: EventLocation[] = []
   reviews: FrontendReview[] = []
+  comments: FrontendComment[] = []
   role: string = ''
 
   // protected readonly location = location;
@@ -32,8 +36,14 @@ export class Locations implements OnInit {
     type: new FormControl('', Validators.required),
   })
 
+  replyForm = new FormGroup({
+    text: new FormControl('', Validators.required),
+    repliesTo: new FormControl(null, Validators.required)
+  })
 
-  constructor(private service: LocationsService, private reviewService: GetReviewService, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+
+  constructor(private service: LocationsService, private reviewService: GetReviewService, private route: ActivatedRoute,
+              private router: Router, private authService: AuthService, private commentService: CommentService) {
   }
 
   ngOnInit(): void {
@@ -41,6 +51,38 @@ export class Locations implements OnInit {
     this.getAllReviews()
     this.getRole()
     this.getAllManagedLocations()
+    this.getAllComments()
+  }
+
+  addComment(repliesTo: FrontendComment | null): void {
+
+    const rawFormData = this.replyForm.getRawValue()
+    const comenteer: FrontendUser = {
+      email: localStorage.getItem("email"),
+      name: localStorage.getItem("name"),
+      phone_number: localStorage.getItem("phone_number"),
+      address: localStorage.getItem("address"),
+      city: localStorage.getItem("city")
+    }
+    const comment: FrontendComment =
+      {
+        id: 0,
+        text: rawFormData.text,
+        createdAt: new Date(),
+        belongsTo: comenteer,
+        repliesTo: repliesTo
+      }
+
+    this.commentService.add(comment).subscribe({
+      next: () => {
+        // this.router.navigate(['../locations'])
+        location.reload()
+      },
+      error: (_) => {
+        console.error("GRESKA PRILIKOM DODAVANJA KOMENTARA!")
+      }
+    })
+
   }
 
   getRole(): void {
@@ -81,6 +123,18 @@ export class Locations implements OnInit {
       },
       error: (_) => {
         console.error("GRESKA!")
+      }
+    })
+  }
+
+  getAllComments(): void {
+    this.commentService.getAll().subscribe({
+      next: (comments: FrontendComment[]) => {
+        this.comments = comments;
+        console.log(this.comments)
+      },
+      error: (_) => {
+        console.error("GRESKA PRILIKOM UCITAVANJA KOMENTARA!")
       }
     })
   }

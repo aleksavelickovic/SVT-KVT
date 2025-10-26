@@ -2,10 +2,8 @@ package rs.ac.ftn.svt.events.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import rs.ac.ftn.svt.events.model.dto.CommentDTO;
 import rs.ac.ftn.svt.events.model.entity.Comment;
 import rs.ac.ftn.svt.events.service.CommentService;
 
@@ -22,5 +20,11 @@ public class CommentController {
     @GetMapping
     public ResponseEntity<List<Comment>> findAllComments() {
         return ResponseEntity.ok(commentService.findAll());
+    }
+
+    @CrossOrigin
+    @PostMapping
+    public ResponseEntity<Comment> addComment(@RequestBody CommentDTO commentDTO) {
+        return ResponseEntity.ok(commentService.addComment(commentDTO));
     }
 }

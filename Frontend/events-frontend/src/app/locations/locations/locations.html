@@ -53,7 +53,21 @@
               Mesto: {{ FrontendReview.rate.venue }} ✪ |
               Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪
             <br>
-              Komentar: {{ FrontendReview.comment?.text }}
+            Komentar: {{ FrontendReview.comment?.text }}
+            <br>
+            <form (ngSubmit)="addComment(FrontendReview.comment)" [formGroup]="replyForm">
+              <mat-form-field>
+                <mat-label>Odgovor...</mat-label>
+                <input formControlName="text" matInput name="text" type="text"/>
+              </mat-form-field>
+<!--              <input type="hidden" formControlName="repliesTo" value="{{FrontendReview.comment}}">-->
+              <button type="submit" matButton>Odgovori</button>
+            </form>
+            @for (frontendComment of comments; track frontendComment.id) {
+              @if (frontendComment.repliesTo?.id == FrontendReview.comment?.id) {
+                Odgovor menadzera: {{ frontendComment.text }}
+              }
+            }
             <br>
             <br>
           }
