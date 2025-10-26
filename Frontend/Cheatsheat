@@ -1,0 +1,28 @@
+  @for (EventLocation of managedLocations; track EventLocation.id) {  <!-- TODO ovako vadis lokacije kojima korisnik upravlja! -->
+    @if (FrontendEvent.location.name == EventLocation.name) {
+
+    }
+
+  }
+
+  <mat-toolbar>
+  <p>toolbar works!</p>
+
+  @if (role == 'ROLE_USER') {
+    <p>Ulogovani ste kao korisnik!</p>
+  }
+  @if (role == 'ROLE_ADMINISTRATOR') {
+    <button [routerLink]="['../registrationrequests']" matButton="outlined">Pregledaj pristigle zahteve za
+      registraciju
+    </button>
+    <button [routerLink]="['../locations']" matButton="outlined">Lokacije
+    </button>
+    <button [routerLink]="['../events']" matButton="outlined">Dogadjaji
+    </button>
+  }
+  @if (role != null) {
+    <button (click)="logOut()" matButton="outlined">LogOut</button>
+    <p>Dobrodosli, {{ localStorage.getItem("name") }}</p>
+    <button matButton="outlined" [routerLink]="['../profile']">Profil</button>
+  }
+</mat-toolbar>
