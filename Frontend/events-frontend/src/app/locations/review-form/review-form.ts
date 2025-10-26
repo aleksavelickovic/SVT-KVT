@@ -6,7 +6,7 @@ import {FrontendEvent} from '../../events/model/frontendEvent';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FrontendRate} from '../../reviews/model/Rate';
 import {FrontendReview} from '../../reviews/model/review';
-import {FrontendComment} from '../../reviews/model/Comment';
+import {FrontendComment} from '../../comments/model/Comment';
 import {FrontendUser} from '../../infrastructure/auth/model/User';
 
 @Component({

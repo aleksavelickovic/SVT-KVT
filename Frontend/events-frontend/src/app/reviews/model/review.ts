@@ -1,6 +1,6 @@
 import {FrontendEvent} from '../../events/model/frontendEvent';
 import {FrontendRate} from './Rate';
-import {FrontendComment} from './Comment';
+import {FrontendComment} from '../../comments/model/Comment';
 
 export interface FrontendReview {
   id: number;
