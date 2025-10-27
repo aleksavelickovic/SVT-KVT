@@ -37,4 +37,6 @@ public class Event {
     @OneToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Location location;
+    @Column
+    private String imageFilename;
 }

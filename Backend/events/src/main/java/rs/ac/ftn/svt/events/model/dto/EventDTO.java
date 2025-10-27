@@ -27,4 +27,5 @@ public class EventDTO {
     private Double price;
     @NotBlank
     private Boolean recurrent;
+    private String imageFilename;
 }

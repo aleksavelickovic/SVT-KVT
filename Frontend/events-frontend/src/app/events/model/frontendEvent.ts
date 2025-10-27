@@ -9,4 +9,5 @@ export interface FrontendEvent {
   price: number;
   recurrent: Boolean;
   location: EventLocation;
+  imageFilename: string
 }
