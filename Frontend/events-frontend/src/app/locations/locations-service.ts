@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../env/enviroment';
 import {EventLocation} from './model/eventLocation';
+import {FrontendUser} from '../infrastructure/auth/model/User';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class LocationsService {
 
   getAllManagedLocations(id: number): Observable<EventLocation[]> {
     return this.httpClient.get<EventLocation[]>(environment.apiHost + '/locations/managed/' + id)
+  }
+
+  getAllManagers(locationId: number): Observable<FrontendUser[]> {
+    return this.httpClient.get<FrontendUser[]>(environment.apiHost + '/locations/' + locationId + '/managers')
   }
 
   add(location: EventLocation): Observable<EventLocation> {

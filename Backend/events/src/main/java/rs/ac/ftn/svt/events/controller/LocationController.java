@@ -7,8 +7,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.ftn.svt.events.model.dto.LocationDTO;
 import rs.ac.ftn.svt.events.model.entity.Location;
+import rs.ac.ftn.svt.events.model.entity.User;
 import rs.ac.ftn.svt.events.service.LocationService;
+import rs.ac.ftn.svt.events.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,6 +20,9 @@ public class LocationController {
 
     @Autowired
     LocationService locationService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -48,6 +54,20 @@ public class LocationController {
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<Location> findOne(@PathVariable Long id) {
         return ResponseEntity.ok(locationService.findOne(id));
+    }
+
+    @CrossOrigin
+    @GetMapping("/{id}/managers")
+    public ResponseEntity<List<User>> getAllManagers(@PathVariable Long id) {
+        List<User> users = new ArrayList<User>();
+        for (User user : userService.findAll()) {
+            for (Location location: user.getManages()){
+                if (location.getId().equals(id)){
+                    users.add(user);
+                }
+            }
+        }
+        return ResponseEntity.ok(users);
     }
 
     @CrossOrigin

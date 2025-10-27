@@ -5,7 +5,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {environment} from '../../env/enviroment';
 import {AuthResponse} from './model/AuthResponse';
 import {FrontendUser} from './model/User';
-import {FrontendReview} from '../../reviews/model/review';
+import {EventLocation} from '../../locations/model/eventLocation';
 
 
 @Injectable({
@@ -36,6 +36,10 @@ export class AuthService {
       newpassword: newpassword
     };
     return this.http.patch<FrontendUser>(environment.apiHost + '/users/' + email, body)
+  }
+
+  removeManager(email: string | null, location: number | undefined): Observable<EventLocation> {
+    return this.http.patch<EventLocation>(environment.apiHost + '/users/' + email + '/' + location, null)
   }
 
   editUser(user: FrontendUser): Observable<FrontendUser> {

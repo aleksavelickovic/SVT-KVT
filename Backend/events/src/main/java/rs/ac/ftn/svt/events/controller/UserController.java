@@ -246,6 +246,7 @@ public class UserController {
 
     @CrossOrigin
     @PatchMapping("/{userEmail}/{locationId}")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Location> removeManager(@PathVariable String userEmail, @PathVariable Long locationId) {
         User user = userService.findByEmail(userEmail);
         Location location = locationService.findOne(locationId);

@@ -3,8 +3,6 @@ import {LocationsService} from '../locations-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventLocation} from '../model/eventLocation';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {waitForAsync} from '@angular/core/testing';
-import {FrontendEvent} from '../../events/model/frontendEvent';
 
 import {GetReviewService} from '../get-review-service';
 import {FrontendReview} from '../../reviews/model/review';
@@ -25,6 +23,7 @@ export class Locations implements OnInit {
   managedLocations: EventLocation[] = []
   reviews: FrontendReview[] = []
   comments: FrontendComment[] = []
+  managers: FrontendUser[] = []
   role: string = ''
 
   // protected readonly location = location;
@@ -102,6 +101,7 @@ export class Locations implements OnInit {
       }
     })
   }
+
 
   getAllManagedLocations(): void {
     this.service.getAllManagedLocations(Number(localStorage.getItem("id"))).subscribe({

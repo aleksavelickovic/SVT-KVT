@@ -20,3 +20,21 @@
     <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
   </div>
 </form>
+<h2>Menadzeri ove lokacije:</h2>
+@for (manager of managers; track manager.email) {
+  <mat-card appearance="outlined" class="example-card">
+    <mat-card-header>
+      <!--      <div mat-card-avatar class="example-header-image"></div>-->
+      <mat-card-title>{{ manager.name }} - Email: {{ manager.email }}</mat-card-title>
+      <mat-card-subtitle>{{ manager.phone_number }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ manager.address }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ manager.city }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (role == "ROLE_ADMINISTRATOR") {
+        <button matButton (click)="removeManager(manager.email)">Ukloni menadzera sa lokacije</button>
+      }
+    </mat-card-content>
+  </mat-card>
+}
+
