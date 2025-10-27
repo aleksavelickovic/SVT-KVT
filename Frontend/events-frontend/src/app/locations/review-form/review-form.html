@@ -18,16 +18,21 @@
   <mat-form-field>
     <mat-label>Dogadjaj</mat-label>
     <mat-select formControlName="event">
-      @for (FrontendEvent of events; track FrontendEvent.id) {
-        <mat-option [value]="FrontendEvent">{{ FrontendEvent.name }}</mat-option>
-      }
+<!--      @for (location of locations; track location.id) {-->
+        @for (FrontendEvent of events; track FrontendEvent.id) {
+          @if (FrontendEvent.location.name == currentLocation?.name && FrontendEvent.recurrent) {
+            <mat-option [value]="FrontendEvent">{{ FrontendEvent.name }}</mat-option>
+          }
+        }
+<!--      }-->
+
     </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Komentar:</mat-label>
     <input formControlName="commentText" matInput name="commentText" type="text"/>
   </mat-form-field>
-<!--  <input formControlName="madeBy" name="madeby" type="hidden" value="{{localStorage.getItem('name')}}"/>-->
+  <!--  <input formControlName="madeBy" name="madeby" type="hidden" value="{{localStorage.getItem('name')}}"/>-->
   <div>
     <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
   </div>

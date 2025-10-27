@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ReviewService} from '../../reviews/review-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventsService} from '../../events/events-service';
@@ -8,6 +8,8 @@ import {FrontendRate} from '../../reviews/model/Rate';
 import {FrontendReview} from '../../reviews/model/review';
 import {FrontendComment} from '../../comments/model/Comment';
 import {FrontendUser} from '../../infrastructure/auth/model/User';
+import {LocationsService} from '../locations-service';
+import {EventLocation} from '../model/eventLocation';
 
 @Component({
   selector: 'app-review-form',
@@ -18,6 +20,10 @@ import {FrontendUser} from '../../infrastructure/auth/model/User';
 export class ReviewForm implements OnInit {
 
   events: FrontendEvent[] = []
+  locations: EventLocation[] = []
+
+  @Input()
+  currentLocation?: EventLocation
 
   @Output()
   submitted: EventEmitter<any> = new EventEmitter<any>();
@@ -31,7 +37,8 @@ export class ReviewForm implements OnInit {
     commentText: new FormControl('', Validators.required)
   })
 
-  constructor(private service: ReviewService, private eventsService: EventsService, private route: ActivatedRoute, private router: Router) {
+  constructor(private service: ReviewService, private eventsService: EventsService, private route: ActivatedRoute,
+              private router: Router, private locationService: LocationsService) {
   }
 
   ngOnInit(): void {
@@ -39,6 +46,15 @@ export class ReviewForm implements OnInit {
       next: (events: FrontendEvent[]) => {
         this.events = events;
         console.log(this.events)
+      },
+      error: (_) => {
+        console.error("GRESKA!")
+      }
+    })
+    this.locationService.getAll().subscribe({
+      next: (locations: EventLocation[]) => {
+        this.locations = locations;
+        console.log(this.locations)
       },
       error: (_) => {
         console.error("GRESKA!")

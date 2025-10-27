@@ -22,12 +22,12 @@
   <button matButton [routerLink]="['../addlocation']">Dodaj novu lokaciju</button>
 }
 
-@for (EventLocation of locations; track EventLocation.id) {
+@for (eventLocation of locations; track eventLocation.id) {
   <mat-card appearance="outlined" class="example-card">
     <mat-card-header>
       <!--      <div mat-card-avatar class="example-header-image"></div>-->
-      <mat-card-title>{{ EventLocation.name }} - ID: {{ EventLocation.id }}</mat-card-title>
-      <mat-card-subtitle>{{ EventLocation.address }}</mat-card-subtitle>
+      <mat-card-title>{{ eventLocation.name }} - ID: {{ eventLocation.id }}</mat-card-title>
+      <mat-card-subtitle>{{ eventLocation.address }}</mat-card-subtitle>
     </mat-card-header>
     <div>
       <img alt="Placeholder image"
@@ -37,16 +37,16 @@
     </div>
     <mat-card-content>
       <p>
-        {{ EventLocation.description }}
+        {{ eventLocation.description }}
         <br>
-        Kreirano: {{ EventLocation.createdAt[2] }}.{{ EventLocation.createdAt[1] }}.{{ EventLocation.createdAt[0] }}
+        Kreirano: {{ eventLocation.createdAt[2] }}.{{ eventLocation.createdAt[1] }}.{{ eventLocation.createdAt[0] }}
         <br>
-        {{ EventLocation.type }}
+        {{ eventLocation.type }}
         <br>
         Ocene:
         <br>
         @for (FrontendReview of reviews; track FrontendReview.id) {
-          @if (FrontendReview.event?.location?.name == EventLocation.name) {
+          @if (FrontendReview.event?.location?.name == eventLocation.name) {
             Ostavljeno od strane: {{ FrontendReview.madeBy }} |
               Performans: {{ FrontendReview.rate.performance }} ✪ |
               Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
@@ -74,21 +74,21 @@
         }
 
         <br>
-        Ukupna Ocena: {{ EventLocation.totalRating }}
+        Ukupna Ocena: {{ eventLocation.totalRating }}
         <br>
         Oceni:
-        <app-review-form></app-review-form>
+        <app-review-form [currentLocation]="eventLocation"></app-review-form>
 
       </p>
     </mat-card-content>
     <mat-card-actions>
       @if (role == "ROLE_ADMINISTRATOR") {
-        <button [routerLink]="['../editlocation/' + EventLocation.id]" matButton>Izmeni</button>
-        <button (click)="deleteLocation(EventLocation.id)" matButton>Obrisi</button>
+        <button [routerLink]="['../editlocation/' + eventLocation.id]" matButton>Izmeni</button>
+        <button (click)="deleteLocation(eventLocation.id)" matButton>Obrisi</button>
       } @else if (role == "ROLE_USER") {
         @for (ManagedLocation of managedLocations; track ManagedLocation.id) {
-          @if (EventLocation.name == ManagedLocation.name) {
-            <button [routerLink]="['../editlocation/' + EventLocation.id]" matButton>Izmeni</button>
+          @if (eventLocation.name == ManagedLocation.name) {
+            <button [routerLink]="['../editlocation/' + eventLocation.id]" matButton>Izmeni</button>
           }
         }
       }
