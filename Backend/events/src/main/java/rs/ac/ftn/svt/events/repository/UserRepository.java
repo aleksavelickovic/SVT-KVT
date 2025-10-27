@@ -25,6 +25,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * from users where dtype = 'ROLE_ADMINISTRATOR'", nativeQuery = true)
     List<Administrator> findAllAdmins();
 
+//    @Query(value = "DELETE FROM users_manages WHERE managed_by_id = :managedById AND manages_id = :managesId", nativeQuery = true)
+
 
     User findFirstById(Long id);
 }

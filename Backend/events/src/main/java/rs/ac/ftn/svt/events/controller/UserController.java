@@ -21,10 +21,12 @@ import rs.ac.ftn.svt.events.model.dto.JwtAuthenticationRequest;
 import rs.ac.ftn.svt.events.model.dto.RejectionDTO;
 import rs.ac.ftn.svt.events.model.dto.UserDTO;
 import rs.ac.ftn.svt.events.model.entity.AccountRequest;
+import rs.ac.ftn.svt.events.model.entity.Location;
 import rs.ac.ftn.svt.events.model.entity.RequestStatus;
 import rs.ac.ftn.svt.events.model.entity.User;
 import rs.ac.ftn.svt.events.security.TokenUtils;
 import rs.ac.ftn.svt.events.service.AccountRequestService;
+import rs.ac.ftn.svt.events.service.LocationService;
 import rs.ac.ftn.svt.events.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -43,6 +45,9 @@ public class UserController {
 
     @Autowired
     UserDetailsService userDetailsService;
+
+    @Autowired
+    LocationService locationService;
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -237,6 +242,18 @@ public class UserController {
         }
 
         return ResponseEntity.status(403).build();
+    }
+
+    @CrossOrigin
+    @PatchMapping("/{userEmail}/{locationId}")
+    public ResponseEntity<Location> removeManager(@PathVariable String userEmail, @PathVariable Long locationId) {
+        User user = userService.findByEmail(userEmail);
+        Location location = locationService.findOne(locationId);
+        user.getManages().removeIf(l -> l.getId().equals(location.getId()));
+        userService.save(user);
+        location.getManagedBy().removeIf(user1 -> user1.getEmail().equals(user.getEmail()));
+
+        return ResponseEntity.ok(locationService.save(location));
     }
 
     @NoArgsConstructor
