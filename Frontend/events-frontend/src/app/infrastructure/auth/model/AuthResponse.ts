@@ -8,4 +8,5 @@ export interface AuthResponse {
   phone_number: string;
   address: string;
   city: string;
+  imageFilename: string;
 }

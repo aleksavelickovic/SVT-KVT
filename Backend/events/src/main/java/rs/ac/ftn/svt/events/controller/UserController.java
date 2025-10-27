@@ -133,7 +133,7 @@ public class UserController {
         System.out.println("TOKEN: " + jwt);
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserDTO(jwt, (long) expiresIn, loggedInUser.getId(), loggedInUser.getEmail(), loggedInUser.getPassword(), loggedInUser.getName(),
-                loggedInUser.getPhoneNumber(), loggedInUser.getAddress(), loggedInUser.getBirthday(), loggedInUser.getCity()));
+                loggedInUser.getPhoneNumber(), loggedInUser.getAddress(), loggedInUser.getBirthday(), loggedInUser.getCity(), loggedInUser.getImageFilename()));
     }
 
 //    @CrossOrigin

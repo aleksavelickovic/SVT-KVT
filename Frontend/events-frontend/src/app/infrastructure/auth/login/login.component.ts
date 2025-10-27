@@ -43,6 +43,7 @@ export class LoginComponent {
           localStorage.setItem("phone_number", response.phone_number)
           localStorage.setItem("address", response.address)
           localStorage.setItem("city", response.city)
+          localStorage.setItem("image", response.imageFilename)
 
           console.log(response.password) // TODO vraca se hash-ovan password
 

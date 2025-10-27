@@ -32,6 +32,7 @@ public class UserDTO {
     private LocalDate birthday;
     @NotBlank
     private String city;
+    private String imageFilename;
 
     public UserDTO(User createdUser) {
         this.id = createdUser.getId();
@@ -42,5 +43,6 @@ public class UserDTO {
         this.address = createdUser.getAddress();
         this.birthday = createdUser.getBirthday();
         this.city = createdUser.getCity();
+        this.imageFilename = createdUser.getImageFilename();
     }
 }

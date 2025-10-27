@@ -4,4 +4,5 @@ export interface FrontendUser {
   phone_number: string | null;
   address: string | null;
   city: string | null;
+  imageFilename: string | null;
 }

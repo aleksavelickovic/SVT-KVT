@@ -81,7 +81,8 @@ export class ReviewForm implements OnInit {
       name: localStorage.getItem("name"),
       phone_number: localStorage.getItem("phone_number"),
       address: localStorage.getItem("address"),
-      city: localStorage.getItem("city")
+      city: localStorage.getItem("city"),
+      imageFilename: localStorage.getItem("image")
     }
     const comment: FrontendComment = {
       id: 0,

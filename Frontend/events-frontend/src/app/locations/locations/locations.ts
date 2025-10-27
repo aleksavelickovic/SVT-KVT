@@ -1,4 +1,4 @@
-import {Component, OnInit, Resource} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LocationsService} from '../locations-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventLocation} from '../model/eventLocation';
@@ -68,7 +68,8 @@ export class Locations implements OnInit {
       name: localStorage.getItem("name"),
       phone_number: localStorage.getItem("phone_number"),
       address: localStorage.getItem("address"),
-      city: localStorage.getItem("city")
+      city: localStorage.getItem("city"),
+      imageFilename: localStorage.getItem("image")
     }
     const comment: FrontendComment =
       {
@@ -186,15 +187,6 @@ export class Locations implements OnInit {
     })
     // this.getAllLocations()
   }
-
-  getImage(filename: string): any {
-    return this.service.getImage(filename).subscribe({
-      next: (_) => {
-        console.log("DOBAVLJENA SLIKA!")
-      }
-    })
-  }
-
 
   searchLocations(): void {
     this.getAllLocations()

@@ -21,6 +21,8 @@
   @if (role != null) {
     <button (click)="logOut()" matButton="outlined">LogOut</button>
     <p>Dobrodosli, {{ localStorage.getItem("name") }}</p>
+    <img src="http://localhost:8080/images/{{localStorage.getItem('image')}}"
+         alt="avatar" style="width:54px; height:54px; border-radius:50%; object-fit:cover; margin-left:8px;">
     <button matButton="outlined" [routerLink]="['../profile']">Profil</button>
   }
 </mat-toolbar>

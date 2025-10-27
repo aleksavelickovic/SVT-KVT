@@ -46,4 +46,6 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Location> manages;
+    @Column
+    private String imageFilename;
 }
