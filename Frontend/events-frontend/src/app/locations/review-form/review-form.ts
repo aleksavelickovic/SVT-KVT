@@ -21,6 +21,7 @@ export class ReviewForm implements OnInit {
 
   events: FrontendEvent[] = []
   locations: EventLocation[] = []
+  currentDate: Date = new Date()
 
   @Input()
   currentLocation?: EventLocation
@@ -45,6 +46,10 @@ export class ReviewForm implements OnInit {
     this.eventsService.getAll().subscribe({
       next: (events: FrontendEvent[]) => {
         this.events = events;
+        this.events = events.map(e => ({
+          ...e,
+          date: new Date(e.date)
+        }))
         console.log(this.events)
       },
       error: (_) => {
@@ -125,4 +130,5 @@ export class ReviewForm implements OnInit {
   }
 
   protected readonly localStorage = localStorage;
+  protected readonly console = console;
 }

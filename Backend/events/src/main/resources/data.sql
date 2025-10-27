@@ -61,7 +61,7 @@ SELECT *
 FROM locations;
 
 INSERT INTO events (name, address, type, date, price, recurrent, location_id)
-VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2025-11-10', 79.99, TRUE,
+VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2023-11-10', 79.99, TRUE,
         (SELECT id FROM locations WHERE name = 'Grand Hall')),
        ('Exit', 'Petrovaradin Fortress 2', 'FESTIVAL', '2023-11-10', 179.99, TRUE,
         (SELECT id FROM locations WHERE name = 'Grand Hall')),

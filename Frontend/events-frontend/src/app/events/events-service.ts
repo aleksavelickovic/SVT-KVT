@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../env/enviroment';
 import {FrontendEvent} from './model/frontendEvent';
-import {EventLocation} from '../locations/model/eventLocation';
 
 @Injectable({
   providedIn: 'root'

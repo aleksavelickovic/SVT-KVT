@@ -18,13 +18,16 @@
   <mat-form-field>
     <mat-label>Dogadjaj</mat-label>
     <mat-select formControlName="event">
-<!--      @for (location of locations; track location.id) {-->
-        @for (FrontendEvent of events; track FrontendEvent.id) {
-          @if (FrontendEvent.location.name == currentLocation?.name && FrontendEvent.recurrent) {
-            <mat-option [value]="FrontendEvent">{{ FrontendEvent.name }}</mat-option>
-          }
+
+      <!--      @for (location of locations; track location.id) {-->
+      @for (FrontendEvent of events; track FrontendEvent.id) {
+        {{ console.log("DATUM FRONTEND EVENTA " + FrontendEvent.date.getTime) }}
+        {{ console.log("TRENUTNO VREME " + currentDate.getTime())}}
+        @if (FrontendEvent.location.name == currentLocation?.name && FrontendEvent.recurrent && FrontendEvent.date.getTime() < currentDate.getTime()) {
+          <mat-option [value]="FrontendEvent">{{ FrontendEvent.name }}</mat-option>
         }
-<!--      }-->
+      }
+      <!--      }-->
 
     </mat-select>
   </mat-form-field>
