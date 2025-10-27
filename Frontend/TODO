@@ -1,1 +1,3 @@
-OSTAVLJANJE KOMENTARA
+[M2] Rukovanje utiscima. Menadžer ima uvid u sve utiske koji su ostavljeni na objektu od strane korisnika i može da sakrije ili ukloni
+ pojedinačne utiske. Uklonjeni utisci se logički brišu i ocena sa utiska poništava i ne računa se u ukupnoj oceni mesta.
+ Ocene ostavljene na sakrivenom utisku se i dalje računaju u ukupnoj oceni objekta.
