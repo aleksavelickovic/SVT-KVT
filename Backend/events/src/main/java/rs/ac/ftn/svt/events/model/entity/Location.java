@@ -40,5 +40,7 @@ public class Location {
     @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<User> managedBy;
+    @Column
+    private String imageFilename;
 
 }

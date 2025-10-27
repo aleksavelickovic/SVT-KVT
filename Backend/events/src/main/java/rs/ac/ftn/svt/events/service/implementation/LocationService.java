@@ -41,6 +41,7 @@ class LocationService implements rs.ac.ftn.svt.events.service.LocationService {
         newLocation.setDescription(locationDTO.getDescription());
         newLocation.setType(locationDTO.getType());
         newLocation.setTotalRating(0.0);
+        newLocation.setImageFilename(locationDTO.getImageFilename());
 
         locationRepository.save(newLocation);
 

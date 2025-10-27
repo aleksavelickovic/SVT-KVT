@@ -43,19 +43,19 @@ VALUES ('321 Maple St, Apt 5', '2025-10-20', '$2a$08$vnTIORF4zzdONivQjYKZZ.Wcfyu
 SELECT *
 FROM account_requests;
 
-INSERT INTO locations (name, description, created_at, address, type, total_rating)
+INSERT INTO locations (name, description, created_at, address, type, total_rating, image_filename)
 VALUES ('Grand Hall', 'Large indoor venue suited for conferences and concerts.', '2025-10-20', '12 Market St, Belgrade',
-        'HALL', 5.47),
+        'HALL', 5.47, 'turizam1.webp'),
        ('Riverside Park', 'Open-air park with stage and seating for community events.', '2025-09-15',
-        'Riverside Dr, Novi Sad', 'OUTDOOR', 3.20),
+        'Riverside Dr, Novi Sad', 'OUTDOOR', 3.20, 'turizam2.jpg'),
        ('Studio 7', 'Intimate studio space for workshops and small performances.', '2025-08-05', '7 Creative Ln, Niš',
-        'STUDIO', 9.64),
+        'STUDIO', 9.64, 'turizam3.jpg'),
        ('Conference Center Delta', 'Modern conference center with multiple meeting rooms.', '2025-07-01',
-        '45 Business Rd, Kragujevac', 'CONFERENCE_CENTER', 7.77),
+        '45 Business Rd, Kragujevac', 'CONFERENCE_CENTER', 7.77, 'turizam4.jpg'),
        ('City Museum Auditorium', 'Auditorium inside the city museum, suitable for lectures and screenings.',
-        '2025-06-12', 'Museum Sq 3, Subotica', 'MUSEUM', 8.91),
+        '2025-06-12', 'Museum Sq 3, Subotica', 'MUSEUM', 8.91, 'turizam5.jpg'),
        ('Open Air Arena', 'Large outdoor arena for festivals and sporting events.', '2025-05-22', 'Arena Blvd, Čačak',
-        'HALL', 8.12);
+        'HALL', 8.12, 'turizam6.jpg');
 
 SELECT *
 FROM locations;
