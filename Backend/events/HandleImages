@@ -1,0 +1,22 @@
+	@PostMapping(value = "/add")
+	public void create(@RequestParam String grad, @RequestParam String drzava, @RequestParam Kontinenti kontinent,
+			@RequestParam MultipartFile slika, HttpServletResponse response) throws IOException {
+		if (grad.equals("") || drzava.equals("")) {
+			response.sendRedirect(bURL + "greska.html");
+			return;
+		}
+		String filename = UUID.randomUUID() + "_" + slika.getOriginalFilename();
+
+        Path uploadDir = Paths.get("uploads");
+        if (!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir);
+        }
+
+        Path filePath = uploadDir.resolve(filename);
+		Files.copy(slika.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+		service.save(new Lokacija(grad, drzava, kontinent, filename));
+		response.sendRedirect(bURL + "lokacije");
+		return;
+
+	}
