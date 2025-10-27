@@ -3,6 +3,7 @@ import {LocationsService} from '../locations-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {EventLocation} from '../model/eventLocation';
+import {ImageService} from '../../images/image-service';
 
 @Component({
   selector: 'app-add-location',
@@ -20,12 +21,34 @@ export class AddLocation {
     // city: new FormControl('', Validators.required),
   })
 
-  constructor(private service: LocationsService, private route: ActivatedRoute, private router: Router) {
+  selectedFile: File | null = null;
+
+  constructor(private service: LocationsService, private route: ActivatedRoute, private router: Router,
+              private imageService: ImageService) {
   }
 
   addLocation(): void {
     console.log("POZVANA addLocation")
-    this.service.add(this.locationForm.getRawValue() as EventLocation).subscribe({
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+      this.imageService.uploadImage(formData).subscribe({
+          next: () => console.log("USPESNO OTPREMLJENA SLIKA!")
+        }
+      );
+    }
+    const raw = this.locationForm.getRawValue()
+    const eventLocation: EventLocation = {
+      id: 0,
+      name: raw.name,
+      address: raw.address,
+      type: raw.type,
+      description: raw.description,
+      totalRating: 0,
+      createdAt: null,
+      imageFilename: this.selectedFile?.name
+    }
+    this.service.add(eventLocation).subscribe({
       next: () => {
         console.log("USPEH!")
         this.router.navigate(['locations'])
@@ -35,6 +58,10 @@ export class AddLocation {
         console.error("GRESKA!")
       }
     })
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
   }
 
 }

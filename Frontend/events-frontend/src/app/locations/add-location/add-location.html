@@ -1,4 +1,4 @@
-<form (ngSubmit)="addLocation()" [formGroup]='locationForm' novalidate>
+<form (ngSubmit)="addLocation()" [formGroup]='locationForm' enctype="multipart/form-data" novalidate>
   <mat-form-field>
     <mat-label>Ime</mat-label>
     <input formControlName="name" matInput name="name" type="text"/>
@@ -15,10 +15,8 @@
     <mat-label>Tip</mat-label>
     <input formControlName="type" matInput name="type" type="text"/>
   </mat-form-field>
-  <!--  <mat-form-field>-->
-  <!--    <mat-label>Grad</mat-label>-->
-  <!--    <input formControlName="city" matInput name="city" type="text"/>-->
-  <!--  </mat-form-field>-->
+  <label for="image">Slika</label>
+  <input type="file" name="image" (change)="onFileSelected($event)">
   <div>
     <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
   </div>

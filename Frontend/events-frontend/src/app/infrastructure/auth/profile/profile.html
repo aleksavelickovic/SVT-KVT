@@ -63,7 +63,7 @@
       <p>
         {{ EventLocation.description }}
         <br>
-        Kreirano: {{ EventLocation.createdAt[2] }}.{{ EventLocation.createdAt[1] }}.{{ EventLocation.createdAt[0] }}
+        Kreirano: {{ EventLocation.createdAt ? EventLocation.createdAt : [2] }}.{{ EventLocation.createdAt ? EventLocation.createdAt : [1] }}.{{ EventLocation.createdAt ? EventLocation.createdAt : [0] }}
         <br>
         {{ EventLocation.type }}
         <br>

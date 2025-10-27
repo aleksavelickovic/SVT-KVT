@@ -171,7 +171,7 @@ export class Locations implements OnInit {
     })
   }
 
-  deleteLocation(id: number): void {
+  deleteLocation(id: number | null): void {
     this.service.deleteLocation(id).subscribe({
       next: () => {
         this.getAllLocations()

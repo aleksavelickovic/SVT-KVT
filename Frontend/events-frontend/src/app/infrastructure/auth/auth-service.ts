@@ -38,7 +38,7 @@ export class AuthService {
     return this.http.patch<FrontendUser>(environment.apiHost + '/users/' + email, body)
   }
 
-  removeManager(email: string | null, location: number | undefined): Observable<EventLocation> {
+  removeManager(email: string | null, location: number | null | undefined): Observable<EventLocation> {
     return this.http.patch<EventLocation>(environment.apiHost + '/users/' + email + '/' + location, null)
   }
 

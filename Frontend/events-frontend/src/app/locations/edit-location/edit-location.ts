@@ -61,7 +61,7 @@ export class EditLocation implements OnInit {
   }
 
   removeManager(email: string | null): void {
-    const id: number | undefined = this.location?.id
+    const id: number | null | undefined = this.location?.id
     this.userService.removeManager(email, id).subscribe({
       next: () => {
         location.reload()
