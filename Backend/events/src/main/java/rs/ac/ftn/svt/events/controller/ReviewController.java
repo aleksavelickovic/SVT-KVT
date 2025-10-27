@@ -32,5 +32,15 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.findAll());
     }
 
+    @CrossOrigin
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMINISTRATOR')")
+    public ResponseEntity<Review> hide(@PathVariable Long id) {
+        Review review = reviewService.findOne(id);
+        review.setHidden(true);
+
+        return ResponseEntity.ok(reviewService.save(review));
+    }
+
 
 }

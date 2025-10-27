@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FrontendReview} from './model/review';
-import {EventLocation} from '../locations/model/eventLocation';
 import {Observable} from 'rxjs';
 import {environment} from '../env/enviroment';
 
@@ -18,6 +17,10 @@ export class ReviewService {
 
   add(review: FrontendReview): Observable<FrontendReview> {
     return this.httpClient.post<FrontendReview>(environment.apiHost + '/reviews', review)
+  }
+
+  hide(reviewId: number): Observable<FrontendReview> {
+    return this.httpClient.patch<FrontendReview>(environment.apiHost + '/reviews/' + reviewId, null)
   }
 
   // getAll(): Observable<FrontendReview[]> {

@@ -46,7 +46,7 @@
         Ocene:
         <br>
         @for (FrontendReview of reviews; track FrontendReview.id) {
-          @if (FrontendReview.event?.location?.name == eventLocation.name) {
+          @if (FrontendReview.event?.location?.name == eventLocation.name && !FrontendReview.hidden) {
             Ostavljeno od strane: {{ FrontendReview.madeBy }} |
               Performans: {{ FrontendReview.rate.performance }} ✪ |
               Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
@@ -64,6 +64,7 @@
                   </mat-form-field>
                   <!--              <input type="hidden" formControlName="repliesTo" value="{{FrontendReview.comment}}">-->
                   <button type="submit" matButton>Odgovori</button>
+                  <button matButton (click)="hideReview(FrontendReview.id)">Sakrij recenziju</button>
                 </form>
               }
             }

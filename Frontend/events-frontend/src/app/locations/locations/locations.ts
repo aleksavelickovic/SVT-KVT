@@ -10,6 +10,7 @@ import {AuthService} from '../../infrastructure/auth/auth-service';
 import {CommentService} from '../../comments/comment-service';
 import {FrontendComment} from '../../comments/model/Comment';
 import {FrontendUser} from '../../infrastructure/auth/model/User';
+import {ReviewService} from '../../reviews/review-service';
 
 @Component({
   selector: 'app-locations',
@@ -41,8 +42,8 @@ export class Locations implements OnInit {
   })
 
 
-  constructor(private service: LocationsService, private reviewService: GetReviewService, private route: ActivatedRoute,
-              private router: Router, private authService: AuthService, private commentService: CommentService) {
+  constructor(private service: LocationsService, private getReviewService: GetReviewService, private route: ActivatedRoute,
+              private router: Router, private authService: AuthService, private commentService: CommentService, private reviewService: ReviewService) {
   }
 
   ngOnInit(): void {
@@ -84,6 +85,14 @@ export class Locations implements OnInit {
 
   }
 
+  hideReview(reviewId: number): void {
+    this.reviewService.hide(reviewId).subscribe({
+      next: (_) => {
+        location.reload()
+      }
+    })
+  }
+
   getRole(): void {
     this.authService.userState.subscribe((result) => {
       this.role = result;
@@ -116,7 +125,7 @@ export class Locations implements OnInit {
   }
 
   getAllReviews(): void {
-    this.reviewService.getAll().subscribe({
+    this.getReviewService.getAll().subscribe({
       next: (reviews: FrontendReview[]) => {
         this.reviews = reviews;
         console.log(this.reviews)
