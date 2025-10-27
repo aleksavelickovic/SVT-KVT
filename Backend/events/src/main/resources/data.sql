@@ -61,15 +61,15 @@ SELECT *
 FROM locations;
 
 INSERT INTO events (name, address, type, date, price, recurrent, location_id)
-VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2023-11-10', 79.99, TRUE,
+VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2026-11-10', 79.99, TRUE,
         (SELECT id FROM locations WHERE name = 'Grand Hall')),
-       ('Exit', 'Petrovaradin Fortress 2', 'FESTIVAL', '2023-11-10', 179.99, TRUE,
+       ('Exit', 'Petrovaradin Fortress 2', 'FESTIVAL', '2029-11-10', 179.99, TRUE,
         (SELECT id FROM locations WHERE name = 'Grand Hall')),
        ('Riverside Music Fest', 'Riverside Dr, Novi Sad', 'FESTIVAL', '2025-08-21', 0.00, TRUE,
         (SELECT id FROM locations WHERE name = 'Open Air Arena')),
        ('Creative Workshop Series', '7 Creative Ln, Niš', 'WORKSHOP', '2025-09-05', 25.00, TRUE,
         (SELECT id FROM locations WHERE name = 'Studio 7')),
-       ('Business Leaders Forum', '45 Business Rd, Kragujevac', 'CONFERENCE', '2025-12-02', 119.00, FALSE,
+       ('Business Leaders Forum', '45 Business Rd, Kragujevac', 'CONFERENCE', '2021-12-02', 119.00, FALSE,
         (SELECT id FROM locations WHERE name = 'Grand Hall')),
        ('Museum Lecture Night', 'Museum Sq 3, Subotica', 'LECTURE', '2025-10-15', 12.50, FALSE,
         (SELECT id FROM locations WHERE name = 'City Museum Auditorium')),

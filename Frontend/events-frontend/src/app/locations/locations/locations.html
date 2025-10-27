@@ -81,6 +81,15 @@
         <br>
         Ukupna Ocena: {{ eventLocation.totalRating }}
         <br>
+        Predstojeci Dogadjaji:
+        @for (frontendEvent of events; track frontendEvent.id) {
+          @if (frontendEvent.location.id == eventLocation.id && frontendEvent.date.getTime() > currentDate.getTime()) {
+            <h4>{{ frontendEvent.name }}</h4>
+            <p>{{ frontendEvent.date.getDay() }}.{{ frontendEvent.date.getMonth() }}
+              .{{ frontendEvent.date.getFullYear() }}</p>
+          }
+        }
+        <br>
         Oceni:
         <app-review-form [currentLocation]="eventLocation"></app-review-form>
 

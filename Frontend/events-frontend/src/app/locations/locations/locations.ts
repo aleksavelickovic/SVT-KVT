@@ -11,6 +11,8 @@ import {CommentService} from '../../comments/comment-service';
 import {FrontendComment} from '../../comments/model/Comment';
 import {FrontendUser} from '../../infrastructure/auth/model/User';
 import {ReviewService} from '../../reviews/review-service';
+import {FrontendEvent} from '../../events/model/frontendEvent';
+import {EventsService} from '../../events/events-service';
 
 @Component({
   selector: 'app-locations',
@@ -24,6 +26,8 @@ export class Locations implements OnInit {
   managedLocations: EventLocation[] = []
   reviews: FrontendReview[] = []
   comments: FrontendComment[] = []
+  events: FrontendEvent[] = []
+  currentDate = new Date()
   managers: FrontendUser[] = []
   role: string = ''
 
@@ -43,7 +47,8 @@ export class Locations implements OnInit {
 
 
   constructor(private service: LocationsService, private getReviewService: GetReviewService, private route: ActivatedRoute,
-              private router: Router, private authService: AuthService, private commentService: CommentService, private reviewService: ReviewService) {
+              private router: Router, private authService: AuthService, private commentService: CommentService, private reviewService: ReviewService,
+              private eventService: EventsService) {
   }
 
   ngOnInit(): void {
@@ -52,6 +57,7 @@ export class Locations implements OnInit {
     this.getRole()
     this.getAllManagedLocations()
     this.getAllComments()
+    this.getAllEvents()
   }
 
   addComment(repliesTo: FrontendComment | null): void {
@@ -111,7 +117,6 @@ export class Locations implements OnInit {
     })
   }
 
-
   getAllManagedLocations(): void {
     this.service.getAllManagedLocations(Number(localStorage.getItem("id"))).subscribe({
       next: (locations: EventLocation[]) => {
@@ -120,6 +125,22 @@ export class Locations implements OnInit {
       },
       error: (_) => {
         console.error("Greska!")
+      }
+    })
+  }
+
+  getAllEvents(): void {
+    this.eventService.getAll().subscribe({
+      next: (events: FrontendEvent[]) => {
+        this.events = events;
+        this.events = events.map(e => ({
+          ...e,
+          date: new Date(e.date)
+        }))
+        console.log(this.events)
+      },
+      error: (_) => {
+        console.error("GRESKA PRILIKOM UCITAVANJA DOGADJAJA!")
       }
     })
   }
