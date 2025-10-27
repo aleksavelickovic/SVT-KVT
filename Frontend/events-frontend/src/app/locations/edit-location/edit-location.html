@@ -37,4 +37,15 @@
     </mat-card-content>
   </mat-card>
 }
+@if (role == "ROLE_ADMINISTRATOR") {
+  <form (ngSubmit)="addManager()" [formGroup]="managerForm">
+    <mat-form-field>
+      <mat-label>Dodaj novog menadzera:</mat-label>
+      <input formControlName="email" matInput name="managerEmail" type="text"/>
+    </mat-form-field>
+      <button matButton type="submit">Dodaj</button>
+
+  </form>
+}
+
 

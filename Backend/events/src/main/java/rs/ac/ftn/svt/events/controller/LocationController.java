@@ -61,13 +61,26 @@ public class LocationController {
     public ResponseEntity<List<User>> getAllManagers(@PathVariable Long id) {
         List<User> users = new ArrayList<User>();
         for (User user : userService.findAll()) {
-            for (Location location: user.getManages()){
-                if (location.getId().equals(id)){
+            for (Location location : user.getManages()) {
+                if (location.getId().equals(id)) {
                     users.add(user);
                 }
             }
         }
         return ResponseEntity.ok(users);
+    }
+
+    @CrossOrigin
+    @PatchMapping("/{locationId}/{userEmail}")
+    public ResponseEntity<Location> addManager(@PathVariable Long locationId, @PathVariable String userEmail) {
+        Location location = locationService.findOne(locationId);
+        User user = userService.findByEmail(userEmail);
+        location.getManagedBy().add(user);
+
+        user.getManages().add(location);
+        userService.save(user);
+
+        return ResponseEntity.ok(locationService.save(location));
     }
 
     @CrossOrigin

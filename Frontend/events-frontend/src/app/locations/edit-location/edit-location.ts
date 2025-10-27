@@ -27,6 +27,10 @@ export class EditLocation implements OnInit {
     id: new FormControl(this.location?.id, Validators.required),
   })
 
+  managerForm = new FormGroup({
+    email: new FormControl('', Validators.required),
+  })
+
   constructor(private route: ActivatedRoute, private service: LocationsService, private router: Router,
               private userService: AuthService) {
 
@@ -59,6 +63,16 @@ export class EditLocation implements OnInit {
   removeManager(email: string | null): void {
     const id: number | undefined = this.location?.id
     this.userService.removeManager(email, id).subscribe({
+      next: () => {
+        location.reload()
+      }
+    })
+  }
+
+  addManager(): void {
+    const managerEmail = this.managerForm.getRawValue().email
+    const locationId = this.location?.id;
+    this.service.addManager(managerEmail, locationId).subscribe({
       next: () => {
         location.reload()
       }

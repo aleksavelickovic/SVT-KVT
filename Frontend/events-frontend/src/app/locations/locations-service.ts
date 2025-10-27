@@ -28,6 +28,10 @@ export class LocationsService {
     return this.httpClient.get<FrontendUser[]>(environment.apiHost + '/locations/' + locationId + '/managers')
   }
 
+  addManager(email: string | null | undefined, locationId: number | null | undefined): Observable<EventLocation> {
+    return this.httpClient.patch<EventLocation>(environment.apiHost + '/locations/' + locationId + '/' + email, null)
+  }
+
   add(location: EventLocation): Observable<EventLocation> {
     return this.httpClient.post<EventLocation>(environment.apiHost + '/locations', location)
   }
