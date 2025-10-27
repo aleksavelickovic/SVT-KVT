@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Resource} from '@angular/core';
 import {LocationsService} from '../locations-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventLocation} from '../model/eventLocation';
@@ -110,6 +110,7 @@ export class Locations implements OnInit {
       next: (locations: EventLocation[]) => {
         this.locations = locations;
         console.log(this.locations)
+        console.log(this.locations[2].imageFilename)
       },
       error: (_) => {
         console.error("GRESKA!")
@@ -184,6 +185,14 @@ export class Locations implements OnInit {
       }
     })
     // this.getAllLocations()
+  }
+
+  getImage(filename: string): any {
+    return this.service.getImage(filename).subscribe({
+      next: (_) => {
+        console.log("DOBAVLJENA SLIKA!")
+      }
+    })
   }
 
 

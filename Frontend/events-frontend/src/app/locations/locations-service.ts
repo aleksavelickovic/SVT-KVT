@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Resource} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../env/enviroment';
@@ -38,6 +38,10 @@ export class LocationsService {
 
   findLocation(id: number): Observable<EventLocation> {
     return this.httpClient.get<EventLocation>(environment.apiHost + '/locations/' + id)
+  }
+
+  getImage(filename: string): Observable<Resource<any>> {
+    return this.httpClient.get<Resource<any>>(environment.apiHost + '/images/' + filename)
   }
 
   editLocation(location: EventLocation): Observable<EventLocation> {

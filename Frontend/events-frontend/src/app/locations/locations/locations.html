@@ -23,6 +23,7 @@
 }
 
 @for (eventLocation of locations; track eventLocation.id) {
+
   <mat-card appearance="outlined" class="example-card">
     <mat-card-header>
       <!--      <div mat-card-avatar class="example-header-image"></div>-->
@@ -30,9 +31,11 @@
       <mat-card-subtitle>{{ eventLocation.address }}</mat-card-subtitle>
     </mat-card-header>
     <div>
+
       <img alt="Placeholder image"
            mat-card-image
-           src="https://www.cvent.com/sites/default/files/styles/focus_scale_and_crop_800x450/public/image/2023-11/Business_Travel_Trends_Bleisure_Event-Cvent_CONNECT_2023.jpg.webp?itok=F_USbJO1"
+
+           src="http://localhost:8080/images/{{eventLocation.imageFilename}}"
            style="width: 100%; height: 500px">
     </div>
     <mat-card-content>

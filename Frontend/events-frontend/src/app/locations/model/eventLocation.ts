@@ -6,4 +6,5 @@ export interface EventLocation {
   address: string;
   type: string;
   totalRating: number;
+  imageFilename: string;
 }
