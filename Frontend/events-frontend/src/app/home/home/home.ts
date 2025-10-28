@@ -11,6 +11,7 @@ import {FrontendEvent} from '../../events/model/frontendEvent';
 export class Home implements OnInit {
 
   events: FrontendEvent[] = []
+  currentDate: Date = new Date()
 
   constructor(private service: EventsService) {
   }
@@ -23,6 +24,10 @@ export class Home implements OnInit {
     this.service.getAll().subscribe({
       next: (events: FrontendEvent[]) => {
         this.events = events
+        this.events = events.map(e => ({
+          ...e,
+          date: new Date(e.date)
+        }))
         console.log(events)
       },
       error: (_) => {

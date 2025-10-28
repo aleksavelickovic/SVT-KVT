@@ -61,9 +61,9 @@ SELECT *
 FROM locations;
 
 INSERT INTO events (name, address, type, date, price, recurrent, location_id, image_filename)
-VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2025-10-28', 79.99, TRUE,
+VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', CAST(current_date() AS DATE), 79.99, TRUE,
         (SELECT id FROM locations WHERE name = 'Grand Hall'), 'tech.jpeg'),
-       ('Exit', 'Petrovaradin Fortress 2', 'FESTIVAL', '2025-10-28', 179.99, TRUE,
+       ('Exit', 'Petrovaradin Fortress 2', 'FESTIVAL', CAST(current_date() AS DATE), 179.99, TRUE,
         (SELECT id FROM locations WHERE name = 'Grand Hall'), 'exit.jpeg'),
        ('Riverside Music Fest', 'Riverside Dr, Novi Sad', 'FESTIVAL', '2025-08-21', 0.00, TRUE,
         (SELECT id FROM locations WHERE name = 'Open Air Arena'), 'riverside.jpg'),
@@ -73,7 +73,7 @@ VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2025-10-28'
         (SELECT id FROM locations WHERE name = 'Grand Hall'), 'buisniess.jpeg'),
        ('Museum Lecture Night', 'Museum Sq 3, Subotica', 'LECTURE', '2025-10-15', 12.50, FALSE,
         (SELECT id FROM locations WHERE name = 'City Museum Auditorium'), 'museum.jpg'),
-       ('Summer Open Air Gala', 'Arena Blvd, Čačak', 'GALA', '2026-06-12', 39.50, TRUE,
+       ('Summer Open Air Gala', 'Arena Blvd, Čačak', 'GALA', CAST(current_date() AS DATE), 39.50, TRUE,
         (SELECT id FROM locations WHERE name = 'Open Air Arena'), 'opengala.jpg');
 
 SELECT *
