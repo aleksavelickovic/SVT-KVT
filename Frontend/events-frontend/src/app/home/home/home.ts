@@ -52,7 +52,7 @@ export class Home implements OnInit {
   getAllLocations(): void {
     this.locationsService.getAll().subscribe({
       next: (locations: EventLocation[]) => {
-        this.locations = locations.sort((a, b) => b.totalRating - a.totalRating);
+        this.locations = locations.sort((a, b) => b.totalRating - a.totalRating).slice(0, 3);
         console.log(this.locations)
         console.log(this.locations[2].imageFilename)
       },
