@@ -46,6 +46,10 @@ export class AuthService {
     return this.http.patch<FrontendUser>(environment.apiHost + '/users', user)
   }
 
+  editProfilePicture(userEmail: string, imageFilename: string): Observable<FrontendUser> {
+    return this.http.patch<FrontendUser>(environment.apiHost + '/users/' + userEmail + '/image/' + imageFilename, null)
+  }
+
   getRole(): any {
     if (this.isLoggedIn()) {
       const accesToken: any = localStorage.getItem('user');

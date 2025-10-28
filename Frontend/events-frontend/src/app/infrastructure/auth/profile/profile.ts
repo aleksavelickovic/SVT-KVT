@@ -7,6 +7,7 @@ import {EventLocation} from '../../../locations/model/eventLocation';
 import {LocationsService} from '../../../locations/locations-service';
 import {FrontendReview} from '../../../reviews/model/review';
 import {GetReviewService} from '../../../locations/get-review-service';
+import {ImageService} from '../../../images/image-service';
 
 @Component({
   selector: 'app-profile',
@@ -27,8 +28,6 @@ export class Profile implements OnInit {
     phone_number: new FormControl(localStorage.getItem("phone_number"), Validators.required),
     address: new FormControl(localStorage.getItem("address"), Validators.required),
     city: new FormControl(localStorage.getItem("city"), Validators.required),
-
-
   })
 
   changePswForm = new FormGroup({
@@ -37,7 +36,8 @@ export class Profile implements OnInit {
     newpasswordagain: new FormControl('', Validators.required)
   })
 
-  constructor(private service: AuthService, private locationsService: LocationsService, private reviewService: GetReviewService, private router: Router) {
+  constructor(private service: AuthService, private locationsService: LocationsService, private reviewService: GetReviewService, private router: Router,
+              private imageService: ImageService) {
   }
 
   changePassword(): void {
@@ -45,7 +45,7 @@ export class Profile implements OnInit {
     console.log(form.oldpassword)
     console.log(form.newpassword)
     console.log(form.newpasswordagain)
-    if (form.newpassword == form.newpasswordagain){
+    if (form.newpassword == form.newpasswordagain) {
       this.service.changePassword(localStorage.getItem("email"), form.oldpassword, form.newpassword).subscribe({
         next: () => {
           console.log("USPESNO PROMENJENA SIFRA!")
@@ -54,7 +54,7 @@ export class Profile implements OnInit {
           console.error("Greska prilikom promene sifre!")
         }
       })
-    } else{
+    } else {
       console.error("LOZINKE SE NE POKLAPAJU!")
     }
 
@@ -91,6 +91,31 @@ export class Profile implements OnInit {
         console.error("Greska!")
       }
     })
+  }
+
+  changeProfilePicture(): void {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+      this.imageService.uploadImage(formData).subscribe({
+          next: () => {
+            console.log("USPESNO OTPREMLJENA SLIKA, editujem korisnika...")
+            this.service.editProfilePicture(localStorage.getItem("email"), this.selectedFile.name).subscribe({
+              next: (user: FrontendUser) => {
+                console.log("Uspesno izmenjena profilna fotografija!")
+                console.log(user.imageFilename) // TODO localstorage i routing
+                localStorage.setItem("image", this.selectedFile.name)
+                location.reload()
+              },
+              error: (_) => {
+                console.error("Greska prilikom izmene profilne fotografije!")
+              }
+            })
+          }
+        }
+      );
+    }
+
   }
 
   onFileSelected(event: any): void {

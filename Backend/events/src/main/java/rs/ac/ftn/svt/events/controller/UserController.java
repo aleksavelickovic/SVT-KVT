@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -102,6 +103,16 @@ public class UserController {
         forEdit.setImageFilename(userDTO.getImageFilename());
 
         return ResponseEntity.ok(userService.save(forEdit));
+    }
+
+    @CrossOrigin
+    @PatchMapping("/{email}/image/{imageFilename}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
+    public ResponseEntity<User> editProfilePicture(@PathVariable String email, @PathVariable String imageFilename) {
+        User user = userService.findByEmail(email);
+        user.setImageFilename(imageFilename);
+
+        return ResponseEntity.ok(userService.save(user));
     }
 
     @CrossOrigin
