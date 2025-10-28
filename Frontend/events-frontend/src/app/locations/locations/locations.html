@@ -72,32 +72,41 @@
         <button matButton type="submit">Sortiraj</button>
       </form>
       <br>
-      @for (FrontendReview of reviews; track FrontendReview.id) {
-        @if (FrontendReview.event?.location?.name == eventLocation.name && !FrontendReview.hidden) {
-          Ostavljeno od strane: {{ FrontendReview.madeBy }} |
-            Performans: {{ FrontendReview.rate.performance }} ✪ |
-            Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
-            Mesto: {{ FrontendReview.rate.venue }} ✪ |
-            Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪
+      @for (frontendReview of reviews; track frontendReview.id) {
+        @if (frontendReview.event?.location?.name == eventLocation.name && !frontendReview.hidden) {
+          Ostavljeno od strane: {{ frontendReview.madeBy }} |
+            Performans: {{ frontendReview.rate.performance }} ✪ |
+            Zvuk i Rasveta: {{ frontendReview.rate.soundAndLightning }} ✪ |
+            Mesto: {{ frontendReview.rate.venue }} ✪ |
+            Generalna ocena: {{ frontendReview.rate.overallImpression }} ✪
           <br>
-          Komentar: {{ FrontendReview.comment?.text }}
+          Komentar: {{ frontendReview.comment?.text }}
           <br>
           @for (ManagedLocation of managedLocations; track ManagedLocation.id) {
             @if (eventLocation.name == ManagedLocation.name) {
-              <form (ngSubmit)="addComment(FrontendReview.comment)" [formGroup]="replyForm">
+              <form (ngSubmit)="addComment(frontendReview.comment)" [formGroup]="replyForm">
                 <mat-form-field>
                   <mat-label>Odgovor...</mat-label>
                   <input formControlName="text" matInput name="text" type="text"/>
                 </mat-form-field>
                 <!--              <input type="hidden" formControlName="repliesTo" value="{{FrontendReview.comment}}">-->
                 <button type="submit" matButton>Odgovori</button>
-                <button matButton (click)="hideReview(FrontendReview.id)">Sakrij recenziju</button>
+                <button matButton (click)="hideReview(frontendReview.id)">Sakrij recenziju</button>
               </form>
             }
           }
           @for (frontendComment of comments; track frontendComment.id) {
-            @if (frontendComment.repliesTo?.id == FrontendReview.comment?.id) {
-              Odgovor menadzera: {{ frontendComment.text }}
+            @if (frontendComment.repliesTo?.id == frontendReview.comment?.id) {
+              <br>
+              Odgovor: {{ frontendComment.text }}
+              <form (ngSubmit)="addComment(frontendReview.comment)" [formGroup]="replyForm">
+                <mat-form-field>
+                  <mat-label>Odgovor...</mat-label>
+                  <input formControlName="text" matInput name="text" type="text"/>
+                </mat-form-field>
+                <!--              <input type="hidden" formControlName="repliesTo" value="{{FrontendReview.comment}}">-->
+                <button type="submit" matButton>Odgovori</button>
+              </form>
             }
           }
           <br>
