@@ -5,6 +5,12 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {LocationsService} from '../locations-service';
 import {FrontendUser} from '../../infrastructure/auth/model/User';
 import {AuthService} from '../../infrastructure/auth/auth-service';
+import {FrontendEvent} from '../../events/model/frontendEvent';
+import {EventsService} from '../../events/events-service';
+import {Chart, registerables} from 'chart.js';
+
+Chart.register(...registerables);
+
 
 @Component({
   selector: 'app-edit-location',
@@ -18,6 +24,15 @@ export class EditLocation implements OnInit {
   location?: EventLocation
   managers: FrontendUser[] = []
   role: string = ''
+
+  events: FrontendEvent[] = [];
+  filteredEvents: FrontendEvent[] = [];
+
+  fromDate!: string;
+  toDate!: string;
+
+  eventTypeChart: any;
+  freePaidChart: any;
 
   locationForm = new FormGroup({
     name: new FormControl(this.location?.name, Validators.required),
@@ -33,8 +48,52 @@ export class EditLocation implements OnInit {
 
 
   constructor(private route: ActivatedRoute, private service: LocationsService, private router: Router,
-              private userService: AuthService) {
+              private userService: AuthService, private eventService: EventsService) {
 
+  }
+
+  applyFilter() {
+    const from = new Date(this.fromDate);
+    const to = new Date(this.toDate);
+
+    this.filteredEvents = this.events.filter(e => {
+      const d = new Date(e.date);
+      return (!this.fromDate || d >= from) && (!this.toDate || d <= to);
+    });
+
+    this.updateCharts();
+  }
+
+  getCounts() {
+    const regular = this.filteredEvents.filter(e => e.recurrent).length;
+    const irregular = this.filteredEvents.length - regular;
+
+    const free = this.filteredEvents.filter(e => e.price <= 0).length;
+    const paid = this.filteredEvents.length - free;
+
+    return {regular, irregular, free, paid};
+  }
+
+  updateCharts() {
+    const {regular, irregular, free, paid} = this.getCounts();
+
+    if (this.eventTypeChart) this.eventTypeChart.destroy();
+    this.eventTypeChart = new Chart('eventTypeChart', {
+      type: 'bar',
+      data: {
+        labels: ['Regularni', 'Neredovni'],
+        datasets: [{data: [regular, irregular]}]
+      }
+    });
+
+    if (this.freePaidChart) this.freePaidChart.destroy();
+    this.freePaidChart = new Chart('freePaidChart', {
+      type: 'pie',
+      data: {
+        labels: ['Besplatni', 'Plaćeni'],
+        datasets: [{data: [free, paid]}]
+      }
+    });
   }
 
   editLocation(): void {
@@ -95,7 +154,18 @@ export class EditLocation implements OnInit {
     this.userService.userState.subscribe((result) => {
       this.role = result;
     })
-
+    this.eventService.getAll().subscribe({
+      next: (events: FrontendEvent[]) => {
+        this.events = events.map(e => ({
+          ...e,
+          date: new Date(e.date)
+        }))
+        console.log(events)
+      },
+      error: (_) => {
+        console.error("GRESKA!")
+      }
+    })
   }
 
 }

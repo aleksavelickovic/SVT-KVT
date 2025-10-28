@@ -48,4 +48,27 @@
   </form>
 }
 
+<!-- src/app/components/location-analytics/location-analytics.component.html -->
+
+<h2>Analitika Mesta</h2>
+
+<label>Od:</label>
+<input type="date" [(ngModel)]="fromDate" (change)="applyFilter()">
+
+<label>Do:</label>
+<input type="date" [(ngModel)]="toDate" (change)="applyFilter()">
+
+<div style="margin-top:20px; display:flex; gap:50px;">
+  <div style="width: 400px;">
+    <h3>Regularni vs Neredovni</h3>
+    <canvas id="eventTypeChart"></canvas>
+  </div>
+
+  <div style="width: 400px;">
+    <h3>Besplatni vs Plaćeni</h3>
+    <canvas id="freePaidChart"></canvas>
+  </div>
+</div>
+
+
 
