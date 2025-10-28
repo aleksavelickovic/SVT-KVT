@@ -42,6 +42,7 @@ class EventServiceImpl implements EventService {
         newEvent.setPrice(eventDTO.getPrice());
         newEvent.setRecurrent(eventDTO.getRecurrent());
         newEvent.setLocation(eventDTO.getLocation());
+        newEvent.setImageFilename(eventDTO.getImageFilename());
 
         eventRepository.save(newEvent);
 

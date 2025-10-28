@@ -31,7 +31,8 @@
       }
     </mat-select>
   </mat-form-field>
-<!--  <input formControlName="id" name="id" type="hidden"/>-->
+  <mat-label>Slika</mat-label>
+  <input type="file" name="image" (change)="onFileSelected($event)">
   <div>
     <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
   </div>
