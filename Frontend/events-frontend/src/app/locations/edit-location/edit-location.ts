@@ -159,7 +159,7 @@ export class EditLocation implements OnInit {
         this.events = events.map(e => ({
           ...e,
           date: new Date(e.date)
-        }))
+        })).filter(event => event.location.name == this.location.name)
         console.log(events)
       },
       error: (_) => {
