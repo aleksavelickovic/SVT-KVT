@@ -49,13 +49,13 @@
         Ocene:
         <br>
         Sortiraj Po:
-      <form [formGroup]="sortForm">
+      <form (ngSubmit)="sortReviews()" [formGroup]="sortForm">
         <mat-form-field>
           <mat-label>Sortiraj po</mat-label>
           <mat-select formControlName="sortType">
 
-            <mat-option>Ocenama</mat-option>
-            <mat-option>Datmu objavljivanja</mat-option>
+            <mat-option value="rating">Ocenama</mat-option>
+            <mat-option value="date">Datmu objavljivanja</mat-option>
 
           </mat-select>
         </mat-form-field>
@@ -64,8 +64,8 @@
           <mat-label>Redosled</mat-label>
           <mat-select formControlName="order">
 
-            <mat-option>Rastuce</mat-option>
-            <mat-option>Opadajuce</mat-option>
+            <mat-option value="asc">Rastuce</mat-option>
+            <mat-option value="desc">Opadajuce</mat-option>
 
           </mat-select>
         </mat-form-field>

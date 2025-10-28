@@ -139,7 +139,6 @@ export class Locations implements OnInit {
   getAllEvents(): void {
     this.eventService.getAll().subscribe({
       next: (events: FrontendEvent[]) => {
-        this.events = events;
         this.events = events.map(e => ({
           ...e,
           date: new Date(e.date)
@@ -155,7 +154,10 @@ export class Locations implements OnInit {
   getAllReviews(): void {
     this.getReviewService.getAll().subscribe({
       next: (reviews: FrontendReview[]) => {
-        this.reviews = reviews;
+        this.reviews = reviews.map(review => ({
+          ...review,
+          createdAt: this.parseDate(review.createdAt) ?? new Date(0)
+        }))
         console.log(this.reviews)
       },
       error: (_) => {
@@ -219,8 +221,32 @@ export class Locations implements OnInit {
     }, 50);
   }
 
+  sortReviews(): void {
+    const raw = this.sortForm.getRawValue()
+    if (raw.sortType == "date") {
+      if (raw.order == "desc") {
+        this.reviews = this.reviews.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      } else if (raw.order == "asc") {
+        this.reviews = this.reviews.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+      }
+    } else if (raw.sortType == "rating") {
+      if (raw.order == "desc") {
+        this.reviews = this.reviews.sort((a, b) => b.rate.overallImpression - a.rate.overallImpression)
+      } else if (raw.order == "asc") {
+        this.reviews = this.reviews.sort((a, b) => a.rate.overallImpression - b.rate.overallImpression)
+      }
+    }
+
+
+  }
+
   resetFilters(): void {
     this.getAllLocations()
+  }
+
+  parseDate(value: any): Date | null {
+    const [y, m, d, h = 0, min = 0, s = 0, nano = 0] = value.map(Number);
+    return new Date(y, (m || 1) - 1, d || 1, h, min, s, Math.floor((nano || 0) / 1e6));
   }
 
 
