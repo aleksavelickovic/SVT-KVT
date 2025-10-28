@@ -33,6 +33,8 @@ export class EditLocation implements OnInit {
 
   eventTypeChart: any;
   freePaidChart: any;
+  topChart: any;
+  worstChart: any;
 
   locationForm = new FormGroup({
     name: new FormControl(this.location?.name, Validators.required),
@@ -74,10 +76,26 @@ export class EditLocation implements OnInit {
     return {regular, irregular, free, paid};
   }
 
+  getTopEvents() {
+    return [...this.filteredEvents]
+      .sort((a, b) => b.price - a.price) // TODO uradi po oceni, NE po ceni
+      .slice(0, 5);
+  }
+
+  getWorstEvents() {
+    return [...this.filteredEvents]
+      .sort((a, b) => a.price - b.price)
+      .slice(0, 5);
+  }
+
   updateCharts() {
     const {regular, irregular, free, paid} = this.getCounts();
 
-    if (this.eventTypeChart) this.eventTypeChart.destroy();
+    this.eventTypeChart?.destroy();
+    this.freePaidChart?.destroy();
+    this.topChart?.destroy();
+    this.worstChart?.destroy();
+
     this.eventTypeChart = new Chart('eventTypeChart', {
       type: 'bar',
       data: {
@@ -86,12 +104,35 @@ export class EditLocation implements OnInit {
       }
     });
 
-    if (this.freePaidChart) this.freePaidChart.destroy();
     this.freePaidChart = new Chart('freePaidChart', {
       type: 'pie',
       data: {
         labels: ['Besplatni', 'Plaćeni'],
         datasets: [{data: [free, paid]}]
+      }
+    });
+
+    const top = this.getTopEvents();
+    this.topChart = new Chart('topChart', {
+      type: 'bar',
+      data: {
+        labels: top.map(e => e.name),
+        datasets: [{data: top.map(e => e.price)}]
+      },
+      options: {
+        indexAxis: 'y'
+      }
+    });
+
+    const worst = this.getWorstEvents();
+    this.worstChart = new Chart('worstChart', {
+      type: 'bar',
+      data: {
+        labels: worst.map(e => e.name),
+        datasets: [{data: worst.map(e => e.price)}]
+      },
+      options: {
+        indexAxis: 'y'
       }
     });
   }
