@@ -18,6 +18,7 @@
     <button [routerLink]="['../events']" matButton="outlined">Dogadjaji
     </button>
   }
+
   @if (role != null) {
     <button (click)="logOut()" matButton="outlined">LogOut</button>
     <p>Dobrodosli, {{ localStorage.getItem("name") }}</p>

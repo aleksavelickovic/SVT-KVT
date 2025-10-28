@@ -61,9 +61,9 @@ SELECT *
 FROM locations;
 
 INSERT INTO events (name, address, type, date, price, recurrent, location_id, image_filename)
-VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2026-11-10', 79.99, TRUE,
+VALUES ('Tech Summit 2025', '12 Market St, Belgrade', 'CONFERENCE', '2025-10-28', 79.99, TRUE,
         (SELECT id FROM locations WHERE name = 'Grand Hall'), 'tech.jpeg'),
-       ('Exit', 'Petrovaradin Fortress 2', 'FESTIVAL', '2029-11-10', 179.99, TRUE,
+       ('Exit', 'Petrovaradin Fortress 2', 'FESTIVAL', '2025-10-28', 179.99, TRUE,
         (SELECT id FROM locations WHERE name = 'Grand Hall'), 'exit.jpeg'),
        ('Riverside Music Fest', 'Riverside Dr, Novi Sad', 'FESTIVAL', '2025-08-21', 0.00, TRUE,
         (SELECT id FROM locations WHERE name = 'Open Air Arena'), 'riverside.jpg'),

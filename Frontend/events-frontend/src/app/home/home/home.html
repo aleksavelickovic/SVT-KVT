@@ -1,0 +1,54 @@
+<h2>Danasnji dogadjaji: </h2>
+@for (FrontendEvent of events; track FrontendEvent.id) {
+
+  <mat-card appearance="outlined" class="example-card">
+    <mat-card-header>
+      <!--      <div mat-card-avatar class="example-header-image"></div>-->
+      <mat-card-title>{{ FrontendEvent.name }} - ID: {{ FrontendEvent.id }}</mat-card-title>
+      <mat-card-subtitle>{{ FrontendEvent.address }}</mat-card-subtitle>
+    </mat-card-header>
+    <div>
+      <img alt="Placeholder image"
+           mat-card-image
+           src="http://localhost:8080/images/{{FrontendEvent.imageFilename}}"
+           style="width: 100%; height: 500px">
+    </div>
+    <mat-card-content>
+      <p>
+        @if (FrontendEvent.price <= 0) {
+          <p>Besplatno!</p>
+        } @else {
+          Cena: {{ FrontendEvent.price }}
+        }
+        <br>
+        Datum: {{ FrontendEvent.date }}
+        <br>
+        {{ FrontendEvent.type }}
+        <br>
+        @if (FrontendEvent.recurrent) {
+          <p>Ponavlja se!</p>
+        } @else {
+          <p>Ne ponavlja se!</p>
+        }
+        <br>
+        Lokacija: {{ FrontendEvent.location.name }}
+
+
+      </p>
+    </mat-card-content>
+    <!--    <mat-card-actions>-->
+    <!--      @for (EventLocation of managedLocations; track EventLocation.id) {-->
+    <!--        &lt;!&ndash; TODO ovako vadis lokacije kojima korisnik upravlja! &ndash;&gt;-->
+    <!--        @if (FrontendEvent.location.name == EventLocation.name) {-->
+    <!--          <h5>Upravljate lokacijom na kojoj se ovaj dogadjaj odrzava</h5>-->
+    <!--          <button [routerLink]="['../editevent/' + FrontendEvent.id]" matButton>Izmeni-->
+    <!--          </button>      &lt;!&ndash; TODO ceo CRUD&ndash;&gt;-->
+    <!--          <button (click)="deleteEvent(FrontendEvent.id)" matButton>Obrisi</button>-->
+    <!--        }-->
+
+    <!--      }-->
+
+    <!--    </mat-card-actions>-->
+  </mat-card>
+}
+

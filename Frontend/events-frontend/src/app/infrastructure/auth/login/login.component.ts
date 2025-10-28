@@ -47,8 +47,8 @@ export class LoginComponent {
 
           console.log(response.password) // TODO vraca se hash-ovan password
 
-          // this.router.navigate(['home'])
           console.log("USPESAN LOGIN!!!")
+          this.router.navigate(['../home'])
         }
       })
     }

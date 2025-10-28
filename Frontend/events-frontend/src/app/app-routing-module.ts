@@ -9,9 +9,9 @@ import {EditLocation} from './locations/edit-location/edit-location';
 import {Events} from './events/events/events';
 import {EditEvent} from './events/edit-event/edit-event';
 import {AddEvent} from './events/add-event/add-event';
-import {ReviewsModule} from './reviews/reviews-module';
 import {Profile} from './infrastructure/auth/profile/profile';
 import {AuthGuard} from './infrastructure/auth/auth-guard';
+import {Home} from './home/home/home';
 
 const routes: Routes = [
 
@@ -23,6 +23,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {role: ['ROLE_ADMINISTRATOR']}
   },
+  {component: Home, path:"home", data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}},
   {component: Locations, path: "locations"},
   {component: AddLocation, path: "addlocation", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
   {component: EditLocation, path: "editlocation/:id", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}},
