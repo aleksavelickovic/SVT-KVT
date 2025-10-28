@@ -44,7 +44,16 @@
     <button color="primary" matButton="outlined" type="submit">Promeni lozinku</button>
   </div>
 </form>
+<br>
+<h4>Profilna slika:</h4>
 
+<br>
+<img src="http://localhost:8080/images/{{localStorage.getItem('image')}}"
+     alt="avatar" style="width:354px; height:354px; border-radius:50%; object-fit:cover; margin-left:8px;">
+<form>
+<input type="file" name="image" (change)="onFileSelected($event)">
+  <button matButton type="submit">Promeni sliku</button>
+</form>
 <h2>Upravljate sledecim lokacijama: </h2>
 @for (EventLocation of locations; track EventLocation.id) {
   <mat-card appearance="outlined" class="example-card">

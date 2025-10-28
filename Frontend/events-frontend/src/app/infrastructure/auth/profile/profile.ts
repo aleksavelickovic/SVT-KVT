@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../auth-service';
-import {RegistrationRequest} from '../../../registration-requests/model/registrationRequest';
 import {FrontendUser} from '../model/User';
-import {Route, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {EventLocation} from '../../../locations/model/eventLocation';
 import {LocationsService} from '../../../locations/locations-service';
-import {ReviewService} from '../../../reviews/review-service';
 import {FrontendReview} from '../../../reviews/model/review';
 import {GetReviewService} from '../../../locations/get-review-service';
 
@@ -20,6 +18,7 @@ export class Profile implements OnInit {
 
   locations: EventLocation[] = []
   reviews: FrontendReview[] = []
+  selectedFile: File | null = null;
 
   profileForm = new FormGroup({
     email: new FormControl(localStorage.getItem("email"), Validators.email),
@@ -92,6 +91,10 @@ export class Profile implements OnInit {
         console.error("Greska!")
       }
     })
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
   }
 
   protected readonly localStorage = localStorage;

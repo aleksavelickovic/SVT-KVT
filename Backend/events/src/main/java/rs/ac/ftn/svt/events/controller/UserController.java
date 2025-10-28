@@ -99,6 +99,7 @@ public class UserController {
         forEdit.setCity(userDTO.getCity());
         forEdit.setPhoneNumber(userDTO.getPhone_number());
         forEdit.setEmail(userDTO.getEmail());
+        forEdit.setImageFilename(userDTO.getImageFilename());
 
         return ResponseEntity.ok(userService.save(forEdit));
     }
