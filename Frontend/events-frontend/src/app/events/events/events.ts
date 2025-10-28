@@ -24,7 +24,8 @@ export class Events implements OnInit {
     type: new FormControl('', Validators.required),
     location: new FormControl(this.locations[0], Validators.required),
     address: new FormControl('', Validators.required),
-    price: new FormControl(null, Validators.required)
+    price: new FormControl(null, Validators.required),
+    date: new FormControl(null, Validators.required)
   })
 
 
@@ -48,7 +49,10 @@ export class Events implements OnInit {
   getAllEvents(): void {
     this.service.getAll().subscribe({
       next: (events: FrontendEvent[]) => {
-        this.events = events
+        this.events = events.map(e => ({
+          ...e,
+          date: new Date(e.date)
+        }))
         console.log(events)
       },
       error: (_) => {
@@ -92,6 +96,7 @@ export class Events implements OnInit {
       const type = raw.type;
       const price = raw.price;
       const location: ɵRawValue<FormControl<EventLocation | null>> = raw.location
+      let date = raw.date;
       console.log(address)
       console.log(type)
       console.log(price)
@@ -114,6 +119,13 @@ export class Events implements OnInit {
       if (location != null) {
         this.events = this.events.filter(e => e.location.name == location.name);
         console.log(this.events)
+      }
+      if (date != null) {
+        console.log("IZABRAN DATUM: " + date)
+        console.log("TIP DATUMA: " + typeof(date))
+        date = new Date(date)
+        console.log("TIP DATUMA, OPET: " + typeof(date))
+        this.events = this.events.filter(e => e.date.getDate() == date.getDate())
       }
     }, 50);
   }
