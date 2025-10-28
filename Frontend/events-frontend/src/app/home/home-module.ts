@@ -1,7 +1,11 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+
 import {Home} from './home/home';
 import {MatButton} from '@angular/material/button';
+import {CommonModule} from '@angular/common';
+
+import {ReactiveFormsModule} from '@angular/forms';
+
 import {
   MatCard,
   MatCardActions,
@@ -11,6 +15,9 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from '@angular/material/card';
+import {MatLabel} from '@angular/material/form-field';
+import {MatFormField, MatInput} from '@angular/material/input';
+import {MaterialModule} from '../material/material-module';
 
 
 @NgModule({
@@ -26,7 +33,12 @@ import {
     MatCardHeader,
     MatCardImage,
     MatCardSubtitle,
-    MatCardTitle
+    MatCardTitle,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    ReactiveFormsModule,
+    MaterialModule
   ]
 })
 export class HomeModule { }

@@ -23,7 +23,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {role: ['ROLE_ADMINISTRATOR']}
   },
-  {component: Home, path:"home", data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}},
+  {component: Home, path:"home", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}},
   {component: Locations, path: "locations"},
   {component: AddLocation, path: "addlocation", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
   {component: EditLocation, path: "editlocation/:id", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}},

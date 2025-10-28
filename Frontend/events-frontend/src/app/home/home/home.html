@@ -54,4 +54,68 @@
     </mat-card>
   }
 }
+<h2>Najpopularnije lokacije: </h2>
+@for (eventLocation of locations; track eventLocation.id) {
+
+  <mat-card appearance="outlined" class="example-card">
+    <mat-card-header>
+      <!--      <div mat-card-avatar class="example-header-image"></div>-->
+      <mat-card-title>{{ eventLocation.name }} - ID: {{ eventLocation.id }}</mat-card-title>
+      <mat-card-subtitle>{{ eventLocation.address }}</mat-card-subtitle>
+    </mat-card-header>
+    <div>
+
+      <img alt="Placeholder image"
+           mat-card-image
+
+           src="http://localhost:8080/images/{{eventLocation.imageFilename}}"
+           style="width: 100%; height: 500px">
+    </div>
+    <mat-card-content>
+      <p>
+        {{ eventLocation.description }}
+        <br>
+        Kreirano: {{ eventLocation.createdAt }}
+        <br>
+        {{ eventLocation.type }}
+        <br>
+        Ocene:
+        <br>
+        @for (FrontendReview of reviews; track FrontendReview.id) {
+          @if (FrontendReview.event?.location?.name == eventLocation.name && !FrontendReview.hidden) {
+            Ostavljeno od strane: {{ FrontendReview.madeBy }} |
+              Performans: {{ FrontendReview.rate.performance }} ✪ |
+              Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
+              Mesto: {{ FrontendReview.rate.venue }} ✪ |
+              Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪
+            <br>
+            Komentar: {{ FrontendReview.comment?.text }}
+            @for (frontendComment of comments; track frontendComment.id) {
+              @if (frontendComment.repliesTo?.id == FrontendReview.comment?.id) {
+                Odgovor menadzera: {{ frontendComment.text }}
+              }
+            }
+            <br>
+          }
+        }
+
+        <br>
+        Ukupna Ocena: {{ eventLocation.totalRating }}
+        <br>
+        Predstojeci Dogadjaji:
+        @for (frontendEvent of events; track frontendEvent.id) {
+          @if (frontendEvent.location.id == eventLocation.id && frontendEvent.date.getTime() > currentDate.getTime()) {
+            <h4>{{ frontendEvent.name }}</h4>
+            <p>{{ frontendEvent.date.getDay() }}.{{ frontendEvent.date.getMonth() }}
+              .{{ frontendEvent.date.getFullYear() }}</p>
+          }
+        }
+        <br>
+
+      </p>
+    </mat-card-content>
+
+  </mat-card>
+}
+
 

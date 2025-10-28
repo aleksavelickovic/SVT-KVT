@@ -5,7 +5,6 @@ import {Locations} from './locations/locations';
 import {AddLocation} from './add-location/add-location';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-// ✅ Import *modules*, not components
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
