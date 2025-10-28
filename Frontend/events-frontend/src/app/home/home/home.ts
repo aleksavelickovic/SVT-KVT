@@ -65,6 +65,10 @@ export class Home implements OnInit {
   getAllReviews(): void {
     this.getReviewService.getAll().subscribe({
       next: (reviews: FrontendReview[]) => {
+        this.reviews = reviews.map(review => ({
+          ...review,
+          createdAt: new Date(review.createdAt)
+        }))
         this.reviews = reviews;
         console.log(this.reviews)
       },
@@ -85,4 +89,14 @@ export class Home implements OnInit {
       }
     })
   }
+
+  getReviewsForLocation(locationId: number): FrontendReview[] {
+    if (!this.reviews || this.reviews.length === 0) return [];
+    return this.reviews
+      .filter(r => r.event?.location?.id == locationId && !r.hidden)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice(0, 3);
+  }
+
+  protected readonly location = location;
 }

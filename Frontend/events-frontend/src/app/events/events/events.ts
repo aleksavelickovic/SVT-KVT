@@ -19,6 +19,7 @@ export class Events implements OnInit {
   locations: EventLocation[] = []
   managedLocations: EventLocation[] = []
 
+
   searchFormEvents = new FormGroup({
     type: new FormControl('', Validators.required),
     location: new FormControl(this.locations[0], Validators.required),

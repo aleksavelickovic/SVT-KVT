@@ -81,7 +81,7 @@
         <br>
         Ocene:
         <br>
-        @for (FrontendReview of reviews; track FrontendReview.id) {
+        @for (FrontendReview of getReviewsForLocation(eventLocation.id); track FrontendReview.id) {
           @if (FrontendReview.event?.location?.name == eventLocation.name && !FrontendReview.hidden) {
             Ostavljeno od strane: {{ FrontendReview.madeBy }} |
               Performans: {{ FrontendReview.rate.performance }} ✪ |
@@ -96,6 +96,7 @@
               }
             }
             <br>
+            <!--            {{ reviewCounter = reviewCounter + 1 }}-->
           }
         }
 
