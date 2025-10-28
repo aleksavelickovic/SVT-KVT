@@ -31,6 +31,7 @@ export class EditLocation implements OnInit {
     email: new FormControl('', Validators.required),
   })
 
+
   constructor(private route: ActivatedRoute, private service: LocationsService, private router: Router,
               private userService: AuthService) {
 
