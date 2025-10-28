@@ -45,6 +45,11 @@ export class Locations implements OnInit {
     repliesTo: new FormControl(null, Validators.required)
   })
 
+  sortForm = new FormGroup({
+    sortType: new FormControl(null, Validators.required),
+    order: new FormControl(null, Validators.required)
+  })
+
 
   constructor(private service: LocationsService, private getReviewService: GetReviewService, private route: ActivatedRoute,
               private router: Router, private authService: AuthService, private commentService: CommentService, private reviewService: ReviewService,

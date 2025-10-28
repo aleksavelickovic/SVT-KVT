@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +29,7 @@ public class Review {
     @Column
     private Boolean hidden;
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Event event;
     @OneToOne
     private Rate rate;

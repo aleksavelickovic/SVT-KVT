@@ -48,55 +48,79 @@
         <br>
         Ocene:
         <br>
-        @for (FrontendReview of reviews; track FrontendReview.id) {
-          @if (FrontendReview.event?.location?.name == eventLocation.name && !FrontendReview.hidden) {
-            Ostavljeno od strane: {{ FrontendReview.madeBy }} |
-              Performans: {{ FrontendReview.rate.performance }} ✪ |
-              Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
-              Mesto: {{ FrontendReview.rate.venue }} ✪ |
-              Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪
-            <br>
-            Komentar: {{ FrontendReview.comment?.text }}
-            <br>
-            @for (ManagedLocation of managedLocations; track ManagedLocation.id) {
-              @if (eventLocation.name == ManagedLocation.name) {
-                <form (ngSubmit)="addComment(FrontendReview.comment)" [formGroup]="replyForm">
-                  <mat-form-field>
-                    <mat-label>Odgovor...</mat-label>
-                    <input formControlName="text" matInput name="text" type="text"/>
-                  </mat-form-field>
-                  <!--              <input type="hidden" formControlName="repliesTo" value="{{FrontendReview.comment}}">-->
-                  <button type="submit" matButton>Odgovori</button>
-                  <button matButton (click)="hideReview(FrontendReview.id)">Sakrij recenziju</button>
-                </form>
-              }
-            }
-            @for (frontendComment of comments; track frontendComment.id) {
-              @if (frontendComment.repliesTo?.id == FrontendReview.comment?.id) {
-                Odgovor menadzera: {{ frontendComment.text }}
-              }
-            }
-            <br>
-            <br>
-          }
-        }
+        Sortiraj Po:
+      <form [formGroup]="sortForm">
+        <mat-form-field>
+          <mat-label>Sortiraj po</mat-label>
+          <mat-select formControlName="sortType">
 
-        <br>
-        Ukupna Ocena: {{ eventLocation.totalRating }}
-        <br>
-        Predstojeci Dogadjaji:
-        @for (frontendEvent of events; track frontendEvent.id) {
-          @if (frontendEvent.location.id == eventLocation.id && frontendEvent.date.getTime() > currentDate.getTime()) {
-            <h4>{{ frontendEvent.name }}</h4>
-            <p>{{ frontendEvent.date.getDay() }}.{{ frontendEvent.date.getMonth() }}
-              .{{ frontendEvent.date.getFullYear() }}</p>
-          }
-        }
-        <br>
-        Oceni:
-        <app-review-form [currentLocation]="eventLocation"></app-review-form>
+            <mat-option>Ocenama</mat-option>
+            <mat-option>Datmu objavljivanja</mat-option>
 
-      </p>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+                  <mat-label>Redosled</mat-label>
+          <mat-select formControlName="order">
+
+            <mat-option>Rastuce</mat-option>
+            <mat-option>Opadajuce</mat-option>
+
+          </mat-select>
+        </mat-form-field>
+        <button matButton type="submit">Sortiraj</button>
+      </form>
+      <br>
+      @for (FrontendReview of reviews; track FrontendReview.id) {
+        @if (FrontendReview.event?.location?.name == eventLocation.name && !FrontendReview.hidden) {
+          Ostavljeno od strane: {{ FrontendReview.madeBy }} |
+            Performans: {{ FrontendReview.rate.performance }} ✪ |
+            Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
+            Mesto: {{ FrontendReview.rate.venue }} ✪ |
+            Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪
+          <br>
+          Komentar: {{ FrontendReview.comment?.text }}
+          <br>
+          @for (ManagedLocation of managedLocations; track ManagedLocation.id) {
+            @if (eventLocation.name == ManagedLocation.name) {
+              <form (ngSubmit)="addComment(FrontendReview.comment)" [formGroup]="replyForm">
+                <mat-form-field>
+                  <mat-label>Odgovor...</mat-label>
+                  <input formControlName="text" matInput name="text" type="text"/>
+                </mat-form-field>
+                <!--              <input type="hidden" formControlName="repliesTo" value="{{FrontendReview.comment}}">-->
+                <button type="submit" matButton>Odgovori</button>
+                <button matButton (click)="hideReview(FrontendReview.id)">Sakrij recenziju</button>
+              </form>
+            }
+          }
+          @for (frontendComment of comments; track frontendComment.id) {
+            @if (frontendComment.repliesTo?.id == FrontendReview.comment?.id) {
+              Odgovor menadzera: {{ frontendComment.text }}
+            }
+          }
+          <br>
+          <br>
+        }
+      }
+
+      <br>
+      Ukupna Ocena: {{ eventLocation.totalRating }}
+      <br>
+      Predstojeci Dogadjaji:
+      @for (frontendEvent of events; track frontendEvent.id) {
+        @if (frontendEvent.location.id == eventLocation.id && frontendEvent.date.getTime() > currentDate.getTime()) {
+          <h4>{{ frontendEvent.name }}</h4>
+          <p>{{ frontendEvent.date.getDay() }}.{{ frontendEvent.date.getMonth() }}
+            .{{ frontendEvent.date.getFullYear() }}</p>
+        }
+      }
+      <br>
+      Oceni:
+      <app-review-form [currentLocation]="eventLocation"></app-review-form>
+
+
     </mat-card-content>
     <mat-card-actions>
       @if (role == "ROLE_ADMINISTRATOR") {
