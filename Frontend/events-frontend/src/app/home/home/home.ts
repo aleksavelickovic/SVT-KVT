@@ -36,7 +36,6 @@ export class Home implements OnInit {
   getAllEvents(): void {
     this.eventsService.getAll().subscribe({
       next: (events: FrontendEvent[]) => {
-        this.events = events
         this.events = events.map(e => ({
           ...e,
           date: new Date(e.date)
@@ -65,11 +64,11 @@ export class Home implements OnInit {
   getAllReviews(): void {
     this.getReviewService.getAll().subscribe({
       next: (reviews: FrontendReview[]) => {
+        console.log("DATUM REVIEW-a: " + reviews[0].createdAt)
         this.reviews = reviews.map(review => ({
           ...review,
-          createdAt: new Date(review.createdAt)
+          createdAt: this.parseDate(review.createdAt) ?? new Date(0)
         }))
-        this.reviews = reviews;
         console.log(this.reviews)
       },
       error: (_) => {
@@ -96,6 +95,11 @@ export class Home implements OnInit {
       .filter(r => r.event?.location?.id == locationId && !r.hidden)
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
       .slice(0, 3);
+  }
+
+  parseDate(value: any): Date | null {
+    const [y, m, d, h = 0, min = 0, s = 0, nano = 0] = value.map(Number);
+    return new Date(y, (m || 1) - 1, d || 1, h, min, s, Math.floor((nano || 0) / 1e6));
   }
 
   protected readonly location = location;
