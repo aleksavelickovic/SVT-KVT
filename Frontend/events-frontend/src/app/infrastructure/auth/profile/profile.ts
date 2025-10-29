@@ -38,6 +38,7 @@ export class Profile implements OnInit {
 
   passwordsDontMatch: boolean = false
   wrongPassword:boolean = false
+  succesfulPassword:boolean = false
 
   constructor(private service: AuthService, private locationsService: LocationsService, private reviewService: GetReviewService, private router: Router,
               private imageService: ImageService) {
@@ -51,6 +52,7 @@ export class Profile implements OnInit {
     if (form.newpassword == form.newpasswordagain) {
       this.service.changePassword(localStorage.getItem("email"), form.oldpassword, form.newpassword).subscribe({
         next: () => {
+          this.succesfulPassword = true
           console.log("USPESNO PROMENJENA SIFRA!")
         },
         error: (_) => {

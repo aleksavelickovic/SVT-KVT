@@ -34,6 +34,9 @@
   @if (wrongPassword) {
     <h3 style="background-color: red">Uneli ste pogresnu sifru!</h3>
   }
+  @if (succesfulPassword) {
+    <h3 style="background-color: green">Uspesno ste promenili sifru!</h3>
+  }
   <mat-form-field>
     <mat-label>Stara lozinka:</mat-label>
     <input formControlName="oldpassword" matInput name="oldpassword" type="password"/>
