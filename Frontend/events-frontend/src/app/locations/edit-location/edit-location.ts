@@ -33,8 +33,8 @@ export class EditLocation implements OnInit {
 
   eventTypeChart: any;
   freePaidChart: any;
-  topChart: any;
-  worstChart: any;
+  mostExpensiveChart: any;
+  cheapestChart: any;
 
   locationForm = new FormGroup({
     name: new FormControl(this.location?.name, Validators.required),
@@ -76,16 +76,14 @@ export class EditLocation implements OnInit {
     return {regular, irregular, free, paid};
   }
 
-  getTopEvents() {
+  mostExpensiveEvents() {
     return [...this.filteredEvents]
-      .sort((a, b) => b.price - a.price) // TODO uradi po oceni, NE po ceni
-      .slice(0, 5);
+      .sort((a, b) => b.price - a.price)
   }
 
-  getWorstEvents() {
+  cheapestEvents() {
     return [...this.filteredEvents]
       .sort((a, b) => a.price - b.price)
-      .slice(0, 5);
   }
 
   updateCharts() {
@@ -93,13 +91,13 @@ export class EditLocation implements OnInit {
 
     this.eventTypeChart?.destroy();
     this.freePaidChart?.destroy();
-    this.topChart?.destroy();
-    this.worstChart?.destroy();
+    this.mostExpensiveChart?.destroy();
+    this.cheapestChart?.destroy();
 
     this.eventTypeChart = new Chart('eventTypeChart', {
-      type: 'bar',
+      type: 'pie',
       data: {
-        labels: ['Regularni', 'Neredovni'],
+        labels: ['Redovni', 'Neredovni'],
         datasets: [{data: [regular, irregular]}]
       }
     });
@@ -112,24 +110,24 @@ export class EditLocation implements OnInit {
       }
     });
 
-    const top = this.getTopEvents();
-    this.topChart = new Chart('topChart', {
+    const expensive = this.mostExpensiveEvents();
+    this.mostExpensiveChart = new Chart('topChart', {
       type: 'bar',
       data: {
-        labels: top.map(e => e.name),
-        datasets: [{data: top.map(e => e.price)}]
+        labels: expensive.map(e => e.name),
+        datasets: [{data: expensive.map(e => e.price)}]
       },
       options: {
         indexAxis: 'y'
       }
     });
 
-    const worst = this.getWorstEvents();
-    this.worstChart = new Chart('worstChart', {
+    const cheapest = this.cheapestEvents();
+    this.cheapestChart = new Chart('worstChart', {
       type: 'bar',
       data: {
-        labels: worst.map(e => e.name),
-        datasets: [{data: worst.map(e => e.price)}]
+        labels: cheapest.map(e => e.name),
+        datasets: [{data: cheapest.map(e => e.price)}]
       },
       options: {
         indexAxis: 'y'
