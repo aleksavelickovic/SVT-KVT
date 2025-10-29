@@ -28,6 +28,12 @@
   <br>
   Lozinka:
   <br>
+  @if (passwordsDontMatch) {
+    <h3 style="background-color: red">Lozinke se ne poklapaju!</h3>
+  }
+  @if (wrongPassword) {
+    <h3 style="background-color: red">Uneli ste pogresnu sifru!</h3>
+  }
   <mat-form-field>
     <mat-label>Stara lozinka:</mat-label>
     <input formControlName="oldpassword" matInput name="oldpassword" type="password"/>

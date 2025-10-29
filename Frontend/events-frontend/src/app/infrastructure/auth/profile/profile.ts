@@ -36,6 +36,9 @@ export class Profile implements OnInit {
     newpasswordagain: new FormControl('', Validators.required)
   })
 
+  passwordsDontMatch: boolean = false
+  wrongPassword:boolean = false
+
   constructor(private service: AuthService, private locationsService: LocationsService, private reviewService: GetReviewService, private router: Router,
               private imageService: ImageService) {
   }
@@ -51,10 +54,12 @@ export class Profile implements OnInit {
           console.log("USPESNO PROMENJENA SIFRA!")
         },
         error: (_) => {
+          this.wrongPassword = true
           console.error("Greska prilikom promene sifre!")
         }
       })
     } else {
+      this.passwordsDontMatch = true
       console.error("LOZINKE SE NE POKLAPAJU!")
     }
 
