@@ -70,6 +70,10 @@ mat-card-actions {
   padding-bottom: 8px;
 }
 
+mat-error {
+  background: red;
+}
+
 /*TODO*/
 /*mat-option {*/
 /*  background-color: dimgray;*/

@@ -1,18 +1,27 @@
 @if (succesfulRequest) {
-  <h1>Uspesno poslat zahtev!</h1>
+  <h1 style="background-color: green">Zahtev je uspesno poslat! Vas zahtev ce biti obradjen u najkracem roku.</h1>
 }
 <form (ngSubmit)="create()" [formGroup]='registerForm'>
   <mat-form-field>
     <mat-label>Email</mat-label>
     <input formControlName="email" matInput name="email" type="email"/>
+    @if (registerForm.get("email").touched && registerForm.get("email").value == "") {
+      <div style="background-color: red">Email ne sme biti prazan!</div>
+    }
   </mat-form-field>
   <mat-form-field>
     <mat-label>Lozinka</mat-label>
     <input formControlName="password" matInput name="password" type="password"/>
+    @if (registerForm.get("password").touched && registerForm.get("password").value == "") {
+      <div style="background-color: red">Sifra ne sme biti prazna!</div>
+    }
   </mat-form-field>
   <mat-form-field>
     <mat-label>Adresa</mat-label>
     <input formControlName="address" matInput name="address" type="text"/>
+    @if (registerForm.get("address").touched && registerForm.get("address").value == "") {
+      <div style="background-color: red">Addresa ne sme biti prazna!</div>
+    }
   </mat-form-field>
   <div>
     <button color="primary" matButton="outlined" type="submit">Posaljite zahtev</button>
