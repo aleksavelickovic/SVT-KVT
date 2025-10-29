@@ -59,9 +59,9 @@
         {{ FrontendEvent.type }}
         <br>
         @if (FrontendEvent.recurrent) {
-          <p>Ponavlja se!</p>
+          <p style="background-color: green">Ponavlja se!</p>
         } @else {
-          <p>Ne ponavlja se!</p>
+          <p style="background-color: red">Ne ponavlja se!</p>
         }
         <br>
         Lokacija: {{ FrontendEvent.location.name }}

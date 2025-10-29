@@ -21,6 +21,8 @@ export class LoginComponent {
 
   }
 
+  failedLogin: boolean = false
+
   login(): void {
 
     if (this.loginForm.valid) {
@@ -53,6 +55,10 @@ export class LoginComponent {
           } else {
             this.router.navigate(['../home'])
           }
+        },
+        error: () => {
+          this.failedLogin = true
+          console.log("Greska prilikom logovanja!")
         }
       })
     }

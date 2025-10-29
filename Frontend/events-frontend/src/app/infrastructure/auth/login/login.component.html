@@ -1,18 +1,27 @@
+@if (failedLogin) {
+  <h2 style="background-color: red">Pogresan e-mail ili lozinka!</h2>
+}
 <form (ngSubmit)="login()" [formGroup]='loginForm'>
   <mat-form-field>
     <mat-label>Email</mat-label>
     <input formControlName="email" matInput name="email" type="email"/>
+    @if (loginForm.get("email").touched && loginForm.get("email").value == "") {
+      <div style="background-color: red">Email ne sme biti prazan!</div>
+    }
   </mat-form-field>
   <mat-form-field>
     <mat-label>Lozinka</mat-label>
     <input formControlName="password" matInput name="password" type="password"/>
+    @if (loginForm.get("password").touched && loginForm.get("password").value == "") {
+      <div style="background-color: red">Sifra ne sme biti prazna!</div>
+    }
   </mat-form-field>
   <div>
     <button color="primary" matButton="outlined" type="submit">Prijava</button>
   </div>
   <br>
   <div>
-    <button [routerLink]="['../register']" color="primary" matButton="outlined">Neamte nalog? Posaljite zahtev za
+    <button [routerLink]="['../register']" color="primary" matButton="outlined">Nemate nalog? Posaljite zahtev za
       registraciju
     </button>
   </div>

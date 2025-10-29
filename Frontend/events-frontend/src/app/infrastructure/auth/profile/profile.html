@@ -54,8 +54,10 @@
 <h4>Profilna slika:</h4>
 
 <br>
+<div style="margin: auto; width: 30%">
 <img src="http://localhost:8080/images/{{localStorage.getItem('image')}}"
      alt="avatar" style="width:354px; height:354px; border-radius:50%; object-fit:cover; margin-left:8px;">
+</div>
 <form (ngSubmit)="changeProfilePicture()">
   <input type="file" name="image" (change)="onFileSelected($event)">
   <button matButton type="submit">Promeni sliku</button>
@@ -107,16 +109,17 @@
     </mat-card-content>
   </mat-card>
 }
-<h3>Vase recenzije: </h3>
+<h3 style="margin: auto; width: 20%">Vase recenzije: </h3>
+<br>
 @for (FrontendReview of reviews; track FrontendReview.id) {
   @if (FrontendReview.madeBy == localStorage.getItem("name")) {
-    Ostavljeno od strane: {{ FrontendReview.madeBy }} |
-      Za Lokaciju: {{ FrontendReview.event?.location?.name }} |
-      Performans: {{ FrontendReview.rate.performance }} ✪ |
-      Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
-      Mesto: {{ FrontendReview.rate.venue }} ✪ |
-      Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪ <br>
-    Komentar: {{ FrontendReview.comment?.text }}
+     <p style="margin: auto; width: 20%">  Za Lokaciju: {{ FrontendReview.event?.location?.name }}  </p>
+    <p style="margin: auto; width: 20%">Performans: {{ FrontendReview.rate.performance }} ✪ </p>
+    <p style="margin: auto; width: 20%">Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ </p>
+    <p style="margin: auto; width: 20%">Mesto: {{ FrontendReview.rate.venue }} ✪ </p>
+    <p style="margin: auto; width: 20%">Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪ </p>
+    <p style="margin: auto; width: 20%">Komentar: {{ FrontendReview.comment?.text }}</p>
+    <br>
     <br>
   }
 }

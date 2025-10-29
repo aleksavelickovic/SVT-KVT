@@ -1,9 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 /*TODO background color*/
-/*body {*/
-/*  background-color: rgb(32, 32, 29);*/
-/*}*/
+body {
+  background-color: rgb(186, 206, 233);
+}
 
+form {
+  margin: auto;
+  width: 30%;
+}
+table, th, td {
+  margin: auto;
+  /*width: 10%;*/
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: auto;
+  width: 30%;
+}
+
+p {
+  margin: auto;
+  width: 20%;
+}
 button[matButton] {
   margin-left: 16px;
   background: #fff;
@@ -31,6 +49,7 @@ button[matButton]:hover {
 
 .example-card:hover {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  background: rgb(117, 170, 240);
 }
 
 .example-header-image {
