@@ -32,20 +32,6 @@ public class LocationController {
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<List<Location>> findAll() {
-/*
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("akica208@gmail.com");
-        msg.setSubject("TEST poruka");
-        msg.setText("Ovo je TEST poruka mejl!");
-
-        try {
-            mailSender.send(msg);
-            System.out.println("Poslat MEJL!");
-        } catch (Exception ex) {
-            System.err.println("Greška pri slanju mejla: " + ex.getMessage());
-            System.err.println("Greška pri slanju mejla: " + ex.getMessage());
-        }
-*/
         return ResponseEntity.ok(locationService.findAll());
     }
 
@@ -58,6 +44,7 @@ public class LocationController {
 
     @CrossOrigin
     @GetMapping("/{id}/managers")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<List<User>> getAllManagers(@PathVariable Long id) {
         List<User> users = new ArrayList<User>();
         for (User user : userService.findAll()) {
@@ -72,6 +59,7 @@ public class LocationController {
 
     @CrossOrigin
     @PatchMapping("/{locationId}/{userEmail}")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Location> addManager(@PathVariable Long locationId, @PathVariable String userEmail) {
         Location location = locationService.findOne(locationId);
         User user = userService.findByEmail(userEmail);
@@ -117,6 +105,7 @@ public class LocationController {
 
     @CrossOrigin
     @GetMapping("/managed/{id}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<List<Location>> findManagedLocations(@PathVariable Long id) {
         return ResponseEntity.ok(locationService.findAllManagedLocations(id));
     }

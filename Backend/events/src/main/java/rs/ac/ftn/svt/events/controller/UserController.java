@@ -11,7 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,16 +64,6 @@ public class UserController {
     @Autowired
     private JavaMailSender mailSender;
 
-    /* Ili preporucen nacin: Constructor Dependency Injection
-    @Autowired
-    public UserController(UserServiceImpl userService, AuthenticationManager authenticationManager,
-                          UserDetailsService userDetailsService, TokenUtils tokenUtils){
-        this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.tokenUtils = tokenUtils;requests
-    }
-    */
     @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<UserDTO> create(@RequestBody @Validated UserDTO newUser) {
@@ -121,18 +110,13 @@ public class UserController {
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response, HttpSession session) {
         System.out.println("OKINUO SE LOGIN CONTROLLER! 1");
 
-        // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
-        // AuthenticationException
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         System.out.println("OKINUO SE LOGIN CONTROLLER! 2");
 
-        // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
-        // kontekst
         SecurityContextHolder.getContext().setAuthentication(authentication);
         System.out.println("OKINUO SE LOGIN CONTROLLER! 3");
 
-        // Kreiraj token za tog korisnika
         UserDetails user = (UserDetails) authentication.getPrincipal();
 
         User loggedInUser = userService.findByEmail(user.getUsername());
@@ -143,19 +127,10 @@ public class UserController {
         int expiresIn = tokenUtils.getExpiredIn();
         System.out.println("OKINUO SE LOGIN CONTROLLER! 4");
         System.out.println("TOKEN: " + jwt);
-        // Vrati token kao odgovor na uspesnu autentifikaciju
+
         return ResponseEntity.ok(new UserDTO(jwt, (long) expiresIn, loggedInUser.getId(), loggedInUser.getEmail(), loggedInUser.getPassword(), loggedInUser.getName(),
                 loggedInUser.getPhoneNumber(), loggedInUser.getAddress(), loggedInUser.getBirthday(), loggedInUser.getCity(), loggedInUser.getImageFilename()));
     }
-
-//    @CrossOrigin
-//    @GetMapping("/loggedin")
-//   @PreAuthorize("hasAnyRole('USER', 'ADMINISTRATOR')")
-//    public ResponseEntity<User> getLoggedInUser(HttpSession session) {
-//        User user = (User) session.getAttribute("korisnik");
-//        System.out.println("IME KORISNIKA:" + user.getName());
-//        return ResponseEntity.ok((User) session.getAttribute("korisnik"));
-//    }
 
     @CrossOrigin
     @GetMapping("/requests")

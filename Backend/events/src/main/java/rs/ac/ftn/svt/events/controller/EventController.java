@@ -27,7 +27,7 @@ public class EventController {
     @CrossOrigin
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMINISTRATOR')")
-    public ResponseEntity<?> deleteLocation(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
         System.out.println("DELETE EVENT-A OKINUTO!");
         eventService.delete(id);
         return ResponseEntity.ok(null);
@@ -58,7 +58,7 @@ public class EventController {
 
     @CrossOrigin
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Event> addEvent(@RequestBody EventDTO eventDTO) {
         System.out.println("POZVANA ADD EVENT!");
         return ResponseEntity.ok(eventService.createEvent(eventDTO));
