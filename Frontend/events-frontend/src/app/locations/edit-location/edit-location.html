@@ -1,4 +1,4 @@
-<form (ngSubmit)="editLocation()" [formGroup]='locationForm' novalidate>
+<form (ngSubmit)="editLocation()" [formGroup]='locationForm'>
   <mat-form-field>
     <mat-label>Ime</mat-label>
     <input formControlName="name" matInput name="name" type="text" value="{{location?.name}}"/>

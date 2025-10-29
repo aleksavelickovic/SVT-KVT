@@ -1,19 +1,35 @@
-<form (ngSubmit)="addReview()" [formGroup]='reviewForm' novalidate>
+<form (ngSubmit)="addReview()" [formGroup]='reviewForm'>
   <mat-form-field>
     <mat-label>Performans</mat-label>
     <input formControlName="performance" matInput name="performance" type="number"/>
+    @if (reviewForm.get('performance')?.touched && reviewForm.get('performance').value < 1 || reviewForm.get('performance').value > 10) {
+      <mat-error style="background-color: red">Vrednost mora biti izmedju 1 i 10!</mat-error>
+      {{ reviewForm.get('performance').setValue(1) }}
+    }
   </mat-form-field>
   <mat-form-field>
     <mat-label>Zvuk i Osvetljenje</mat-label>
     <input formControlName="soundAndLightning" matInput name="soundAndLightning" type="number"/>
+    @if (reviewForm.get('soundAndLightning')?.touched && reviewForm.get('soundAndLightning').value < 1 || reviewForm.get('soundAndLightning').value > 10) {
+      <mat-error style="background-color: red">Vrednost mora biti izmedju 1 i 10!</mat-error>
+      {{ reviewForm.get('soundAndLightning').setValue(1) }}
+    }
   </mat-form-field>
   <mat-form-field>
     <mat-label>Organizacija</mat-label>
     <input formControlName="venue" matInput name="venue" type="number"/>
+    @if (reviewForm.get('venue')?.touched && reviewForm.get('venue').value < 1 || reviewForm.get('venue').value > 10) {
+      <mat-error style="background-color: red">Vrednost mora biti izmedju 1 i 10!</mat-error>
+      {{ reviewForm.get('venue').setValue(1) }}
+    }
   </mat-form-field>
   <mat-form-field>
     <mat-label>Generalni utisak</mat-label>
     <input formControlName="overallImpression" matInput name="overallImpression" type="number"/>
+    @if (reviewForm.get('overallImpression')?.touched && reviewForm.get('overallImpression').value < 1 || reviewForm.get('overallImpression').value > 10) {
+      <mat-error style="background-color: red">Vrednost mora biti izmedju 1 i 10!</mat-error>
+      {{ reviewForm.get('overallImpression').setValue(1) }}
+    }
   </mat-form-field>
   <mat-form-field>
     <mat-label>Dogadjaj</mat-label>
@@ -21,8 +37,8 @@
 
       <!--      @for (location of locations; track location.id) {-->
       @for (FrontendEvent of events; track FrontendEvent.id) {
-<!--        {{ console.log("DATUM FRONTEND EVENTA " + FrontendEvent.date.getTime) }}-->
-<!--        {{ console.log("TRENUTNO VREME " + currentDate.getTime())}}-->
+        <!--        {{ console.log("DATUM FRONTEND EVENTA " + FrontendEvent.date.getTime) }}-->
+          <!--        {{ console.log("TRENUTNO VREME " + currentDate.getTime())}}-->
         @if (FrontendEvent.location.name == currentLocation?.name && FrontendEvent.recurrent && FrontendEvent.date.getTime() < currentDate.getTime()) {
           <mat-option [value]="FrontendEvent">{{ FrontendEvent.name }}</mat-option>
         }

@@ -1,5 +1,5 @@
 <p>add-event works!</p>
-<form (ngSubmit)="addEvent()" [formGroup]='eventForm' novalidate>
+<form (ngSubmit)="addEvent()" [formGroup]='eventForm'>
   <mat-form-field>
     <mat-label>Ime</mat-label>
     <input formControlName="name" matInput name="name" type="text"/>

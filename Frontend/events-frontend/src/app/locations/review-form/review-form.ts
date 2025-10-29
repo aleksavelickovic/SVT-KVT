@@ -30,12 +30,12 @@ export class ReviewForm implements OnInit {
   submitted: EventEmitter<any> = new EventEmitter<any>();
 
   reviewForm = new FormGroup({
-    performance: new FormControl(0, Validators.required),
-    soundAndLightning: new FormControl(0, Validators.required),
-    venue: new FormControl(0, Validators.required),
-    overallImpression: new FormControl(0, Validators.required),
+    performance: new FormControl(1, Validators.required),
+    soundAndLightning: new FormControl(1, Validators.required),
+    venue: new FormControl(1, Validators.required),
+    overallImpression: new FormControl(1, Validators.required),
     event: new FormControl(Validators.required),
-    commentText: new FormControl('', Validators.required)
+    commentText: new FormControl(' ')
   })
 
   constructor(private service: ReviewService, private eventsService: EventsService, private route: ActivatedRoute,
