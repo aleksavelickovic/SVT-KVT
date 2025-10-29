@@ -88,7 +88,7 @@ export class Locations implements OnInit {
     this.commentService.add(comment).subscribe({
       next: () => {
         // this.router.navigate(['../locations'])
-        location.reload()
+        this.ngOnInit()
       },
       error: (_) => {
         console.error("GRESKA PRILIKOM DODAVANJA KOMENTARA!")
@@ -100,7 +100,7 @@ export class Locations implements OnInit {
   hideReview(reviewId: number): void {
     this.reviewService.hide(reviewId).subscribe({
       next: (_) => {
-        location.reload()
+        this.ngOnInit()
       }
     })
   }

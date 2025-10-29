@@ -89,8 +89,14 @@ export class Profile implements OnInit {
   editUser(): void {
     this.service.editUser(this.profileForm.getRawValue() as FrontendUser).subscribe({
       next: (user: FrontendUser) => {
+        this.localStorage.setItem("address", user.address)
+        this.localStorage.setItem("city", user.city)
+        this.localStorage.setItem("email", user.email)
+        this.localStorage.setItem("name", user.name)
+        this.localStorage.setItem("phone_number", user.phone_number)
         console.log("USPEH")
-        console.log(user) // TODO localstorage i routing
+        console.log(user)
+        this.ngOnInit()
       },
       error: (_) => {
         console.error("Greska!")
@@ -110,7 +116,10 @@ export class Profile implements OnInit {
                 console.log("Uspesno izmenjena profilna fotografija!")
                 console.log(user.imageFilename) // TODO localstorage i routing
                 localStorage.setItem("image", this.selectedFile.name)
-                location.reload()
+                setTimeout(function() {
+                  this.ngOnInit();
+                }, 1000);
+
               },
               error: (_) => {
                 console.error("Greska prilikom izmene profilne fotografije!")

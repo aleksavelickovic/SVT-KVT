@@ -163,7 +163,7 @@ export class EditLocation implements OnInit {
     const id: number | null | undefined = this.location?.id
     this.userService.removeManager(email, id).subscribe({
       next: () => {
-        location.reload()
+        this.ngOnInit()
       }
     })
   }
@@ -173,7 +173,7 @@ export class EditLocation implements OnInit {
     const locationId = this.location?.id;
     this.service.addManager(managerEmail, locationId).subscribe({
       next: () => {
-        location.reload()
+        this.ngOnInit()
       }
     })
   }
