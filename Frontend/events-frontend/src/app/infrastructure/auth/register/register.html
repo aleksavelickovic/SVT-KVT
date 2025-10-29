@@ -1,3 +1,6 @@
+@if (succesfulRequest) {
+  <h1>Uspesno poslat zahtev!</h1>
+}
 <form (ngSubmit)="create()" [formGroup]='registerForm'>
   <mat-form-field>
     <mat-label>Email</mat-label>

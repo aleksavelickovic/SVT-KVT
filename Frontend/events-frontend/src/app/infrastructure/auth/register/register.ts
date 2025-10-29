@@ -18,6 +18,8 @@ export class Register {
     address: new FormControl('', Validators.required)
   })
 
+  succesfulRequest: boolean = false
+
   constructor(private service: RegistrationRequestsService, private router: Router) {
   }
 
@@ -27,6 +29,7 @@ export class Register {
 
       this.service.add(registrationRequest).subscribe({
         next: (registrationRequest: RegistrationRequest) => {
+          this.succesfulRequest = true
           console.log("USPEH")
         },
         error: (_) => {
