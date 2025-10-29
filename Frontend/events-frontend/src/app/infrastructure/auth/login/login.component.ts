@@ -48,7 +48,11 @@ export class LoginComponent {
           console.log(response.password) // TODO vraca se hash-ovan password
 
           console.log("USPESAN LOGIN!!!")
-          this.router.navigate(['../home'])
+          if (localStorage.getItem("name") == null || localStorage.getItem("name") == undefined || localStorage.getItem("name") == "null") {
+            this.router.navigate(['../setup'])
+          } else {
+            this.router.navigate(['../home'])
+          }
         }
       })
     }

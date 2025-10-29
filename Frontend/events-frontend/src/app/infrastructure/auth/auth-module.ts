@@ -6,13 +6,15 @@ import {RouterLink} from '@angular/router';
 import {Register} from './register/register';
 import {Profile} from './profile/profile';
 import {FormsModule} from "@angular/forms";
+import {Setup} from './setup/setup';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     Register,
-    Profile
+    Profile,
+    Setup
   ],
   exports: [
     LoginComponent

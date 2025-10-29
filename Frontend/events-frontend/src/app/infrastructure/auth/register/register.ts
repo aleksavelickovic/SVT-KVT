@@ -15,11 +15,7 @@ export class Register {
   registerForm = new FormGroup({
     email: new FormControl('', Validators.email),
     password: new FormControl('', Validators.required),
-    name: new FormControl('', Validators.required),
-    phone_number: new FormControl('', Validators.required),
-    birthday: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required)
-    // city: new FormControl('', Validators.required),
   })
 
   constructor(private service: RegistrationRequestsService, private router: Router) {

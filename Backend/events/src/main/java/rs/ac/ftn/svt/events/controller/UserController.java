@@ -159,6 +159,7 @@ public class UserController {
             newUser.setCreatedAt(LocalDate.now());
             newUser.setEmail(accountRequest.getEmail());
             newUser.setPassword(accountRequest.getPassword());
+            newUser.setImageFilename("placeholder.jpg");
 
             SimpleMailMessage msg = new SimpleMailMessage();
             msg.setTo(newUser.getEmail());

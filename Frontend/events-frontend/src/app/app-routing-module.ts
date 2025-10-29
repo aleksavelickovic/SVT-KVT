@@ -12,11 +12,13 @@ import {AddEvent} from './events/add-event/add-event';
 import {Profile} from './infrastructure/auth/profile/profile';
 import {AuthGuard} from './infrastructure/auth/auth-guard';
 import {Home} from './home/home/home';
+import {Setup} from './infrastructure/auth/setup/setup';
 
 const routes: Routes = [
 
   {component: LoginComponent, path: "login"},
   {component: Register, path: "register"},
+  {component: Setup, path: "setup"},
   {
     component: RegistrationRequests,
     path: "registrationrequests",
@@ -29,6 +31,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}
   },
+
   {
     component: Locations,
     path: "locations",

@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
         newUser.setCity(userDTO.getCity());
         newUser.setName(userDTO.getName());
         newUser.setPhoneNumber(userDTO.getPhone_number());
-        newUser.setImageFilename(userDTO.getImageFilename());
+        newUser.setImageFilename("placeholder.jpg");
 
 //        newUser.setRole(Roles.USER);
         newUser = userRepository.save(newUser);
