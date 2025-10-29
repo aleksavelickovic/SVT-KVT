@@ -23,24 +23,54 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {role: ['ROLE_ADMINISTRATOR']}
   },
-  {component: Home, path: "home", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}},
+  {
+    component: Home,
+    path: "home",
+    canActivate: [AuthGuard],
+    data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}
+  },
   {
     component: Locations,
     path: "locations",
     canActivate: [AuthGuard],
     data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}
   },
-  {component: AddLocation, path: "addlocation", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
+  {
+    component: AddLocation,
+    path: "addlocation",
+    canActivate: [AuthGuard],
+    data: {role: ['ROLE_ADMINISTRATOR']}
+  },
   {
     component: EditLocation,
     path: "editlocation/:id",
     canActivate: [AuthGuard],
     data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}
   },
-  {component: EditEvent, path: "editevent/:id", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
-  {component: Events, path: "events", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}},
-  {component: AddEvent, path: "addevent", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR']}},
-  {component: Profile, path: "profile", canActivate: [AuthGuard], data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}},
+  {
+    component: EditEvent,
+    path: "editevent/:id",
+    canActivate: [AuthGuard],
+    data: {role: ['ROLE_ADMINISTRATOR']}
+  },
+  {
+    component: Events,
+    path: "events",
+    canActivate: [AuthGuard],
+    data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}
+  },
+  {
+    component: AddEvent,
+    path: "addevent",
+    canActivate: [AuthGuard],
+    data: {role: ['ROLE_ADMINISTRATOR']}
+  },
+  {
+    component: Profile,
+    path: "profile",
+    canActivate: [AuthGuard],
+    data: {role: ['ROLE_ADMINISTRATOR', 'ROLE_USER']}
+  },
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/home', pathMatch: 'full'}
 
