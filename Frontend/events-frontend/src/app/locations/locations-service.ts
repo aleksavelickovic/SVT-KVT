@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../env/enviroment';
 import {EventLocation} from './model/eventLocation';
 import {FrontendUser} from '../infrastructure/auth/model/User';
+import {LocationSearchRequest} from './model/locationSearchRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,14 @@ export class LocationsService {
 
   add(location: EventLocation): Observable<EventLocation> {
     return this.httpClient.post<EventLocation>(environment.apiHost + '/locations', location)
+  }
+
+  search(criteria: LocationSearchRequest): Observable<EventLocation[]> {
+    return this.httpClient.post<EventLocation[]>(environment.apiHost + '/locations/search', criteria)
+  }
+
+  moreLikeThis(id: number | null): Observable<EventLocation[]> {
+    return this.httpClient.get<EventLocation[]>(environment.apiHost + '/locations/' + id + '/more-like-this')
   }
 
   findLocation(id: number): Observable<EventLocation> {

@@ -96,7 +96,8 @@
         <!--          @if (FrontendReview.event?.location?.name == EventLocation.name) {-->
         <!--            Ostavljeno od strane: {{ FrontendReview.madeBy }} |-->
         <!--              Performans: {{ FrontendReview.rate.performance }} ✪ |-->
-        <!--              Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |-->
+        <!--              Zvuk: {{ FrontendReview.rate.sound }} ✪ |-->
+        <!--              Svetlo: {{ FrontendReview.rate.lighting }} ✪ |-->
         <!--              Mesto: {{ FrontendReview.rate.venue }} ✪ |-->
         <!--              Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪-->
         <!--            <br>-->
@@ -118,7 +119,8 @@
   @if (FrontendReview.madeBy == localStorage.getItem("name")) {
      <p style="margin: auto; width: 20%">  Za Lokaciju: {{ FrontendReview.event?.location?.name }}  </p>
     <p style="margin: auto; width: 20%">Performans: {{ FrontendReview.rate.performance }} ✪ </p>
-    <p style="margin: auto; width: 20%">Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ </p>
+    <p style="margin: auto; width: 20%">Zvuk: {{ FrontendReview.rate.sound }} ✪ </p>
+    <p style="margin: auto; width: 20%">Svetlo: {{ FrontendReview.rate.lighting }} ✪ </p>
     <p style="margin: auto; width: 20%">Mesto: {{ FrontendReview.rate.venue }} ✪ </p>
     <p style="margin: auto; width: 20%">Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪ </p>
     <p style="margin: auto; width: 20%">Komentar: {{ FrontendReview.comment?.text }}</p>

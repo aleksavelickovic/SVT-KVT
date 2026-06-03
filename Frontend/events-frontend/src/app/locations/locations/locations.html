@@ -1,85 +1,157 @@
-<form (ngSubmit)="searchLocations()" [formGroup]='searchForm'>
-  <mat-form-field>
-    <mat-label>Naziv</mat-label>
-    <input formControlName="name" matInput name="name" type="text"/>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Adresa</mat-label>
-    <input formControlName="address" matInput name="address" type="text"/>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Tip</mat-label>
-    <input formControlName="type" matInput name="type" type="text"/>
-  </mat-form-field>
+<form (ngSubmit)="searchLocations()" [formGroup]="searchForm">
+  <div style="display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+    <mat-form-field>
+      <mat-label>Naziv</mat-label>
+      <input formControlName="name" matInput type="text"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Opis</mat-label>
+      <input formControlName="description" matInput type="text"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>PDF tekst</mat-label>
+      <input formControlName="pdfText" matInput type="text"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Broj review-a od</mat-label>
+      <input formControlName="reviewCountFrom" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Broj review-a do</mat-label>
+      <input formControlName="reviewCountTo" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Performans od</mat-label>
+      <input formControlName="performanceFrom" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Performans do</mat-label>
+      <input formControlName="performanceTo" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Zvuk od</mat-label>
+      <input formControlName="soundFrom" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Zvuk do</mat-label>
+      <input formControlName="soundTo" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Svetlo od</mat-label>
+      <input formControlName="lightingFrom" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Svetlo do</mat-label>
+      <input formControlName="lightingTo" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Prostor od</mat-label>
+      <input formControlName="venueFrom" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Prostor do</mat-label>
+      <input formControlName="venueTo" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Ukupan utisak od</mat-label>
+      <input formControlName="overallImpressionFrom" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Ukupan utisak do</mat-label>
+      <input formControlName="overallImpressionTo" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Operator</mat-label>
+      <mat-select formControlName="operator">
+        <mat-option value="AND">AND</mat-option>
+        <mat-option value="OR">OR</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Sort po nazivu</mat-label>
+      <mat-select formControlName="sortDirection">
+        <mat-option value="ASC">Rastuće</mat-option>
+        <mat-option value="DESC">Opadajuće</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <div>
     <button color="primary" matButton="outlined" type="submit">Pretrazi</button>
+    <button color="primary" matButton="outlined" type="button" (click)="resetFilters()">Resetuj pretragu</button>
   </div>
 </form>
-<button color="primary" matButton="outlined" (click)="resetFilters()">Resetuj pretragu</button>
 
 @if (role == "ROLE_ADMINISTRATOR") {
   <button matButton [routerLink]="['../addlocation']">Dodaj novu lokaciju</button>
 }
 
 @for (eventLocation of locations; track eventLocation.id) {
-
   <mat-card appearance="outlined" class="example-card">
     <mat-card-header>
-      <!--      <div mat-card-avatar class="example-header-image"></div>-->
       <mat-card-title>{{ eventLocation.name }} - ID: {{ eventLocation.id }}</mat-card-title>
       <mat-card-subtitle>{{ eventLocation.address }}</mat-card-subtitle>
     </mat-card-header>
+
     <div>
-
-      <img alt="Placeholder image"
-           mat-card-image
-
-           src="http://localhost:8080/images/{{eventLocation.imageFilename}}"
-           style="width: 100%; height: 500px">
+      <img
+        alt="Slika lokacije"
+        mat-card-image
+        src="http://localhost:8080/images/{{eventLocation.imageFilename}}"
+        style="width: 100%; height: 500px">
     </div>
+
     <mat-card-content>
       <p>
         {{ eventLocation.description }}
         <br>
         Kreirano: {{ eventLocation.createdAt }}
         <br>
-        {{ eventLocation.type }}
+        Tip: {{ eventLocation.type }}
         <br>
-        Ocene:
+        Ukupna Ocena: {{ eventLocation.totalRating }}
         <br>
-        Sortiraj Po:
+        @if (eventLocation.documentFilename) {
+          <a href="http://localhost:8080/documents/{{eventLocation.documentFilename}}" target="_blank" rel="noopener">Preuzmi PDF</a>
+          <br>
+        }
+        @if (eventLocation.highlight) {
+          <span [innerHTML]="eventLocation.highlight"></span>
+          <br>
+        }
+      </p>
+
+      <br>
+      Sortiraj Po:
       <form (ngSubmit)="sortReviews()" [formGroup]="sortForm">
         <mat-form-field>
           <mat-label>Sortiraj po</mat-label>
           <mat-select formControlName="sortType">
-
             <mat-option value="rating">Ocenama</mat-option>
             <mat-option value="date">Datmu objavljivanja</mat-option>
-
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Redosled</mat-label>
           <mat-select formControlName="order">
-
             <mat-option value="asc">Rastuce</mat-option>
             <mat-option value="desc">Opadajuce</mat-option>
-
           </mat-select>
         </mat-form-field>
         <button matButton type="submit">Sortiraj</button>
       </form>
+
       <br>
       @for (frontendReview of reviews; track frontendReview.id) {
         @if (frontendReview.event?.location?.name == eventLocation.name && !frontendReview.hidden) {
           Ostavljeno od strane: {{ frontendReview.madeBy }} |
-            Performans: {{ frontendReview.rate.performance }} ✪ |
-            Zvuk i Rasveta: {{ frontendReview.rate.soundAndLightning }} ✪ |
-            Mesto: {{ frontendReview.rate.venue }} ✪ |
-            Generalna ocena: {{ frontendReview.rate.overallImpression }} ✪ |
-            Dogadjaj: {{frontendReview.event.name}}
+          Performans: {{ frontendReview.rate.performance }} ✪ |
+          Zvuk: {{ frontendReview.rate.sound }} ✪ |
+          Svetlo: {{ frontendReview.rate.lighting }} ✪ |
+          Prostor: {{ frontendReview.rate.venue }} ✪ |
+          Generalna ocena: {{ frontendReview.rate.overallImpression }} ✪ |
+          Dogadjaj: {{ frontendReview.event.name }}
           <br>
           Komentar: {{ frontendReview.comment?.text }}
           <br>
@@ -88,9 +160,8 @@
               <form (ngSubmit)="addComment(frontendReview.comment)" [formGroup]="replyForm">
                 <mat-form-field>
                   <mat-label>Odgovor...</mat-label>
-                  <input formControlName="text" matInput name="text" type="text"/>
+                  <input formControlName="text" matInput type="text"/>
                 </mat-form-field>
-                <!--              <input type="hidden" formControlName="repliesTo" value="{{FrontendReview.comment}}">-->
                 <button type="submit" matButton>Odgovori</button>
                 <button matButton (click)="hideReview(frontendReview.id)">Sakrij recenziju</button>
               </form>
@@ -103,9 +174,8 @@
               <form (ngSubmit)="addComment(frontendReview.comment)" [formGroup]="replyForm">
                 <mat-form-field>
                   <mat-label>Odgovor...</mat-label>
-                  <input formControlName="text" matInput name="text" type="text"/>
+                  <input formControlName="text" matInput type="text"/>
                 </mat-form-field>
-                <!--              <input type="hidden" formControlName="repliesTo" value="{{FrontendReview.comment}}">-->
                 <button type="submit" matButton>Odgovori</button>
               </form>
             }
@@ -115,24 +185,20 @@
         }
       }
 
-      <br>
-      Ukupna Ocena: {{ eventLocation.totalRating }}
-      <br>
       Predstojeci Dogadjaji:
       @for (frontendEvent of events; track frontendEvent.id) {
         @if (frontendEvent.location.id == eventLocation.id && frontendEvent.date.getTime() > currentDate.getTime()) {
           <h4>{{ frontendEvent.name }}</h4>
-          <p>{{ frontendEvent.date.getDay() }}.{{ frontendEvent.date.getMonth() }}
-            .{{ frontendEvent.date.getFullYear() }}</p>
+          <p>{{ frontendEvent.date.getDay() }}.{{ frontendEvent.date.getMonth() }}.{{ frontendEvent.date.getFullYear() }}</p>
         }
       }
       <br>
       Oceni:
       <app-review-form [currentLocation]="eventLocation"></app-review-form>
-
-
     </mat-card-content>
+
     <mat-card-actions>
+      <button (click)="moreLikeThis(eventLocation.id)" matButton>Slična mesta</button>
       @if (role == "ROLE_ADMINISTRATOR") {
         <button [routerLink]="['../editlocation/' + eventLocation.id]" matButton>Izmeni</button>
         <button (click)="deleteLocation(eventLocation.id)" matButton>Obrisi</button>
@@ -143,8 +209,6 @@
           }
         }
       }
-
     </mat-card-actions>
   </mat-card>
 }
-

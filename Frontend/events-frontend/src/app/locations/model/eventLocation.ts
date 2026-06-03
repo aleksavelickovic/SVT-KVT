@@ -7,4 +7,12 @@ export interface EventLocation {
   type: string | null;
   totalRating: number | null;
   imageFilename: string | null | undefined;
+  documentFilename?: string | null;
+  reviewCount?: number | null;
+  performanceAverage?: number | null;
+  soundAverage?: number | null;
+  lightingAverage?: number | null;
+  venueAverage?: number | null;
+  overallImpressionAverage?: number | null;
+  highlight?: string | null;
 }

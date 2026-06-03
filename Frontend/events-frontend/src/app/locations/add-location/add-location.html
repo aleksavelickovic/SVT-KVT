@@ -17,6 +17,8 @@
   </mat-form-field>
   <mat-label>Slika</mat-label>
   <input type="file" name="image" (change)="onFileSelected($event)">
+  <mat-label>PDF dokument</mat-label>
+  <input type="file" accept="application/pdf" name="document" (change)="onDocumentSelected($event)">
   <div>
     <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
   </div>

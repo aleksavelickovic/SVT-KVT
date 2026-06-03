@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {EventLocation} from '../model/eventLocation';
 import {ImageService} from '../../images/image-service';
+import {forkJoin, of} from 'rxjs';
 
 @Component({
   selector: 'app-add-location',
@@ -22,46 +23,61 @@ export class AddLocation {
   })
 
   selectedFile: File | null = null;
+  selectedDocument: File | null = null;
 
   constructor(private service: LocationsService, private route: ActivatedRoute, private router: Router,
               private imageService: ImageService) {
   }
 
   addLocation(): void {
-    console.log("POZVANA addLocation")
-    if (this.selectedFile) {
-      const formData = new FormData();
-      formData.append('file', this.selectedFile, this.selectedFile.name);
-      this.imageService.uploadImage(formData).subscribe({
-          next: () => console.log("USPESNO OTPREMLJENA SLIKA!")
-        }
-      );
-    }
-    const raw = this.locationForm.getRawValue()
-    const eventLocation: EventLocation = {
-      id: 0,
-      name: raw.name,
-      address: raw.address,
-      type: raw.type,
-      description: raw.description,
-      totalRating: 0,
-      createdAt: null,
-      imageFilename: this.selectedFile?.name
-    }
-    this.service.add(eventLocation).subscribe({
+    const imageUpload$ = this.selectedFile
+      ? this.uploadFile(this.imageService.uploadImage.bind(this.imageService), this.selectedFile)
+      : of(null);
+    const documentUpload$ = this.selectedDocument
+      ? this.uploadFile(this.imageService.uploadDocument.bind(this.imageService), this.selectedDocument)
+      : of(null);
+
+    forkJoin([imageUpload$, documentUpload$]).subscribe({
       next: () => {
-        console.log("USPEH!")
-        this.router.navigate(['locations'])
-        // this.getAllLocations()
+        const raw = this.locationForm.getRawValue();
+        const eventLocation: EventLocation = {
+          id: 0,
+          name: raw.name,
+          address: raw.address,
+          type: raw.type,
+          description: raw.description,
+          totalRating: 0,
+          createdAt: null,
+          imageFilename: this.selectedFile?.name,
+          documentFilename: this.selectedDocument?.name
+        };
+        this.service.add(eventLocation).subscribe({
+          next: () => {
+            this.router.navigate(['locations'])
+          },
+          error: (_) => {
+            console.error("GRESKA!")
+          }
+        })
       },
       error: (_) => {
-        console.error("GRESKA!")
+        console.error("GRESKA PRILIKOM OTPREME FAJLA!")
       }
     })
   }
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
+  }
+
+  onDocumentSelected(event: any): void {
+    this.selectedDocument = event.target.files[0];
+  }
+
+  private uploadFile(uploadMethod: (formData: FormData) => any, file: File) {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return uploadMethod(formData);
   }
 
 }

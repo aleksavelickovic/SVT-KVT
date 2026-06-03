@@ -85,7 +85,7 @@ public class WebSecurityConfiguration {
 
         return (web) -> web.ignoring().antMatchers(HttpMethod.POST, "/api/users/login")
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
-                        "/**/*.html", "/**/*.css", "/**/*.js", "/uploads", "/images", "/images/**");  // Potrebno za rad sa slikama
+                        "/**/*.html", "/**/*.css", "/**/*.js", "/uploads", "/images", "/images/**", "/documents", "/documents/**");  // Potrebno za rad sa slikama i dokumentima
 
     }
 

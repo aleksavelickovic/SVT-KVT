@@ -8,6 +8,7 @@ import {AuthService} from '../../infrastructure/auth/auth-service';
 import {FrontendEvent} from '../../events/model/frontendEvent';
 import {EventsService} from '../../events/events-service';
 import {Chart, registerables} from 'chart.js';
+import {ImageService} from '../../images/image-service';
 
 Chart.register(...registerables);
 
@@ -30,6 +31,7 @@ export class EditLocation implements OnInit {
 
   fromDate!: string;
   toDate!: string;
+  selectedDocument: File | null = null;
 
   eventTypeChart: any;
   freePaidChart: any;
@@ -50,7 +52,8 @@ export class EditLocation implements OnInit {
 
 
   constructor(private route: ActivatedRoute, private service: LocationsService, private router: Router,
-              private userService: AuthService, private eventService: EventsService) {
+              private userService: AuthService, private eventService: EventsService,
+              private imageService: ImageService) {
 
   }
 
@@ -136,15 +139,45 @@ export class EditLocation implements OnInit {
   }
 
   editLocation(): void {
-    this.service.editLocation(this.locationForm.getRawValue() as EventLocation).subscribe({
-      next: () => {
-        console.log("USPEH!")
-        this.router.navigate(['locations'])
-      },
-      error: () => {
-        console.error("GRESKA PRILIKOM IZMENE LOKACIJE!")
-      }
-    })
+    const saveLocation = (documentFilename: string | null | undefined): void => {
+      const raw = this.locationForm.getRawValue();
+      const location: EventLocation = {
+        id: raw.id,
+        name: raw.name,
+        address: raw.address,
+        type: raw.type,
+        description: raw.description,
+        createdAt: this.location?.createdAt ?? null,
+        totalRating: this.location?.totalRating ?? 0,
+        imageFilename: this.location?.imageFilename ?? null,
+        documentFilename: documentFilename ?? this.location?.documentFilename ?? null
+      };
+
+      this.service.editLocation(location).subscribe({
+        next: () => {
+          this.router.navigate(['locations'])
+        },
+        error: () => {
+          console.error("GRESKA PRILIKOM IZMENE LOKACIJE!")
+        }
+      })
+    };
+
+    if (this.selectedDocument) {
+      const formData = new FormData();
+      formData.append('file', this.selectedDocument, this.selectedDocument.name);
+      this.imageService.uploadDocument(formData).subscribe({
+        next: () => {
+          saveLocation(this.selectedDocument?.name ?? null)
+        },
+        error: () => {
+          console.error("GRESKA PRILIKOM OTPREME DOKUMENTA!")
+        }
+      });
+      return;
+    }
+
+    saveLocation(this.location?.documentFilename ?? null);
   }
 
   getAllManagers(locationId: number): void {
@@ -205,6 +238,10 @@ export class EditLocation implements OnInit {
         console.error("GRESKA!")
       }
     })
+  }
+
+  onDocumentSelected(event: any): void {
+    this.selectedDocument = event.target.files[0];
   }
 
 }

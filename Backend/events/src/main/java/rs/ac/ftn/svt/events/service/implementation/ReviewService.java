@@ -8,6 +8,7 @@ import rs.ac.ftn.svt.events.model.entity.Location;
 import rs.ac.ftn.svt.events.model.entity.Rate;
 import rs.ac.ftn.svt.events.model.entity.Review;
 import rs.ac.ftn.svt.events.repository.*;
+import rs.ac.ftn.svt.events.service.LocationSearchService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,6 +33,9 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private LocationSearchService locationSearchService;
 
     @Override
     public List<Review> findAll() {
@@ -62,7 +66,8 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
 
         Rate rate = new Rate();
         rate.setPerformance(reviewDTO.getRate().getPerformance());
-        rate.setSoundAndLightning(reviewDTO.getRate().getSoundAndLightning());
+        rate.setSound(reviewDTO.getRate().getSound());
+        rate.setLighting(reviewDTO.getRate().getLighting());
         rate.setVenue(reviewDTO.getRate().getVenue());
         rate.setOverallImpression(reviewDTO.getRate().getOverallImpression());
         rateRepository.save(rate);
@@ -90,9 +95,9 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
 
         for (Review r : locationReviews) {
             Rate rt = r.getRate();
-            totalSum += rt.getPerformance() + rt.getSoundAndLightning() +
+            totalSum += rt.getPerformance() + rt.getSound() + rt.getLighting() +
                     rt.getVenue() + rt.getOverallImpression();
-            ratingCount += 4;
+            ratingCount += 5;
         }
 
         if (ratingCount > 0) {
@@ -100,6 +105,8 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
             location.setTotalRating(newAverage);
             locationRepository.save(location);
         }
+
+        locationSearchService.indexLocation(location.getId());
 
         return newReview;
     }
@@ -115,5 +122,8 @@ class ReviewService implements rs.ac.ftn.svt.events.service.ReviewService {
         Review forHiding = reviewRepository.findFirstById(id);
         forHiding.setHidden(true);
         reviewRepository.save(forHiding);
+        if (forHiding.getEvent() != null && forHiding.getEvent().getLocation() != null) {
+            locationSearchService.indexLocation(forHiding.getEvent().getLocation().getId());
+        }
     }
 }

@@ -1,0 +1,19 @@
+export interface LocationSearchRequest {
+  name: string | null;
+  description: string | null;
+  pdfText: string | null;
+  reviewCountFrom: number | null;
+  reviewCountTo: number | null;
+  performanceFrom: number | null;
+  performanceTo: number | null;
+  soundFrom: number | null;
+  soundTo: number | null;
+  lightingFrom: number | null;
+  lightingTo: number | null;
+  venueFrom: number | null;
+  venueTo: number | null;
+  overallImpressionFrom: number | null;
+  overallImpressionTo: number | null;
+  operator: string | null;
+  sortDirection: string | null;
+}

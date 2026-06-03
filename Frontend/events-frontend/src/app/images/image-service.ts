@@ -19,4 +19,12 @@ export class ImageService {
     return this.http.request(req);
   }
 
+  uploadDocument(formData: FormData): Observable<HttpEvent<any>> {
+    const req = new HttpRequest('POST', environment.apiHost + '/documents', formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.http.request(req);
+  }
+
 }

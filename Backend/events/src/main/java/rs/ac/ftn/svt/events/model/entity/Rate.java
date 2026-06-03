@@ -22,7 +22,9 @@ public class Rate {
     @Column
     private Integer performance;
     @Column
-    private Integer soundAndLightning;
+    private Integer sound;
+    @Column
+    private Integer lighting;
     @Column
     private Integer venue;
     @Column

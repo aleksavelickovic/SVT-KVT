@@ -6,9 +6,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.ftn.svt.events.model.dto.LocationDTO;
+import rs.ac.ftn.svt.events.model.dto.LocationSearchRequest;
+import rs.ac.ftn.svt.events.model.dto.LocationSearchResultDTO;
 import rs.ac.ftn.svt.events.model.entity.Location;
 import rs.ac.ftn.svt.events.model.entity.User;
 import rs.ac.ftn.svt.events.service.LocationService;
+import rs.ac.ftn.svt.events.service.LocationSearchService;
 import rs.ac.ftn.svt.events.service.UserService;
 
 import java.util.ArrayList;
@@ -23,6 +26,9 @@ public class LocationController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    LocationSearchService locationSearchService;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -91,8 +97,11 @@ public class LocationController {
         locationForEdit.setAddress(locationDTO.getAddress());
         locationForEdit.setType(locationDTO.getType());
         locationForEdit.setTotalRating(locationDTO.getTotalRating());
+        locationForEdit.setDocumentFilename(locationDTO.getDocumentFilename());
 
-        return ResponseEntity.ok(locationService.save(locationForEdit));
+        Location saved = locationService.save(locationForEdit);
+        locationSearchService.indexLocation(saved.getId());
+        return ResponseEntity.ok(saved);
     }
 
     @CrossOrigin
@@ -108,6 +117,20 @@ public class LocationController {
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
     public ResponseEntity<List<Location>> findManagedLocations(@PathVariable Long id) {
         return ResponseEntity.ok(locationService.findAllManagedLocations(id));
+    }
+
+    @CrossOrigin
+    @PostMapping("/search")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
+    public ResponseEntity<List<LocationSearchResultDTO>> search(@RequestBody LocationSearchRequest request) {
+        return ResponseEntity.ok(locationSearchService.search(request));
+    }
+
+    @CrossOrigin
+    @GetMapping("/{id}/more-like-this")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'USER')")
+    public ResponseEntity<List<LocationSearchResultDTO>> moreLikeThis(@PathVariable Long id) {
+        return ResponseEntity.ok(locationSearchService.moreLikeThis(id));
     }
 
 }

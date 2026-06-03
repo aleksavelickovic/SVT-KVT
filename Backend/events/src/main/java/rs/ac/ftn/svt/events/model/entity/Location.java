@@ -43,4 +43,7 @@ public class Location {
     @Column
     private String imageFilename;
 
+    @Column
+    private String documentFilename;
+
 }
