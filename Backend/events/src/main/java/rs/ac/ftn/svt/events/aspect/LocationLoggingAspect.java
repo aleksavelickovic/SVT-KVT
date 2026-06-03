@@ -95,6 +95,15 @@ public class LocationLoggingAspect {
                     LOGGER.error("GRESKA PRILIKOM IZVRSAVANJA addManager METODE!");
                 }
                 break;
+            case "search":
+                LOGGER.info("POZVANA search METODA!");
+                try {
+                    returnval = joinPoint.proceed();
+                    LOGGER.info("ZAVRSENA search METODA!");
+                } catch (Throwable e) {
+                    LOGGER.error("GRESKA PRILIKOM IZVRSAVANJA search METODE!");
+                }
+                break;
 
 
             default:

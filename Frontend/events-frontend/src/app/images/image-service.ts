@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../env/enviroment';
 
@@ -11,20 +11,16 @@ export class ImageService {
   constructor(private http: HttpClient) {
   }
 
-  uploadImage(formData: FormData): Observable<HttpEvent<any>> {
-    const req = new HttpRequest('POST', environment.apiHost + '/images', formData, {
-      reportProgress: true,
-      responseType: 'json'
+  uploadImage(formData: FormData): Observable<string> {
+    return this.http.post(environment.apiHost + '/images', formData, {
+      responseType: 'text'
     });
-    return this.http.request(req);
   }
 
-  uploadDocument(formData: FormData): Observable<HttpEvent<any>> {
-    const req = new HttpRequest('POST', environment.apiHost + '/documents', formData, {
-      reportProgress: true,
-      responseType: 'json'
+  uploadDocument(formData: FormData): Observable<string> {
+    return this.http.post(environment.apiHost + '/documents', formData, {
+      responseType: 'text'
     });
-    return this.http.request(req);
   }
 
 }

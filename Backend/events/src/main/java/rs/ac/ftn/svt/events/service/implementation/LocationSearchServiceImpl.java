@@ -25,6 +25,7 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import org.elasticsearch.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -312,7 +313,9 @@ public class LocationSearchServiceImpl implements LocationSearchService {
         request.settings(settings);
         Map<String, Object> mappings = new HashMap<>();
         mappings.put("properties", properties);
-        request.mapping("_doc", mappings);
+        Map<String, Object> body = new HashMap<>();
+        body.put("mappings", Map.of("_doc", mappings));
+        request.source(objectMapper.writeValueAsString(body), XContentType.JSON);
         client.indices().create(request, RequestOptions.DEFAULT);
     }
 
