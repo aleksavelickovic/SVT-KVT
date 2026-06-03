@@ -60,10 +60,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/events?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Belgrade
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-      SPRING_JPA_HIBERNATE_DDL_AUTO: create
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"
-      SPRING_SQL_INIT_MODE: always
-      SPRING_SQL_INIT_DATA_LOCATIONS: classpath:data.sql
+      SPRING_SQL_INIT_MODE: never
       APP_ELASTICSEARCH_HOST: elasticsearch
       APP_ELASTICSEARCH_PORT: "9200"
       APP_ELASTICSEARCH_SCHEME: http
