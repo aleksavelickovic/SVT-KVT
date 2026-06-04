@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -15,7 +12,9 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
@@ -109,8 +108,9 @@ public class LocationSearchServiceImpl implements LocationSearchService {
         for (int attempt = 1; attempt <= 10; attempt++) {
             try {
                 storageService.initializeBuckets();
-                recreateIndex();
-                reindexAllLocations();
+                if (ensureIndex()) {
+                    reindexAllLocations();
+                }
                 return;
             } catch (Exception e) {
                 lastError = e;
@@ -137,6 +137,7 @@ public class LocationSearchServiceImpl implements LocationSearchService {
             IndexRequest request = new IndexRequest(indexName)
                     .id(String.valueOf(location.getId()))
                     .source(objectMapper.convertValue(document, Map.class));
+            request.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
             client.index(request, RequestOptions.DEFAULT);
         } catch (Exception e) {
             throw new IllegalStateException("Unable to index location " + locationId, e);
@@ -207,13 +208,16 @@ public class LocationSearchServiceImpl implements LocationSearchService {
     @Override
     public List<LocationSearchResultDTO> moreLikeThis(Long locationId) {
         try {
-            GetResponse response = client.get(new GetRequest(indexName, String.valueOf(locationId)), RequestOptions.DEFAULT);
-            if (!response.isExists() || response.getSourceAsMap() == null) {
+            Location location = locationRepository.findFirstById(locationId);
+            if (location == null) {
                 return List.of();
             }
 
-            LocationSearchDocument document = objectMapper.convertValue(response.getSourceAsMap(), LocationSearchDocument.class);
-            String likeText = Arrays.asList(document.getName(), document.getDescription(), document.getPdfText()).stream()
+            String likeText = Arrays.asList(
+                            location.getName(),
+                            location.getDescription(),
+                            extractPdfText(location.getDocumentFilename()))
+                    .stream()
                     .filter(Objects::nonNull)
                     .filter(text -> !text.isBlank())
                     .collect(Collectors.joining(" "));
@@ -222,19 +226,15 @@ public class LocationSearchServiceImpl implements LocationSearchService {
                 return List.of();
             }
 
-            QueryBuilder queryBuilder = QueryBuilders.wrapperQuery("""
-                    {
-                      "more_like_this": {
-                        "fields": ["name", "description", "pdfText"],
-                        "like": [
-                          { "_index": "%s", "_id": "%s" }
-                        ],
-                        "min_term_freq": 1,
-                        "min_doc_freq": 1,
-                        "max_query_terms": 25
-                      }
-                    }
-                    """.formatted(indexName, locationId));
+            QueryBuilder queryBuilder = QueryBuilders.moreLikeThisQuery(
+                            new String[]{NAME_FIELD, DESCRIPTION_FIELD, PDF_TEXT_FIELD},
+                            new String[]{likeText},
+                            null)
+                    .minTermFreq(1)
+                    .minDocFreq(1)
+                    .maxQueryTerms(25)
+                    .minWordLength(2)
+                    .include(false);
 
             BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                     .must(queryBuilder)
@@ -255,19 +255,45 @@ public class LocationSearchServiceImpl implements LocationSearchService {
 
             SearchRequest searchRequest = new SearchRequest(indexName).source(sourceBuilder);
             SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-            return Arrays.stream(searchResponse.getHits().getHits())
+            List<LocationSearchResultDTO> results = Arrays.stream(searchResponse.getHits().getHits())
                     .map(this::toResult)
                     .toList();
+
+            if (!results.isEmpty()) {
+                return results;
+            }
+
+            return fallbackMoreLikeThis(locationId, location);
         } catch (Exception e) {
             throw new IllegalStateException("Unable to execute more-like-this search", e);
         }
     }
 
-    private void recreateIndex() throws Exception {
+    private List<LocationSearchResultDTO> fallbackMoreLikeThis(Long locationId, Location location) throws Exception {
+        BoolQueryBuilder fallbackQuery = QueryBuilders.boolQuery()
+                .should(QueryBuilders.matchQuery(NAME_FIELD, location.getName()).boost(3.0f))
+                .should(QueryBuilders.matchQuery(DESCRIPTION_FIELD, location.getDescription()).boost(2.0f))
+                .should(QueryBuilders.matchQuery(PDF_TEXT_FIELD, extractPdfText(location.getDocumentFilename())).boost(4.0f))
+                .minimumShouldMatch(1)
+                .mustNot(QueryBuilders.termQuery("id", locationId));
+
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder()
+                .query(fallbackQuery)
+                .size(10)
+                .sort(new FieldSortBuilder(NAME_SORT_FIELD).order(SortOrder.ASC));
+
+        SearchRequest searchRequest = new SearchRequest(indexName).source(sourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        return Arrays.stream(searchResponse.getHits().getHits())
+                .map(this::toResult)
+                .toList();
+    }
+
+    private boolean ensureIndex() throws Exception {
         GetIndexRequest getIndexRequest = new GetIndexRequest();
         getIndexRequest.indices(indexName);
         if (client.indices().exists(getIndexRequest, RequestOptions.DEFAULT)) {
-            client.indices().delete(new DeleteIndexRequest(indexName), RequestOptions.DEFAULT);
+            return false;
         }
 
         CreateIndexRequest request = new CreateIndexRequest(indexName);
@@ -319,6 +345,7 @@ public class LocationSearchServiceImpl implements LocationSearchService {
         body.put("mappings", Map.of("_doc", mappings));
         request.source(objectMapper.writeValueAsString(body), XContentType.JSON);
         client.indices().create(request, RequestOptions.DEFAULT);
+        return true;
     }
 
     private void reindexAllLocations() {

@@ -104,6 +104,15 @@ public class LocationLoggingAspect {
                     LOGGER.error("GRESKA PRILIKOM IZVRSAVANJA search METODE!");
                 }
                 break;
+            case "moreLikeThis":
+                LOGGER.info("POZVANA moreLikeThis METODA!");
+                try {
+                    returnval = joinPoint.proceed();
+                    LOGGER.info("ZAVRSENA moreLikeThis METODA!");
+                } catch (Throwable e) {
+                    LOGGER.error("GRESKA PRILIKOM IZVRSAVANJA moreLikeThis METODE!");
+                }
+                break;
 
 
             default:
