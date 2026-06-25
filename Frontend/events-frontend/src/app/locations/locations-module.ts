@@ -14,6 +14,8 @@ import {EditLocation} from './edit-location/edit-location';
 import {ReviewForm} from './review-form/review-form';
 import {MatOptgroup, MatOption} from "@angular/material/core";
 import {MatSelect} from '@angular/material/select';
+import {MatIcon} from "@angular/material/icon";
+import {MatDivider} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import {MatSelect} from '@angular/material/select';
     MatInputModule,
     MatOptgroup,
     MatOption,
-    MatSelect
+    MatSelect,
+    MatIcon,
+    MatDivider
   ]
 })
 export class LocationsModule {}
