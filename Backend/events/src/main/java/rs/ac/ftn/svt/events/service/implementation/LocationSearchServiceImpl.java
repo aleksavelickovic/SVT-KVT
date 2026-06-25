@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
+import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -147,7 +148,7 @@ public class LocationSearchServiceImpl implements LocationSearchService {
     @Override
     public void deleteLocation(Long locationId) {
         try {
-            client.delete(new org.elasticsearch.action.delete.DeleteRequest(indexName, String.valueOf(locationId)),
+            client.delete(new DeleteRequest(indexName, String.valueOf(locationId)),
                     RequestOptions.DEFAULT);
         } catch (Exception ignored) {
         }
