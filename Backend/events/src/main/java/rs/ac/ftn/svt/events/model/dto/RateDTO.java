@@ -14,7 +14,9 @@ public class RateDTO {
 
     private Integer performance;
 
-    private Integer soundAndLightning;
+    private Integer sound;
+
+    private Integer lighting;
 
     private Integer venue;
 

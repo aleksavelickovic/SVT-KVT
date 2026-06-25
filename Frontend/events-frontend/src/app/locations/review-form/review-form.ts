@@ -31,7 +31,8 @@ export class ReviewForm implements OnInit {
 
   reviewForm = new FormGroup({
     performance: new FormControl(1, Validators.required),
-    soundAndLightning: new FormControl(1, Validators.required),
+    sound: new FormControl(1, Validators.required),
+    lighting: new FormControl(1, Validators.required),
     venue: new FormControl(1, Validators.required),
     overallImpression: new FormControl(1, Validators.required),
     event: new FormControl(Validators.required),
@@ -72,7 +73,8 @@ export class ReviewForm implements OnInit {
     const rate: FrontendRate = {
       id: 0,
       performance: Number(raw.performance),
-      soundAndLightning: Number(raw.soundAndLightning),
+      sound: Number(raw.sound),
+      lighting: Number(raw.lighting),
       venue: Number(raw.venue),
       overallImpression: Number(raw.overallImpression),
     };

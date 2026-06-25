@@ -85,7 +85,8 @@
           @if (FrontendReview.event?.location?.name == eventLocation.name && !FrontendReview.hidden) {
             Ostavljeno od strane: {{ FrontendReview.madeBy }} |
               Performans: {{ FrontendReview.rate.performance }} ✪ |
-              Zvuk i Rasveta: {{ FrontendReview.rate.soundAndLightning }} ✪ |
+              Zvuk: {{ FrontendReview.rate.sound }} ✪ |
+              Svetlo: {{ FrontendReview.rate.lighting }} ✪ |
               Mesto: {{ FrontendReview.rate.venue }} ✪ |
               Generalna ocena: {{ FrontendReview.rate.overallImpression }} ✪
             <br>
@@ -118,5 +119,4 @@
 
   </mat-card>
 }
-
 

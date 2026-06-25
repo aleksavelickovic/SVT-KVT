@@ -15,6 +15,13 @@
     <mat-label>Tip</mat-label>
     <input formControlName="type" matInput name="type" type="text" value="{{location?.type}}"/>
   </mat-form-field>
+  @if (location?.documentFilename) {
+    <div>
+      <a href="http://localhost:8080/documents/{{location?.documentFilename}}" target="_blank" rel="noopener">Trenutni PDF</a>
+    </div>
+  }
+  <mat-label>Novi PDF dokument</mat-label>
+  <input type="file" accept="application/pdf" name="document" (change)="onDocumentSelected($event)">
   <input formControlName="id" name="id" type="hidden" value="{{location?.id}}"/>
   <div>
     <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
@@ -80,7 +87,6 @@
     <canvas id="worstChart"></canvas>
   </div>
 </div>
-
 
 
 

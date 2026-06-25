@@ -1,7 +1,8 @@
 export interface FrontendRate {
   id: number;
   performance: number;
-  soundAndLightning: number;
+  sound: number;
+  lighting: number;
   venue: number;
   overallImpression: number;
 }

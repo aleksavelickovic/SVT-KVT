@@ -8,11 +8,19 @@
     }
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Zvuk i Osvetljenje</mat-label>
-    <input formControlName="soundAndLightning" matInput name="soundAndLightning" type="number"/>
-    @if (reviewForm.get('soundAndLightning')?.touched && reviewForm.get('soundAndLightning').value < 1 || reviewForm.get('soundAndLightning').value > 10) {
+    <mat-label>Zvuk</mat-label>
+    <input formControlName="sound" matInput name="sound" type="number"/>
+    @if (reviewForm.get('sound')?.touched && reviewForm.get('sound').value < 1 || reviewForm.get('sound').value > 10) {
       <mat-error style="background-color: red">Vrednost mora biti izmedju 1 i 10!</mat-error>
-      {{ reviewForm.get('soundAndLightning').setValue(1) }}
+      {{ reviewForm.get('sound').setValue(1) }}
+    }
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Svetlo</mat-label>
+    <input formControlName="lighting" matInput name="lighting" type="number"/>
+    @if (reviewForm.get('lighting')?.touched && reviewForm.get('lighting').value < 1 || reviewForm.get('lighting').value > 10) {
+      <mat-error style="background-color: red">Vrednost mora biti izmedju 1 i 10!</mat-error>
+      {{ reviewForm.get('lighting').setValue(1) }}
     }
   </mat-form-field>
   <mat-form-field>
@@ -56,4 +64,3 @@
     <button color="primary" matButton="outlined" type="submit">Potvrdi</button>
   </div>
 </form>
-

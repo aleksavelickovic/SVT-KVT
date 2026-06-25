@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.ftn.svt.events.model.dto.LocationDTO;
 import rs.ac.ftn.svt.events.model.entity.Location;
 import rs.ac.ftn.svt.events.repository.LocationRepository;
+import rs.ac.ftn.svt.events.service.LocationSearchService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +16,9 @@ class LocationService implements rs.ac.ftn.svt.events.service.LocationService {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private LocationSearchService locationSearchService;
 
     @Override
     public List<Location> findAll() {
@@ -42,10 +46,12 @@ class LocationService implements rs.ac.ftn.svt.events.service.LocationService {
         newLocation.setType(locationDTO.getType());
         newLocation.setTotalRating(0.0);
         newLocation.setImageFilename(locationDTO.getImageFilename());
+        newLocation.setDocumentFilename(locationDTO.getDocumentFilename());
 
-        locationRepository.save(newLocation);
+        Location savedLocation = locationRepository.save(newLocation);
+        locationSearchService.indexLocation(savedLocation.getId());
 
-        return newLocation;
+        return savedLocation;
     }
 
     @Override
@@ -55,6 +61,7 @@ class LocationService implements rs.ac.ftn.svt.events.service.LocationService {
 
     @Override
     public void delete(Long id) {
+        locationSearchService.deleteLocation(id);
         locationRepository.delete(locationRepository.findFirstById(id));
     }
 

@@ -22,5 +22,6 @@ public class LocationDTO {
     private String type;
     private Double totalRating;
     private String imageFilename;
+    private String documentFilename;
 
 }

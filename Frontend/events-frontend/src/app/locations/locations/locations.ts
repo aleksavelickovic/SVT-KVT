@@ -13,6 +13,7 @@ import {FrontendUser} from '../../infrastructure/auth/model/User';
 import {ReviewService} from '../../reviews/review-service';
 import {FrontendEvent} from '../../events/model/frontendEvent';
 import {EventsService} from '../../events/events-service';
+import {LocationSearchRequest} from '../model/locationSearchRequest';
 
 @Component({
   selector: 'app-locations',
@@ -35,9 +36,23 @@ export class Locations implements OnInit {
   // protected readonly Location = Location;
 
   searchForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    address: new FormControl('', Validators.required),
-    type: new FormControl('', Validators.required),
+    name: new FormControl(''),
+    description: new FormControl(''),
+    pdfText: new FormControl(''),
+    reviewCountFrom: new FormControl(null),
+    reviewCountTo: new FormControl(null),
+    performanceFrom: new FormControl(null),
+    performanceTo: new FormControl(null),
+    soundFrom: new FormControl(null),
+    soundTo: new FormControl(null),
+    lightingFrom: new FormControl(null),
+    lightingTo: new FormControl(null),
+    venueFrom: new FormControl(null),
+    venueTo: new FormControl(null),
+    overallImpressionFrom: new FormControl(null),
+    overallImpressionTo: new FormControl(null),
+    operator: new FormControl('AND'),
+    sortDirection: new FormControl('ASC'),
   })
 
   replyForm = new FormGroup({
@@ -115,8 +130,6 @@ export class Locations implements OnInit {
     this.service.getAll().subscribe({
       next: (locations: EventLocation[]) => {
         this.locations = locations;
-        console.log(this.locations)
-        console.log(this.locations[2].imageFilename)
       },
       error: (_) => {
         console.error("GRESKA!")
@@ -196,29 +209,26 @@ export class Locations implements OnInit {
   }
 
   searchLocations(): void {
-    this.getAllLocations()
-    setTimeout(() => {
-      console.log("Pocinjem sa pretragom...");
-      const raw = this.searchForm.getRawValue();
-      const name = raw.name;
-      const address = raw.address;
-      const type = raw.type;
-      console.log(name)
-      console.log(address)
-      console.log(type)
-      if (name?.trim().length != 0) {
-        this.locations = this.locations.filter(l => l.name == name);
-        console.log(this.locations)
+    const criteria = this.buildSearchRequest();
+    this.service.search(criteria).subscribe({
+      next: (locations: EventLocation[]) => {
+        this.locations = locations;
+      },
+      error: (_) => {
+        console.error("GRESKA PRILIKOM PRETRAGE LOKACIJA!")
       }
-      if (address?.trim().length != 0) {
-        this.locations = this.locations.filter(l => l.address == address);
-        console.log(this.locations)
+    })
+  }
+
+  moreLikeThis(locationId: number | null): void {
+    this.service.moreLikeThis(locationId).subscribe({
+      next: (locations: EventLocation[]) => {
+        this.locations = locations;
+      },
+      error: (_) => {
+        console.error("GRESKA PRILIKOM PRETRAGE SLICNIH LOKACIJA!")
       }
-      if (type?.trim().length != 0) {
-        this.locations = this.locations.filter(l => l.type == type);
-        console.log(this.locations)
-      }
-    }, 50);
+    })
   }
 
   sortReviews(): void {
@@ -241,7 +251,65 @@ export class Locations implements OnInit {
   }
 
   resetFilters(): void {
+    this.searchForm.reset({
+      name: '',
+      description: '',
+      pdfText: '',
+      reviewCountFrom: null,
+      reviewCountTo: null,
+      performanceFrom: null,
+      performanceTo: null,
+      soundFrom: null,
+      soundTo: null,
+      lightingFrom: null,
+      lightingTo: null,
+      venueFrom: null,
+      venueTo: null,
+      overallImpressionFrom: null,
+      overallImpressionTo: null,
+      operator: 'AND',
+      sortDirection: 'ASC',
+    })
     this.getAllLocations()
+  }
+
+  private buildSearchRequest(): LocationSearchRequest {
+    const raw = this.searchForm.getRawValue();
+    return {
+      name: this.normalizeText(raw.name),
+      description: this.normalizeText(raw.description),
+      pdfText: this.normalizeText(raw.pdfText),
+      reviewCountFrom: this.normalizeNumber(raw.reviewCountFrom),
+      reviewCountTo: this.normalizeNumber(raw.reviewCountTo),
+      performanceFrom: this.normalizeNumber(raw.performanceFrom),
+      performanceTo: this.normalizeNumber(raw.performanceTo),
+      soundFrom: this.normalizeNumber(raw.soundFrom),
+      soundTo: this.normalizeNumber(raw.soundTo),
+      lightingFrom: this.normalizeNumber(raw.lightingFrom),
+      lightingTo: this.normalizeNumber(raw.lightingTo),
+      venueFrom: this.normalizeNumber(raw.venueFrom),
+      venueTo: this.normalizeNumber(raw.venueTo),
+      overallImpressionFrom: this.normalizeNumber(raw.overallImpressionFrom),
+      overallImpressionTo: this.normalizeNumber(raw.overallImpressionTo),
+      operator: raw.operator || 'AND',
+      sortDirection: raw.sortDirection || 'ASC',
+    }
+  }
+
+  private normalizeText(value: string | null | undefined): string | null {
+    if (value == null) {
+      return null;
+    }
+    const trimmed = value.trim();
+    return trimmed.length > 0 ? trimmed : null;
+  }
+
+  private normalizeNumber(value: string | number | null | undefined): number | null {
+    if (value === null || value === undefined || value === '') {
+      return null;
+    }
+    const normalized = Number(value);
+    return Number.isNaN(normalized) ? null : normalized;
   }
 
   parseDate(value: any): Date | null {

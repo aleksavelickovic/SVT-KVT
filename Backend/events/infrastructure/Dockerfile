@@ -8,6 +8,7 @@ COPY .mvn .mvn
 RUN chmod +x mvnw
 
 COPY src ./src
+COPY uploads ./uploads
 
 RUN ./mvnw -DskipTests package
 
